@@ -1,955 +1,1442 @@
-// Constantes e configurações
+/* ==============================================================
+   VARIÁVEIS DE CORES (Themes: Light/Dark)
+   ============================================================== */
 
-const STORAGE_KEY = 'routineAppData';
-const DEFAULT_DATA = {
-  // Adicione algumas rotinas iniciais para teste
-  routines: [
-    { id: 't1', title: 'Treino de força (peito e tríceps)', description: 'Foco em progressão de carga.', date: new Date().toISOString().split('T')[0], time: '08:00', priority: 'high', tag: 'saúde', completed: false, status: 'doing' },
-    { id: 't2', title: 'Reunião de planejamento semanal', description: 'Revisar metas e definir prioridades.', date: new Date().toISOString().split('T')[0], time: '10:30', priority: 'medium', tag: 'trabalho', completed: false, status: 'todo' },
-    { id: 't3', title: 'Ler 50 páginas do livro "Atomic Habits"', description: 'Hábito de leitura diário.', date: new Date(Date.now() + 86400000).toISOString().split('T')[0], priority: 'low', tag: 'estudos', completed: false, status: 'todo' },
-    { id: 't4', title: 'Pagar contas mensais', description: 'Água, luz, internet.', date: new Date().toISOString().split('T')[0], priority: 'high', tag: 'pessoal', completed: true, status: 'done' },
-  ],
-  tags: [
-    { id: 'tag1', name: 'pessoal', color: '#4f46e5' },
-    { id: 'tag2', name: 'trabalho', color: '#10b981' },
-    { id: 'tag3', name: 'saúde', color: '#ef4444' },
-    { id: 'tag4', name: 'estudos', color: '#f59e0b' }
-  ],
-  preferences: { theme: 'light', showCompleted: true }
-};
+/* =======================
+   🌞 LIGHT MODE (Default)
+   ======================= */
+:root {
+    /* Cores Principais */
+    --color-primary: #ff5454;          /* Indigo 600 */
+    --color-primary-dark: #ff2c2c;     /* Indigo 800 */
 
-// Estado da aplicação
-let state = {
-  currentView: 'hoje',
-  currentViewMode: 'lista',
-  selectedTask: null,
-  currentDate: new Date(),
-  showSidebar: true,
-  routines: [],
-  tags: [],
-  preferences: {}
-};
+    /* Texto */
+    --color-text-default: #1f2937;     /* Gray 800 */
+    --color-text-secondary: #6b7280;   /* Gray 500 */
 
-// Seletores DOM
-const DOM = {
-  app: document.querySelector('.app'),
-  sidebar: document.getElementById('sidebar'),
-  btnToggleSidebar: document.getElementById('btnToggleSidebar'),
-  // Corrigido: Não existe btnToggleTheme no HTML fornecido, usando elemento fictício ou removendo, mas mantive para não quebrar a lógica anterior
-  btnToggleTheme: document.querySelector('[data-layout]'), 
-  btnQuickAdd: document.getElementById('btnQuickAdd'),
-  todayDate: document.getElementById('todayDate'),
-  nowTime: document.getElementById('nowTime'),
-  menuLinks: document.querySelectorAll('.menu-link[data-view]'),
-  filterLinks: document.querySelectorAll('.menu-link[data-filter]'), // Adicionado
-  tagList: document.getElementById('tagList'),
-  btnAddTag: document.getElementById('btnAddTag'),
-  viewTitle: document.getElementById('viewTitle'), // Corrigido: viewTitle não existe no HTML, mas mantido no JS.
-  crumbView: document.getElementById('crumbView'), // Corrigido: crumbView não existe no HTML, mas mantido no JS.
-  // Corrigido: Não existem tabs no HTML fornecido, usando as views para simular a mudança de modo
-  // viewTabs may not be used directly, keep as list if present
-  viewTabs: Array.from(document.querySelectorAll('.sidebar [data-viewmode]')) || [],
-  viewLista: document.getElementById('viewLista'),
-  // There was a mismatch between HTML id (viewQuadro) and earlier code; ensure we query the actual id
-  viewQuadro: document.getElementById('viewQuadro') || document.getElementById('viewTodasRotinas'),
-  viewCalendario: document.getElementById('viewCalendario'),
-  taskListToday: document.getElementById('taskListToday'),
-  todoList: document.querySelector('[data-col="todo"] .card-list'),
-  doingList: document.querySelector('[data-col="doing"] .card-list'),
-  doneList: document.querySelector('[data-col="done"] .card-list'),
-  detailsPanel: document.getElementById('detailsPanel'),
-  detailsClose: document.getElementById('detailsClose'),
-  detailsForm: document.getElementById('detailsForm'),
-  taskTitle: document.getElementById('taskTitle'),
-  taskDesc: document.getElementById('taskDesc'),
-  taskDate: document.getElementById('taskDate'),
-  taskTime: document.getElementById('taskTime'),
-  taskPriority: document.getElementById('taskPriority'),
-  taskTag: document.getElementById('taskTag'),
-  btnSaveTask: document.getElementById('btnSaveTask'),
-  btnDeleteTask: document.getElementById('btnDeleteTask'),
-  btnDuplicateTask: document.getElementById('btnDuplicateTask'),
-  modalQuickAdd: document.getElementById('modalQuickAdd'),
-  quickAddForm: document.getElementById('quickAddForm'),
-  quickTitle: document.getElementById('quickTitle'),
-  quickDate: document.getElementById('quickDate'),
-  quickPriority: document.getElementById('quickPriority'),
-  quickTag: document.getElementById('quickTag'),
-  modalAddTag: document.getElementById('modalAddTag'),
-  addTagForm: document.getElementById('addTagForm'),
-  tagName: document.getElementById('tagName'),
-  tagColor: document.getElementById('tagColor'),
-  calPrev: document.getElementById('calPrev'),
-  calNext: document.getElementById('calNext'),
-  calToday: document.getElementById('calToday'),
-  calTitle: document.getElementById('calTitle'),
-  calendarGrid: document.querySelector('.calendar-grid'),
-  toastsContainer: document.getElementById('toasts') // Adicionado
-};
+    /* Fundo */
+    --color-bg: #ffffff;               /* Branco puro */
+    --color-bg-alt: #f9fafb;           /* Gray 50 */
+    --color-sidebar-bg: #f3f4f6;       /* Gray 100 */
 
-// Templates
-const templates = {
-  taskItem: document.getElementById('tplTaskItem'),
-  boardCard: document.getElementById('tplBoardCard'),
-  toast: document.getElementById('tplToast')
-};
+    /* Bordas e Divisores */
+    --color-border: #e5e7eb;           /* Gray 200 */
 
-// ID counter global simples
-let nextId = 1000;
+    /* Prioridades / Status */
+    --color-priority-high: #dc2626;    /* Red 600 */
+    --color-priority-medium: #d97706;  /* Amber 600 */
+    --color-priority-low: #059669;     /* Emerald 600 */
+    --color-danger: #dc2626;
 
-// Inicialização da aplicação
-function init() {
-  loadData();
-  // Garante que o nextId seja maior que os IDs existentes
-  state.routines.forEach(t => {
-    const idNum = parseInt(t.id.replace('t', ''));
-    if (idNum >= nextId) nextId = idNum + 1;
-  });
-  setupEventListeners();
-  updateClock();
-  setInterval(updateClock, 60000);
-  setupDragAndDrop();
-  render();
-  // Definir a visualização inicial correta
-  if (state.currentView === 'calendario') {
-      state.currentViewMode = 'calendario';
-      renderCalendar();
-  } else {
-      state.currentViewMode = 'lista';
-      renderTaskList();
-  }
+    /* Layout */
+    --sidebar-width: 250px;
+    --header-height: 60px;
+
+    /* Sombras */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+                 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
-// Carrega dados do localStorage
-function loadData() {
-  const savedData = localStorage.getItem(STORAGE_KEY);
-  if (savedData) {
-    const parsedData = JSON.parse(savedData);
-    state.routines = parsedData.routines || DEFAULT_DATA.routines;
-    state.tags = parsedData.tags || DEFAULT_DATA.tags;
-    state.preferences = parsedData.preferences || DEFAULT_DATA.preferences;
-    state.showSidebar = parsedData.showSidebar !== undefined ? parsedData.showSidebar : true;
-  } else {
-    state.routines = DEFAULT_DATA.routines;
-    state.tags = DEFAULT_DATA.tags;
-    state.preferences = DEFAULT_DATA.preferences;
-    saveData();
-  }
-  // Corrigido: ajustando a configuração do tema e sidebar
-  DOM.app.setAttribute('data-theme', state.preferences.theme);
-  // DOM.btnToggleTheme.setAttribute('aria-pressed', state.preferences.theme === 'dark'); // Removido ou corrigido se o elemento não existe
-  DOM.app.setAttribute('data-layout', state.showSidebar ? 'with-sidebar' : 'without-sidebar');
+/* =======================
+   🌙 DARK MODE
+   ======================= */
+.app[data-theme="dark"] {
+    /* Cores Principais */
+    --color-primary: #ff5454;          /* Violet 500 */
+    --color-primary-dark: #ff5454;     /* Violet 600 */
+
+    /* Texto */
+    --color-text-default: #ffffff;     /* Gray 100 */
+    --color-text-secondary: #d1d5db;   /* Gray 300 */
+
+    /* Fundo */
+    --color-bg: #111827;               /* Gray 900 */
+    --color-bg-alt: #1f2937;           /* Gray 800 */
+    --color-sidebar-bg: #374151;       /* Gray 700 */
+
+    /* Bordas e Divisores */
+    --color-border: #4b5563;           /* Gray 600 */
+
+    /* Prioridades / Status */
+    --color-priority-high: #ef4444;    /* Red 500 */
+    --color-priority-medium: #f59e0b;  /* Yellow 500 */
+    --color-priority-low: #10b981;     /* Emerald 500 */
+    --color-danger: #ef4444;
 }
 
-// Salva dados no localStorage
-function saveData() {
-  const dataToSave = {
-    routines: state.routines,
-    tags: state.tags,
-    preferences: state.preferences,
-    showSidebar: state.showSidebar
-  };
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(dataToSave));
+/* Base Reset e Tipografia */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
-// === Funções de Utilidade ===
-
-// Gera um ID único
-function generateId() {
-    return 't' + nextId++;
+body {
+    font-family: 'Inter', sans-serif;
+    /* background moved to .app so theme overrides on .app[data-theme] take effect */
+    background-color: transparent;
+    color: var(--color-text-default);
+    line-height: 1.5;
+    transition: background-color 0.3s, color 0.3s;
 }
 
-// Exibe um toast de notificação
-function showToast(message, type = 'info') {
-    const toastElement = templates.toast.content.cloneNode(true);
-    const toast = toastElement.querySelector('.toast');
-    toast.querySelector('.toast-content').textContent = message;
-    toast.classList.add(type);
-    
-    // Configura o fechamento automático
-    DOM.toastsContainer.prepend(toast);
-    
-    setTimeout(() => {
-        toast.classList.add('fade-out');
-        toast.addEventListener('transitionend', () => toast.remove());
-    }, 3000);
-    
-    toast.querySelector('.toast-close').addEventListener('click', () => {
-        toast.remove();
-    });
+/* Apply global background on the .app container so theme variables defined on
+   .app[data-theme="dark"] are used when switching themes. .app already has
+   min-height:100vh so it covers the viewport. */
+.app {
+    background-color: var(--color-bg);
 }
 
-
-// Adiciona uma nova rotina
-function addNewRoutine({ title, description, date, time, priority, tag, status = 'todo', completed = false }) {
-    const newRoutine = {
-        id: generateId(),
-        title: title,
-        description: description || '',
-        date: date || undefined,
-        time: time || undefined,
-        priority: priority || 'medium',
-        tag: tag || undefined,
-        status: status, // default para 'todo'
-        completed: completed
-    };
-
-    state.routines.push(newRoutine);
-    saveData();
-    render();
-    showToast('Rotina adicionada com sucesso!', 'success');
+a {
+    color: var(--color-primary);
+    text-decoration: none;
 }
 
-// Alterna a conclusão da tarefa
-function toggleTaskCompletion(taskId) {
-    const task = state.routines.find(t => t.id === taskId);
-    if (task) {
-        task.completed = !task.completed;
-        // Ajusta o status no Kanban se estiver sendo marcada como concluída ou não
-        if (task.completed) {
-            task.status = 'done';
-            showToast(`Rotina "${task.title}" concluída!`, 'success');
-        } else if (task.status === 'done') {
-             task.status = 'todo'; // Volta para 'todo' se desmarcada
-             showToast(`Rotina "${task.title}" marcada como pendente.`, 'info');
-        }
-        
-        saveData();
-        render(); // Re-renderiza para atualizar a lista/quadro
+/* =================================================================
+   LAYOUT PRINCIPAL: .app, .topbar, .sidebar, .layout, .content
+   ================================================================= */
+
+.app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Barra Superior (Top Bar) */
+.topbar {
+    display: flex;
+    align-items: center;
+    height: var(--header-height);
+    padding: 0 16px;
+    background-color: var(--color-bg-alt);
+    border-bottom: 1px solid var(--color-border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--shadow-sm);
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin-left: 8px;
+}
+
+.brand-mark {
+    font-size: 1.5rem;
+    margin-right: 6px;
+}
+
+.spacer {
+    flex-grow: 1;
+}
+
+.now {
+    margin-right: 16px;
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+}
+
+.now .time {
+    font-weight: 600;
+    margin-left: 4px;
+}
+
+.top-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.avatar img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--color-primary);
+    cursor: pointer;
+}
+
+/* Layout principal (Sidebar + Content) */
+.layout {
+    display: flex;
+    flex-grow: 1;
+    position: relative;
+}
+
+/* Sidebar */
+.sidebar {
+    width: var(--sidebar-width);
+    min-width: var(--sidebar-width);
+    background-color: var(--color-sidebar-bg);
+    border-right: 1px solid var(--color-border);
+    padding: 16px;
+    overflow-y: auto;
+    transition: transform 0.3s ease-in-out, width 0.3s ease-in-out;
+    flex-shrink: 0;
+}
+
+/* Conteúdo Principal */
+.content {
+    flex-grow: 1;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+}
+
+.content-header {
+    margin-bottom: 24px;
+}
+
+.view-title {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: var(--color-text-default);
+}
+
+/* Layout com Sidebar Fechada */
+.app[data-layout="without-sidebar"] .sidebar {
+    transform: translateX(-100%);
+    width: 0;
+    min-width: 0;
+    padding: 16px 0;
+}
+.app[data-layout="without-sidebar"] .content {
+    margin-left: 0;
+}
+
+.footer {
+    padding: 10px 20px;
+    text-align: center;
+    font-size: 0.75rem;
+    color: var(--color-text-default);
+    border-top: 1px solid var(--color-border);  
+}
+
+/* =================================================================
+   COMPONENTES GERAIS: Botões, Menu, Fields
+   ================================================================= */
+
+/* Botões */
+.btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s, box-shadow 0.2s, opacity 0.2s;
+    background-color: var(--color-primary);
+    color: white;
+    font-size: 0.875rem;
+}
+
+.btn:hover {
+    background-color: var(--color-primary-dark);
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.btn.ghost {
+    background-color: transparent;
+    color: var(--color-primary);
+    border: 1px solid var(--color-primary);
+    padding: 7px 15px;
+}
+
+.btn.ghost:hover {
+    background-color: var(--color-primary);
+    color: white;
+}
+
+.btn.icon.only {
+    padding: 8px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-primary);
+    color: white;
+}
+
+.btn.icon.only:hover {
+    background-color: var(--color-primary-dark);
+    color: white;
+    box-shadow: none;
+    border-radius: 8px;
+}
+
+.btn.small {
+    padding: 6px 17px;
+    font-size: 0.8rem;
+}
+
+.btn.danger {
+    background-color: var(--color-danger);
+    color: white;
+}
+.btn.danger.ghost {
+    color: var(--color-danger);
+    border-color: var(--color-danger);
+    background-color: transparent;
+}
+.btn.danger.ghost:hover {
+    background-color: var(--color-danger);
+    color: white;
+}
+
+/* Menu de Navegação */
+.section {
+    margin-bottom: 20px;
+}
+
+.section-title {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: var(--color-text-secondary);
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.menu {
+    list-style: none;
+}
+
+.menu-link {
+    display: block;
+    padding: 8px 10px;
+    border-radius: 6px;
+    color: var(--color-text-default);
+    transition: background-color 0.2s, color 0.2s;
+    font-size: 1rem;
+}
+
+.menu-link:hover {
+    background-color: var(--color-primary);
+    color: white;
+    font-size: 1rem;
+}
+
+.menu-link.is-active {
+    background-color: var(--color-primary);
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+/* Etiquetas */
+.tags {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 4px;
+    margin-bottom: 12px;
+}
+
+.tag {
+    font-size: 0.8rem;
+    padding: 2px 8px;
+    border-radius: 4px;
+    border: 1px solid var(--color-border);
+    color: var(--color-text-secondary);
+    transition: opacity 0.2s;
+}
+
+.tag:hover {
+    opacity: 0.8;
+}
+
+/* Formulários e Campos */
+.field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+}
+
+.field span {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--color-text-default);
+    margin-bottom: 4px;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="time"],
+select,
+textarea {
+    padding: 10px;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    font-size: 1rem;
+    background-color: var(--color-bg-alt);
+    color: var(--color-text-default);
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 1px var(--color-primary);
+    outline: none;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.grid {
+    display: grid;
+    gap: 16px;
+}
+.grid.two {
+    grid-template-columns: 1fr 1fr;
+}
+
+/* =================================================================
+   ESTILOS PARA PERÍODO PERSONALIZADO
+   ================================================================= */
+
+.period-type-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.period-type-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.period-type-option:hover {
+  background-color: var(--color-sidebar-bg);
+}
+
+.period-type-option input[type="radio"]:checked + span {
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.period-section {
+  margin-top: 16px;
+  padding: 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  background-color: var(--color-sidebar-bg);
+}
+
+.weekday-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.weekday-option {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.weekday-option:hover {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.weekday-option input[type="checkbox"]:checked + span {
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.date-input-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+  align-items: center;
+}
+
+.date-input-row input {
+  flex-grow: 1;
+}
+
+.remove-date {
+  background-color: var(--color-danger);
+  color: white;
+}
+
+#recurringIntervalField {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#recurringIntervalField input {
+  width: 60px;
+}
+
+#recurringEndOptions label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+#recurringEndOptions input[type="number"],
+#recurringEndOptions input[type="date"] {
+  margin-left: 8px;
+  padding: 4px;
+}
+
+/* Indicador visual para rotinas com múltiplas datas */
+.task.has-multiple-dates::after {
+  content: "📅";
+  margin-left: 8px;
+  font-size: 0.8rem;
+}
+
+.calendar-event.has-multiple-dates::after {
+  content: " 📅";
+  font-size: 0.7rem;
+}
+
+/* =================================================================
+   PAINEL DE DETALHES (ASIDE.DETAILS)
+   ================================================================= */
+.details {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 400px;
+    height: 100%;
+    background-color: var(--color-bg-alt);
+    border-left: 1px solid var(--color-border);
+    box-shadow: -8px 0 16px rgba(0, 0, 0, 0.1);
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+}
+
+.details.is-open {
+    transform: translateX(0);
+}
+
+.actions {
+    display: flex;
+    gap: 8px;
+}
+
+.details-header {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.details-header h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    flex-grow: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.details-body {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 16px;
+}
+
+.details-form .actions {
+    display: flex;
+    padding-top: 20px;
+    border-top: 1px solid var(--color-border);
+    margin-top: 20px;
+    position: sticky;
+    bottom: 0;
+    background-color: var(--color-bg-alt);
+}
+
+/* =================================================================
+   CONFIGURAÇÕES
+   ================================================================= */
+
+.config-body {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.profile-container {
+  background-color: var(--color-bg-alt);
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 24px;
+}
+
+.profile-header {
+  text-align: center;
+  position: relative;
+  margin-bottom: 24px;
+}
+
+.profile-banner {
+  height: 120px;
+  background-color: var(--color-primary);
+  border-radius: 8px 8px 0 0;
+  margin: -20px -20px 20px -20px;
+}
+
+.profile-photo {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 4px solid var(--color-bg);
+  margin-top: -50px;
+  object-fit: cover;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+}
+
+.profile-photo:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Indicador visual de que a foto é editável */
+.profile-header {
+  position: relative;
+}
+
+.profile-photo::after {
+  content: '📷';
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  background: var(--color-primary);
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.profile-photo:hover::after {
+  opacity: 1;
+}
+
+.profile-info {
+  margin-top: 16px;
+}
+
+.account-info {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.info-item label {
+  font-weight: 600;
+  color: var(--color-text-default);
+}
+
+.info-field {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.edit-btn, .link {
+  color: var(--color-primary);
+  font-size: 0.875rem;
+  cursor: pointer;
+  background: none;
+  border: none;
+  text-decoration: underline;
+}
+
+.config-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: var(--color-text-default);
+}
+
+.config-option {
+  background-color: var(--color-bg-alt);
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  border: 1px solid var(--color-border);
+}
+
+.config-option label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  font-weight: 500;
+  color: var(--color-text-default);
+}
+
+/* Switch Toggle */
+.switch {
+  position: relative;
+  display: inline-block;
+  color: var(--color-text-default);
+  width: 50px;
+  height: 24px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 24px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: var(--color-primary);
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--color-border);
+}
+
+.btn.primary {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.btn.secondary {
+  background-color: transparent;
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+}
+
+.btn.edit-profile {
+  background-color: transparent;
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+}
+
+.btn.edit-profile:hover {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--color-text-secondary);
+  font-style: italic;
+}
+
+/* =================================================================
+   VISUALIZAÇÕES: LISTA, QUADRO (KANBAN), CALENDÁRIO
+   ================================================================= */
+
+.view {
+  display: none;
+}
+
+.view.is-active {
+  display: block;
+}
+
+/* Lista de Tarefas */
+.task-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.task-list li {
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-border);
+  padding: 8px 12px;
+  margin-bottom: 6px;
+  border-radius: 8px;
+}
+
+.task {
+    display: flex;
+    align-items: center;
+    background-color: var(--color-bg-alt);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    transition: background-color 0.2s, box-shadow 0.2s;
+    cursor: grab;
+}
+
+.task:hover {
+    box-shadow: var(--shadow-sm);
+}
+
+.task.is-completed {
+    background-color: var(--color-sidebar-bg);
+    text-decoration: line-through;
+    font-style: italic;
+}
+
+.task-main {
+    flex-grow: 1;
+    margin: 0 16px;
+}
+
+.task-title {
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 4px;
+    color: var(--color-text-default);
+}
+
+.task-meta {
+    display: flex;
+    gap: 12px;
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+}
+
+.task-meta .priority {
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.task-meta .priority.high { color: var(--color-priority-high); }
+.task-meta .priority.medium { color: var(--color-priority-medium); }
+.task-meta .priority.low { color: var(--color-priority-low); }
+
+.task-meta .due.overdue {
+    color: var(--color-danger);
+    font-weight: 500;
+}
+
+/* Checkbox Customizado */
+.checkbox {
+    display: inline-flex;
+    position: relative; 
+    cursor: pointer;
+}
+
+.checkbox input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.check {
+    width: 20px;
+    height: 20px;
+    background-color: var(--color-bg);
+    border: 2px solid var(--color-border);
+    border-radius: 4px;
+    transition: background-color 0.2s, border-color 0.2s;
+    display: inline-block;
+}
+
+.checkbox input:checked + .check {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+.checkbox input:checked + .check::after {
+    content: '✔';
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.8rem;
+}
+
+/* Quadro Kanban */
+.board {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+}
+
+.column {
+    min-width: 300px;
+    width: 33.33%;
+    background-color: var(--color-bg-alt);
+    border-radius: 8px;
+    padding: 12px;
+    transition: background-color 0.2s;
+}
+
+.column.drag-over {
+    background-color: var(--color-primary);
+    outline: 2px dashed var(--color-primary);
+    outline-offset: -4px;
+}
+
+.column-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 0 4px;
+}
+
+.column-header h2 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-text-default);
+}
+
+.card-list {
+    list-style: none;
+    min-height: 50px;
+}
+
+.card {
+    background-color: var(--color-bg);
+    border-radius: 6px;
+    box-shadow: var(--shadow-sm);
+    padding: 12px;
+    margin-bottom: 8px;
+    border-left: 4px solid transparent;
+    transition: border-left-color 0.2s, box-shadow 0.2s;
+    cursor: grab;
+}
+
+.card:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.card-head {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.card-head .status {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.card-title {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    flex-grow: 1;
+}
+
+.card-meta {
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.card-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.count {
+    font-size: 0.8rem;
+    color: var(--color-text-secondary);
+    padding: 4px;
+}
+
+/* =================================================================
+   CALENDÁRIO - CORREÇÃO COMPLETA
+   ================================================================= */
+
+.calendar-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 20px;
+    padding: 0 8px;
+}
+
+/* Calendário */
+.calendar-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+    padding: 0 8px;
+}
+
+.calendar-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-text-default);
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    border: 1px solid var(--color-border);
+    border-radius: 15px;
+    overflow: hidden;
+    background-color: var(--color-bg-alt);
+    gap:  7px;
+    box-shadow: var(--shadow-sm);
+}
+
+.calendar-day-header {
+    text-align: center;
+    padding: 8px;
+    font-weight: 600;
+    color: white;
+    background-color: var(--color-primary);
+    border-radius: 10px;
+}
+
+.calendar-day {
+    min-height: 120px;
+    padding: 1px;
+    position: relative;
+    border-radius: 10px;
+    background-color: var(--color-bg);
+    box-shadow: var(--shadow-sm);
+}
+
+.calendar-day:nth-child(7n) {
+    border-right: none;
+}
+.calendar-day:nth-last-child(-n+7) {
+    border-bottom: none;
+}
+
+.calendar-day-number {
+    font-size: 1rem;
+    font-weight: 700;
+    text-align: right;
+    padding-right: 6px;
+    margin-bottom: 4px;
+    color: var(--color-text-default);
+}
+
+.calendar-day.other-month {
+    background-color: var(--color-sidebar-bg);
+    color: var(--color-text-secondary);
+}
+.calendar-day.other-month .calendar-day-number {
+    color: var(--color-text-secondary);
+}
+
+.calendar-day.today {
+    background-color: #111827;
+}
+.calendar-day.today .calendar-day-number {
+    color: white;
+    background-color: #ff5454;
+    border-radius: 12px;
+}
+
+.calendar-event {
+    display: block;
+    width: 130px;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 0.75rem;
+    padding: 2px 4px;
+    margin-bottom: 2px;
+    border-radius: 3px;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    background-color: var(--color-primary);
+    color: white;
+}
+.calendar-event.priority-high { background-color: var(--color-priority-high); }
+.calendar-event.priority-medium { background-color: var(--color-priority-medium); }
+.calendar-event.priority-low { background-color: var(--color-priority-low); }
+
+/* =================================================================
+   GRÁFICOS - CORREÇÕES E MELHORIAS
+   ================================================================= */
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.container header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.container header h1 {
+  font-size: 2.5rem;
+  color: var(--color-text-default);
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: var(--color-text-secondary);
+}
+
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+.chart-container {
+  background: var(--color-bg-alt);
+  border-radius: 12px;
+  padding: 25px;
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s ease;
+}
+
+.chart-container:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
+}
+
+.chart-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: var(--color-text-default);
+  text-align: center;
+}
+
+.chart-wrapper {
+  position: relative;
+  height: 300px;
+  width: 100%;
+}
+
+.info-text {
+  text-align: center;
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+  margin-top: 15px;
+  font-style: italic;
+}
+
+.container footer {
+  text-align: center;
+  padding: 20px;
+  color: var(--color-text-secondary);
+  border-top: 1px solid var(--color-border);
+  margin-top: 40px;
+}
+
+/* Ajustes para gráficos específicos */
+#weeklyProgressChart,
+#timeDistributionChart,
+#habitsOverTimeChart,
+#lifeBalanceChart,
+#monthlyGoalsChart,
+#dailyProductivityChart {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Ajustes para modo escuro */
+.app[data-theme="dark"] .chart-container {
+  background-color: var(--color-sidebar-bg);
+}
+
+.app[data-theme="dark"] .charts-section {
+  background-color: var(--color-bg);
+}
+
+/* =================================================================
+   MODAIS (DIALOG)
+   ================================================================= */
+.modal {
+    border: none;
+    padding: 0;
+    border-radius: 8px;
+    box-shadow: var(--shadow-md);
+    background-color: var(--color-bg-alt);
+    max-width: 500px;
+    width: 90%;
+}
+
+.modal::backdrop {
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(2px);
+}
+
+.modal.small {
+    max-width: 400px;
+}
+
+.modal-content {
+    padding: 0;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.modal-header h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-text-default);
+}
+
+.modal-body {
+    padding: 16px;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 16px;
+    border-top: 1px solid var(--color-border);
+}
+
+/* =================================================================
+   TOASTS E RODAPÉ
+   ================================================================= */
+
+.toasts {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.toast {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    background-color: var(--color-bg-alt);
+    border-radius: 6px;
+    box-shadow: var(--shadow-md);
+    min-width: 250px;
+    border-left: 4px solid var(--color-primary);
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+    color: var(--color-text-default);
+}
+
+.toast.success { border-color: var(--color-priority-low); }
+.toast.error { border-color: var(--color-danger); }
+.toast.info { border-color: var(--color-primary); }
+
+.toast-content {
+    flex-grow: 1;
+    font-size: 0.9rem;
+}
+
+.toast .toast-close {
+    margin-left: 10px;
+    width: 20px;
+    height: 20px;
+}
+
+.toast.fade-out {
+    opacity: 0;
+    transform: translateX(100%);
+}
+
+/* =================================================================
+   RESPONSIVIDADE (Celulares e Tablets)
+   ================================================================= */
+
+@media (max-width: 768px) {
+    /* Layout Mobile */
+    .app[data-layout="with-sidebar"] .sidebar {
+        position: fixed;
+        left: 0;
+        top: var(--header-height);
+        height: calc(100% - var(--header-height));
+        z-index: 500;
+        box-shadow: var(--shadow-md);
+        width: 280px;
     }
-}
-
-
-// Abre o painel de detalhes da tarefa
-function openTaskDetails(taskId) {
-  const task = state.routines.find(t => t.id === taskId);
-  if (!task) return;
-  state.selectedTask = task;
-  
-  DOM.taskTitle.value = task.title;
-  DOM.taskDesc.value = task.description || '';
-  DOM.taskPriority.value = task.priority || 'medium';
-  DOM.taskTag.value = task.tag ? `#${task.tag}` : '';
-  
-  if (task.date) {
-    const date = new Date(task.date);
-    // Corrigido: Garante que o fuso horário não altere a data para o dia anterior
-    const dateString = new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toISOString().split('T')[0];
-    DOM.taskDate.value = dateString;
-  } else {
-    DOM.taskDate.value = '';
-  }
-  
-  DOM.taskTime.value = task.time || '';
-
-  // Configura o título do painel
-  document.getElementById('detailsTitle').textContent = task.title;
-
-  DOM.detailsPanel.setAttribute('aria-hidden', 'false');
-  DOM.detailsPanel.classList.add('is-open');
-}
-
-// Fecha o painel de detalhes da tarefa
-function closeDetails() {
-  state.selectedTask = null;
-  DOM.detailsPanel.setAttribute('aria-hidden', 'true');
-  DOM.detailsPanel.classList.remove('is-open');
-  // Garante que o form seja resetado visualmente se o usuário não salvou
-  DOM.detailsForm.reset(); 
-}
-
-// Salva os detalhes da tarefa (função incompleta no código original)
-function saveTaskDetails(e) {
-  e.preventDefault();
-  if (!state.selectedTask) return;
-
-  const task = state.selectedTask;
-  
-  task.title = DOM.taskTitle.value.trim();
-  task.description = DOM.taskDesc.value;
-  task.date = DOM.taskDate.value || undefined;
-  task.time = DOM.taskTime.value || undefined;
-  task.priority = DOM.taskPriority.value;
-  task.tag = DOM.taskTag.value.replace('#', '').trim() || undefined;
-  
-  if (!task.title) {
-    showToast('O título da rotina é obrigatório.', 'error');
-    return;
-  }
-
-  saveData();
-  render();
-  closeDetails();
-  showToast('Rotina salva com sucesso!', 'success');
-}
-
-// Deleta a tarefa (função incompleta no código original)
-function deleteCurrentTask() {
-  if (!state.selectedTask) return;
-
-  const confirmDelete = confirm(`Tem certeza que deseja excluir a rotina: "${state.selectedTask.title}"?`);
-  if (confirmDelete) {
-    state.routines = state.routines.filter(t => t.id !== state.selectedTask.id);
-    saveData();
-    render();
-    closeDetails();
-    showToast('Rotina excluída com sucesso!', 'info');
-  }
-}
-
-// Duplica a tarefa (função incompleta no código original)
-function duplicateCurrentTask() {
-  if (!state.selectedTask) return;
-
-  const originalTask = state.selectedTask;
-  const duplicatedTask = {
-    ...originalTask,
-    id: generateId(), // Novo ID
-    title: `Cópia de ${originalTask.title}`,
-    completed: false, // Começa como pendente
-    status: 'todo' // Começa como 'todo'
-  };
-
-  state.routines.push(duplicatedTask);
-  saveData();
-  render();
-  closeDetails();
-  showToast('Rotina duplicada com sucesso!', 'success');
-}
-
-// === Lógica de Etiquetas (Tags) ===
-
-// Adiciona uma nova etiqueta
-function addNewTag({ name, color }) {
-    const newTag = {
-        id: `tag${state.tags.length + 1}`,
-        name: name,
-        color: color
-    };
     
-    // Verifica se a tag já existe
-    if (state.tags.some(t => t.name.toLowerCase() === name.toLowerCase())) {
-        showToast('Esta etiqueta já existe!', 'error');
-        return;
+    .app[data-layout="without-sidebar"] .sidebar {
+         transform: translateX(-100%);
+    }
+
+    /* Topbar */
+    .topbar .now {
+        display: none;
+    }
+    .topbar .brand-name {
+        display: none;
     }
     
-    state.tags.push(newTag);
-    saveData();
-    renderTags();
-    showToast(`Etiqueta #${name} adicionada!`, 'success');
-}
-
-// Renderiza a lista de etiquetas na sidebar
-function renderTags() {
-    DOM.tagList.innerHTML = '';
-    const datalistTags = document.getElementById('datalistTags');
-    datalistTags.innerHTML = ''; // Limpa o datalist
-
-    state.tags.forEach(tag => {
-        // 1. Renderiza na sidebar
-        const li = document.createElement('li');
-        const a = document.createElement('a');
-        a.className = 'tag';
-        a.href = '#';
-        a.dataset.tag = tag.name;
-        a.textContent = `#${tag.name}`;
-        a.style.borderColor = tag.color; // Adiciona a cor
-        a.addEventListener('click', (e) => {
-            e.preventDefault();
-            // Implementação simples de filtro por tag (pode ser expandida)
-            showToast(`Filtro por tag #${tag.name} ativado.`, 'info');
-            renderTaskListWithTasks(state.routines.filter(t => t.tag === tag.name));
-        });
-        li.appendChild(a);
-        DOM.tagList.appendChild(li);
-
-        // 2. Renderiza no datalist
-        const option = document.createElement('option');
-        option.value = `#${tag.name}`;
-        datalistTags.appendChild(option);
-    });
-}
-
-// === Filtros e Visualizações ===
-
-// Filtra tarefas com base na view e filtros extras
-function getFilteredTasks() {
-  let tasks = [...state.routines];
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-
-  // 1. Filtro por View
-  switch (state.currentView) {
-    case 'hoje':
-      tasks = tasks.filter(task => {
-        if (!task.date) return false;
-        const taskDate = new Date(task.date);
-        taskDate.setHours(0, 0, 0, 0);
-        return taskDate.getTime() === today.getTime();
-      });
-      break;
-    case 'semana':
-      const nextWeek = new Date(today);
-      nextWeek.setDate(today.getDate() + 7);
-      tasks = tasks.filter(task => {
-        if (!task.date) return false;
-        const taskDate = new Date(task.date);
-        taskDate.setHours(0, 0, 0, 0);
-        return taskDate >= today && taskDate < nextWeek;
-      });
-      break;
-    case 'calendario':
-      tasks = tasks.filter(task => task.date);
-      break;
-    case 'todasRotinas':
-      // Não filtra, mostra todas
-      break;
-  }
-
-  // 2. Filtro por Filtros Rápidos (sidebar)
-  const activeFilterLink = document.querySelector('.menu-link[data-filter].is-active');
-  if (activeFilterLink) {
-    const filter = activeFilterLink.dataset.filter;
-    switch (filter) {
-      case 'pendentes':
-        tasks = tasks.filter(task => !task.completed);
-        break;
-      case 'concluidas':
-        tasks = tasks.filter(task => task.completed);
-        break;
-      case 'alta':
-        tasks = tasks.filter(task => task.priority === 'high');
-        break;
-      case 'semData':
-        tasks = tasks.filter(task => !task.date);
-        break;
+    .btn#btnQuickAdd {
+        font-size: 0;
+        padding: 8px 10px;
     }
-  } else if (!state.preferences.showCompleted) {
-    // Se nenhum filtro ativo, aplica a preferência global
-    tasks = tasks.filter(task => !task.completed);
-  }
-  
-  return tasks;
-}
+    .btn#btnQuickAdd::before {
+        content: '+';
+        font-size: 1rem;
+    }
 
-// === Renderização ===
-
-// Define a visualização atual (Hoje, Semana, etc.)
-function setCurrentView(view) {
-  state.currentView = view;
-  DOM.menuLinks.forEach(link => {
-    link.classList.toggle('is-active', link.dataset.view === view);
-  });
-  
-  // Troca o modo de visualização baseado na view (pode ser customizado)
-  if (view === 'calendario') {
-      setViewMode('calendario');
-  } else {
-      // Para 'hoje' e 'semana', volta para lista (padrão)
-      setViewMode('lista');
-  }
-  
-  // Limpa o filtro ativo quando muda a view principal
-  DOM.filterLinks.forEach(link => link.classList.remove('is-active'));
-  
-  render();
-}
-
-// Define o modo de visualização (Lista, Quadro, Calendário)
-function setViewMode(mode) {
-  // Desativa todas as views
-  DOM.viewLista.classList.remove('is-active');
-  DOM.viewQuadro.classList.remove('is-active');
-  DOM.viewCalendario.classList.remove('is-active');
-  
-  state.currentViewMode = mode;
-  
-  // Ativa a view correta
-  if (mode === 'lista') DOM.viewLista.classList.add('is-active');
-  else if (mode === 'quadro') DOM.viewQuadro.classList.add('is-active');
-  else if (mode === 'calendario') DOM.viewCalendario.classList.add('is-active');
-
-  render();
-}
-
-// Renderiza a lista de tarefas
-function renderTaskList() {
-  if (!DOM.taskListToday) return;
-  DOM.taskListToday.innerHTML = '';
-  const tasks = getFilteredTasks();
-  if (tasks.length === 0) {
-    const emptyState = document.createElement('div');
-    emptyState.className = 'empty-state';
-    emptyState.textContent = 'Nenhuma rotina encontrada';
-    DOM.taskListToday.appendChild(emptyState);
-    return;
-  }
-  tasks.forEach(task => {
-    const taskElement = createTaskElement(task);
-    DOM.taskListToday.appendChild(taskElement);
-  });
-}
-
-// Render a supplied list of tasks into the main task list (used by tag filtering)
-function renderTaskListWithTasks(tasks) {
-  if (!DOM.taskListToday) return;
-  DOM.taskListToday.innerHTML = '';
-  if (!tasks || tasks.length === 0) {
-    const emptyState = document.createElement('div');
-    emptyState.className = 'empty-state';
-    emptyState.textContent = 'Nenhuma rotina encontrada';
-    DOM.taskListToday.appendChild(emptyState);
-    return;
-  }
-  tasks.forEach(task => {
-    const taskElement = createTaskElement(task);
-    DOM.taskListToday.appendChild(taskElement);
-  });
-}
-
-// Renderiza toda a aplicação
-function render() {
-  updateViewTitle();
-  renderTags(); // Garante que as tags estão sempre atualizadas
-  
-  if (state.currentViewMode === 'lista') renderTaskList();
-  else if (state.currentViewMode === 'quadro') renderBoard();
-  else if (state.currentViewMode === 'calendario') renderCalendar();
-}
-
-// Renderiza o calendário (função incompleta no código original)
-function renderCalendar() {
-  if (!DOM.calendarGrid) return;
-  
-  DOM.calendarGrid.innerHTML = '';
-  const year = state.currentDate.getFullYear();
-  const month = state.currentDate.getMonth();
-  const monthNames = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 
-                     'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
-  DOM.calTitle.textContent = `${monthNames[month]} ${year}`;
-  
-  // 0 = Domingo, 1 = Segunda...
-  const firstDayOfMonth = new Date(year, month, 1).getDay(); 
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
-  const prevMonthDays = new Date(year, month, 0).getDate();
-  
-  const dayNames = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
-  
-    // Adiciona cabeçalho dos dias da semana
-    dayNames.forEach(day => {
-      const dayElement = document.createElement('div');
-      dayElement.className = 'calendar-day-header';
-      dayElement.textContent = day;
-      DOM.calendarGrid.appendChild(dayElement);
-    });
-    
-    // Dias do mês anterior
-    for (let i = firstDayOfMonth - 1; i >= 0; i--) {
-      const dayElement = createCalendarDay(prevMonthDays - i, true);
-      DOM.calendarGrid.appendChild(dayElement);
+    /* Quadro Kanban */
+    .board {
+        flex-direction: column;
+        gap: 16px;
+        padding-right: 0;
     }
     
-    const today = new Date();
-    
-    // Dias do mês atual
-    for (let i = 1; i <= daysInMonth; i++) {
-      const isToday = today.getDate() === i && today.getMonth() === month && today.getFullYear() === year;
-      const date = new Date(year, month, i);
-      const dayElement = createCalendarDay(i, false, isToday, date);
-      DOM.calendarGrid.appendChild(dayElement);
+    .column {
+        min-width: 100%;
+        width: 100%;
+    }
+
+    /* Painel de Detalhes */
+    .details {
+        width: 100%;
     }
     
-    // Dias do próximo mês
-    const totalCells = 42;
-    const daysSoFar = firstDayOfMonth + daysInMonth;
-    const nextMonthDays = totalCells - daysSoFar;
-    for (let i = 1; i <= nextMonthDays; i++) {
-      const dayElement = createCalendarDay(i, true);
-      DOM.calendarGrid.appendChild(dayElement);
+    /* Modais */
+    .modal {
+        margin: auto 10px;
     }
-  }
 
-// Cria um elemento de dia para o calendário
-function createCalendarDay(day, isOtherMonth, isToday = false, fullDate = null) {
-  const dayElement = document.createElement('div');
-  dayElement.className = 'calendar-day';
-  if (isOtherMonth) dayElement.classList.add('other-month');
-  if (isToday) dayElement.classList.add('today');
-  
-  const dayHeader = document.createElement('div');
-  dayHeader.className = 'calendar-day-number'; // Renomeado para melhor clareza
-  dayHeader.textContent = day;
-  dayElement.appendChild(dayHeader);
-  
-  if (fullDate) {
-    const tasksForDay = state.routines.filter(task => {
-      if (!task.date) return false;
-const taskDate = new Date(task.date);
-const localTaskDate = new Date(taskDate.getTime() + taskDate.getTimezoneOffset() * 60000);
-return (
-  localTaskDate.getDate() === fullDate.getDate() &&
-  localTaskDate.getMonth() === fullDate.getMonth() &&
-  localTaskDate.getFullYear() === fullDate.getFullYear()
-);
-    });
-
-    tasksForDay.forEach(task => {
-      const event = document.createElement('button');
-      event.className = `calendar-event priority-${task.priority || 'medium'}`;
-      event.textContent = task.title;
-      event.addEventListener('click', () => openTaskDetails(task.id));
-      dayElement.appendChild(event);
-    });
-  }
-
-  return dayElement;
-}
-
-
-// === Configuração de Eventos e DRAG and DROP ===
-
-function setupEventListeners() {
-  if (DOM.btnToggleSidebar) DOM.btnToggleSidebar.addEventListener('click', toggleSidebar);
-  // DOM.btnToggleTheme.addEventListener('click', toggleTheme); // Comentado pois o HTML não tem esse botão
-  if (DOM.btnQuickAdd && DOM.modalQuickAdd) DOM.btnQuickAdd.addEventListener('click', () => {
-    if (DOM.modalQuickAdd.showModal) DOM.modalQuickAdd.showModal();
-    if (DOM.quickTitle) DOM.quickTitle.focus();
-  });
-  
-  // Navegação principal (Hoje, Semana, etc.)
-  if (DOM.menuLinks && DOM.menuLinks.length) {
-    DOM.menuLinks.forEach(link => {
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        setCurrentView(link.dataset.view);
-      });
-    });
-  }
-
-  // Filtros rápidos
-  if (DOM.filterLinks && DOM.filterLinks.length) {
-    DOM.filterLinks.forEach(link => {
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        const isActive = link.classList.contains('is-active');
-        
-        // Limpa a seleção de todos os filtros
-        DOM.filterLinks.forEach(l => l.classList.remove('is-active'));
-        
-        // Ativa ou desativa o filtro clicado
-        if (!isActive) {
-          link.classList.add('is-active');
-        }
-        
-        render(); // Re-renderiza com o novo filtro ativo
-      });
-    });
-  }
-
-  if (DOM.btnAddTag && DOM.modalAddTag) DOM.btnAddTag.addEventListener('click', () => { if (DOM.modalAddTag.showModal) DOM.modalAddTag.showModal(); });
-  if (DOM.detailsClose) DOM.detailsClose.addEventListener('click', closeDetails);
-  if (DOM.detailsForm) DOM.detailsForm.addEventListener('submit', saveTaskDetails);
-  if (DOM.btnDeleteTask) DOM.btnDeleteTask.addEventListener('click', deleteCurrentTask);
-  if (DOM.btnDuplicateTask) DOM.btnDuplicateTask.addEventListener('click', duplicateCurrentTask);
-  
-  // Adição Rápida
-if (DOM.quickAddForm) DOM.quickAddForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    let dateValue = DOM.quickDate.value || undefined;
-    // Corrige o bug do "um dia antes"
-    if (dateValue) {
-        const [year, month, day] = dateValue.split('-');
-        dateValue = new Date(year, month - 1, day).toISOString().split('T')[0];
+    /* Configurações */
+    .config-option label {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
     }
-    const formData = {
-      title: DOM.quickTitle.value.trim(),
-      date: dateValue,
-      priority: DOM.quickPriority.value || 'medium',
-      tag: DOM.quickTag.value ? DOM.quickTag.value.replace('#', '') : undefined
-    };
-    if (formData.title) {
-      addNewRoutine(formData);
-      DOM.quickAddForm.reset();
-      DOM.modalQuickAdd.close();
-    } else {
-        showToast('O título é obrigatório.', 'error');
+
+    .info-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
     }
-});
-  // ... (outros listeners de modal/calendário)
-  
-  if (DOM.quickAddForm && DOM.modalQuickAdd) {
-    const cancelBtn = DOM.quickAddForm.querySelector('button[value="cancel"]');
-    if (cancelBtn) cancelBtn.addEventListener('click', () => {
-      DOM.quickAddForm.reset();
-      if (DOM.modalQuickAdd.close) DOM.modalQuickAdd.close();
-    });
-  }
-  
-  // Nova Etiqueta
-  if (DOM.addTagForm) DOM.addTagForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const formData = {
-      name: DOM.tagName.value.trim(),
-      color: DOM.tagColor.value
-    };
-    if (formData.name) {
-      addNewTag(formData);
-      DOM.addTagForm.reset();
-      DOM.modalAddTag.close();
-    } else {
-        showToast('O nome da etiqueta é obrigatório.', 'error');
+
+    .info-field {
+        width: 100%;
+        justify-content: space-between;
     }
-  });
-  if (DOM.addTagForm && DOM.modalAddTag) {
-    const cancelTagBtn = DOM.addTagForm.querySelector('button[value="cancel"]');
-    if (cancelTagBtn) cancelTagBtn.addEventListener('click', () => {
-      DOM.addTagForm.reset();
-      if (DOM.modalAddTag.close) DOM.modalAddTag.close();
-    });
+
+  .charts-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
   }
   
-  // Navegação do Calendário
-  if (DOM.calPrev) DOM.calPrev.addEventListener('click', () => {
-    state.currentDate.setMonth(state.currentDate.getMonth() - 1);
-    renderCalendar();
-  });
-  if (DOM.calNext) DOM.calNext.addEventListener('click', () => {
-    state.currentDate.setMonth(state.currentDate.getMonth() + 1);
-    renderCalendar();
-  });
-  if (DOM.calToday) DOM.calToday.addEventListener('click', () => {
-    state.currentDate = new Date();
-    renderCalendar();
-  });
-  
-  // Seleção de View Mode (Lista/Quadro/Calendário) - baseado no sidebar
-  // Adicionado listener nos links do sidebar para mudar o viewmode quando clica
-  document.querySelectorAll('.menu-link[data-view]').forEach(link => {
-      link.addEventListener('click', (e) => {
-          e.preventDefault();
-          const view = link.dataset.view;
-          setCurrentView(view);
-          
-          // Lógica simples para mudar o modo de visualização
-          if (view === 'calendario') {
-              setViewMode('calendario');
-          } else if (view === 'hoje' || view === 'semana') {
-              setViewMode('lista'); // Padrão
-          }
-      });
-  });
-
-  // Drag over global para permitir drop
-  document.addEventListener('dragover', (e) => { e.preventDefault(); });
-}
-
-// Configuração do Drag and Drop (Kanban) - Adicionado lógica funcional
-function setupDragAndDrop() {
-    const columns = document.querySelectorAll('.column');
-    
-    // Configura o dragenter/dragleave para feedback visual
-    columns.forEach(column => {
-        column.addEventListener('dragenter', (e) => {
-            e.preventDefault();
-            column.classList.add('drag-over');
-        });
-        
-        column.addEventListener('dragleave', () => {
-            column.classList.remove('drag-over');
-        });
-        
-        column.addEventListener('drop', handleDrop);
-    });
-}
-
-// Lógica de drop
-function handleDrop(e) {
-    e.preventDefault();
-    e.currentTarget.classList.remove('drag-over');
-    
-    const taskId = e.dataTransfer.getData('text/plain');
-    const newStatus = e.currentTarget.dataset.col;
-    
-    const task = state.routines.find(t => t.id === taskId);
-    if (task) {
-        task.status = newStatus;
-        task.completed = newStatus === 'done'; // Marca como concluída se for para 'done'
-        saveData();
-        renderBoard(); // Re-renderiza o quadro
-        showToast(`Rotina movida para: ${newStatus === 'todo' ? 'A fazer' : newStatus === 'doing' ? 'Em progresso' : 'Concluído'}`, 'info');
-    }
-}
-
-// Alterna a sidebar
-function toggleSidebar() {
-  state.showSidebar = !state.showSidebar;
-  DOM.app.setAttribute('data-layout', state.showSidebar ? 'with-sidebar' : 'without-sidebar');
-  saveData();
-}
-
-// Alterna o tema claro/escuro (mantido como referência, embora o botão não esteja no HTML)
-function toggleTheme() {
-  const newTheme = state.preferences.theme === 'light' ? 'dark' : 'light';
-  state.preferences.theme = newTheme;
-  DOM.app.setAttribute('data-theme', newTheme);
-  // DOM.btnToggleTheme.setAttribute('aria-pressed', newTheme === 'dark'); 
-  saveData();
-}
-
-// Atualiza o relógio na topbar
-function updateClock() {
-  const now = new Date();
-  DOM.todayDate.textContent = now.toLocaleDateString('pt-BR');
-  DOM.nowTime.textContent = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
-}
-
-// Atualiza o título da view
-function updateViewTitle() {
-  const titles = {
-    'hoje': 'Hoje',
-    'todasRotinas': 'Todas as Rotinas',
-    'calendario': 'Calendário'
-  };
-  // Tenta atualizar o título, mas como os elementos não existem, isso só evitará um erro.
-  if (DOM.viewTitle) DOM.viewTitle.textContent = titles[state.currentView] || 'Rotinas';
-  if (DOM.crumbView) DOM.crumbView.textContent = titles[state.currentView] || 'Rotinas';
-}
-
-// Renderiza o quadro Kanban
-function renderBoard() {
-  if (!DOM.todoList) return;
-  DOM.todoList.innerHTML = '';
-  DOM.doingList.innerHTML = '';
-  DOM.doneList.innerHTML = '';
-  
-  // Obtém todas as tarefas, pois a filtragem é por status no Kanban
-  let tasks = getFilteredTasks(); 
-  
-  tasks.forEach(task => {
-    const card = createBoardCard(task);
-    if (task.status === 'done') DOM.doneList.appendChild(card);
-    else if (task.status === 'doing') DOM.doingList.appendChild(card);
-    else DOM.todoList.appendChild(card);
-  });
-  
-  document.getElementById('todoCount').textContent = `${DOM.todoList.children.length} itens`;
-  document.getElementById('doingCount').textContent = `${DOM.doingList.children.length} itens`;
-  document.getElementById('doneCount').textContent = `${DOM.doneList.children.length} itens`;
-}
-
-
-// Cria um elemento de tarefa para a lista
-function createTaskElement(task) {
-  const element = templates.taskItem.content.cloneNode(true);
-  const li = element.querySelector('li');
-  li.dataset.taskId = task.id;
-  li.classList.toggle('is-completed', task.completed); // Adiciona classe para tarefas concluídas
-  
-  const checkbox = element.querySelector('.checkbox input');
-  checkbox.checked = task.completed || false;
-  checkbox.addEventListener('change', () => toggleTaskCompletion(task.id));
-  
-  element.querySelector('.task-title').textContent = task.title;
-  
-  const dueElement = element.querySelector('.due');
-  if (task.date) {
-    const dueDate = new Date(task.date);
-    // Corrigido para garantir que a data exibida é a data correta
-    dueElement.textContent = new Date(dueDate.getTime() + dueDate.getTimezoneOffset() * 60000).toLocaleDateString('pt-BR'); 
-    
-    // Lógica de atraso (Overdue)
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    if (!task.completed && dueDate < today) dueElement.classList.add('overdue');
-    else dueElement.classList.remove('overdue');
-    
-  } else {
-    dueElement.textContent = 'Sem data';
+  .charts-section {
+    padding: 16px;
+    margin-top: 24px;
   }
   
-  const priorityElement = element.querySelector('.priority');
-  // Remove classes existentes e adiciona a correta
-  priorityElement.className = 'priority'; 
-  priorityElement.textContent = task.priority === 'high' ? 'Alta' : task.priority === 'low' ? 'Baixa' : 'Média';
-  priorityElement.classList.add(task.priority || 'medium');
-  
-  const tagElement = element.querySelector('.tag');
-  if (task.tag) {
-    tagElement.textContent = `#${task.tag}`;
-    const tagInfo = state.tags.find(t => t.name === task.tag);
-    if (tagInfo) {
-      tagElement.style.backgroundColor = `${tagInfo.color}20`;
-      tagElement.style.color = tagInfo.color;
-    }
-  } else {
-    tagElement.textContent = '#geral';
+  .chart-wrapper {
+    height: 220px;
   }
   
-  element.querySelector('.task-open').addEventListener('click', () => openTaskDetails(task.id));
-  
-  li.addEventListener('dragstart', (e) => {
-    e.dataTransfer.setData('text/plain', task.id);
-  });
-  
-  return element;
+  .charts-header {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  /* Calendário Mobile */
+  .calendar-grid {
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0;
+  }
+
+  .calendar-day {
+    min-height: 80px;
+    padding: 4px;
+  }
+
+  .calendar-day-header {
+    padding: 8px 4px;
+    font-size: 0.75rem;
+  }
+
+  .calendar-day-number {
+    font-size: 0.75rem;
+  }
+
+  .calendar-event {
+    font-size: 0.7rem;
+    padding: 1px 2px;
+  }
 }
-
-// Cria um card para o quadro Kanban
-function createBoardCard(task) {
-  const element = templates.boardCard.content.cloneNode(true);
-  const card = element.querySelector('.card');
-  card.dataset.taskId = task.id;
-  card.draggable = true;
-  card.classList.toggle('is-completed', task.completed);
-  
-  element.querySelector('.card-title').textContent = task.title;
-  
-  const dueElement = element.querySelector('.due');
-  if (task.date) {
-    const dueDate = new Date(task.date);
-    dueElement.textContent = new Date(dueDate.getTime() + dueDate.getTimezoneOffset() * 60000).toLocaleDateString('pt-BR');
-    
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    if (!task.completed && dueDate < today) dueElement.classList.add('overdue');
-    else dueElement.classList.remove('overdue');
-  } else {
-    dueElement.textContent = 'Sem data';
-  }
-  
-  const priorityElement = element.querySelector('.priority');
-  priorityElement.className = 'priority'; // Limpa e adiciona
-  priorityElement.textContent = task.priority === 'high' ? 'Alta' : task.priority === 'low' ? 'Baixa' : 'Média';
-  priorityElement.classList.add(task.priority || 'medium');
-  
-  const tagElement = element.querySelector('.tag');
-  if (task.tag) {
-    tagElement.textContent = `#${task.tag}`;
-    const tagInfo = state.tags.find(t => t.name === task.tag);
-    if (tagInfo) {
-      tagElement.style.backgroundColor = `${tagInfo.color}20`;
-      tagElement.style.color = tagInfo.color;
-    }
-  } else {
-    tagElement.textContent = '#geral';
-  }
-  
-  const statusElement = element.querySelector('.status');
-  if (task.status === 'done') statusElement.style.backgroundColor = '#10b981';
-  else if (task.status === 'doing') statusElement.style.backgroundColor = '#f59e0b';
-  else statusElement.style.backgroundColor = '#e5e7eb';
-  
-  element.querySelector('.card-actions button:first-child').addEventListener('click', () => openTaskDetails(task.id));
-  element.querySelector('.card-actions button:last-child').textContent = task.completed ? 'Desfazer' : 'Concluir';
-  element.querySelector('.card-actions button:last-child').addEventListener('click', () => toggleTaskCompletion(task.id));
-  
-  card.addEventListener('dragstart', (e) => {
-    e.dataTransfer.setData('text/plain', task.id);
-  });
-  
-  return element;
-}
-
-
-// Inicia a aplicação
-init();
