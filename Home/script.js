@@ -1,1442 +1,1775 @@
-/* ==============================================================
-   VARIÁVEIS DE CORES (Themes: Light/Dark)
-   ============================================================== */
-
-/* =======================
-   🌞 LIGHT MODE (Default)
-   ======================= */
-:root {
-    /* Cores Principais */
-    --color-primary: #ff5454;          /* Indigo 600 */
-    --color-primary-dark: #ff2c2c;     /* Indigo 800 */
-
-    /* Texto */
-    --color-text-default: #1f2937;     /* Gray 800 */
-    --color-text-secondary: #6b7280;   /* Gray 500 */
-
-    /* Fundo */
-    --color-bg: #ffffff;               /* Branco puro */
-    --color-bg-alt: #f9fafb;           /* Gray 50 */
-    --color-sidebar-bg: #f3f4f6;       /* Gray 100 */
-
-    /* Bordas e Divisores */
-    --color-border: #e5e7eb;           /* Gray 200 */
-
-    /* Prioridades / Status */
-    --color-priority-high: #dc2626;    /* Red 600 */
-    --color-priority-medium: #d97706;  /* Amber 600 */
-    --color-priority-low: #059669;     /* Emerald 600 */
-    --color-danger: #dc2626;
-
-    /* Layout */
-    --sidebar-width: 250px;
-    --header-height: 60px;
-
-    /* Sombras */
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-                 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-}
-
-/* =======================
-   🌙 DARK MODE
-   ======================= */
-.app[data-theme="dark"] {
-    /* Cores Principais */
-    --color-primary: #ff5454;          /* Violet 500 */
-    --color-primary-dark: #ff5454;     /* Violet 600 */
-
-    /* Texto */
-    --color-text-default: #ffffff;     /* Gray 100 */
-    --color-text-secondary: #d1d5db;   /* Gray 300 */
-
-    /* Fundo */
-    --color-bg: #111827;               /* Gray 900 */
-    --color-bg-alt: #1f2937;           /* Gray 800 */
-    --color-sidebar-bg: #374151;       /* Gray 700 */
-
-    /* Bordas e Divisores */
-    --color-border: #4b5563;           /* Gray 600 */
-
-    /* Prioridades / Status */
-    --color-priority-high: #ef4444;    /* Red 500 */
-    --color-priority-medium: #f59e0b;  /* Yellow 500 */
-    --color-priority-low: #10b981;     /* Emerald 500 */
-    --color-danger: #ef4444;
-}
-
-/* Base Reset e Tipografia */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    font-family: 'Inter', sans-serif;
-    /* background moved to .app so theme overrides on .app[data-theme] take effect */
-    background-color: transparent;
-    color: var(--color-text-default);
-    line-height: 1.5;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-/* Apply global background on the .app container so theme variables defined on
-   .app[data-theme="dark"] are used when switching themes. .app already has
-   min-height:100vh so it covers the viewport. */
-.app {
-    background-color: var(--color-bg);
-}
-
-a {
-    color: var(--color-primary);
-    text-decoration: none;
-}
-
-/* =================================================================
-   LAYOUT PRINCIPAL: .app, .topbar, .sidebar, .layout, .content
-   ================================================================= */
-
-.app {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-
-/* Barra Superior (Top Bar) */
-.topbar {
-    display: flex;
-    align-items: center;
-    height: var(--header-height);
-    padding: 0 16px;
-    background-color: var(--color-bg-alt);
-    border-bottom: 1px solid var(--color-border);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: var(--shadow-sm);
-}
-
-.brand {
-    display: flex;
-    align-items: center;
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--color-primary);
-    margin-left: 8px;
-}
-
-.brand-mark {
-    font-size: 1.5rem;
-    margin-right: 6px;
-}
-
-.spacer {
-    flex-grow: 1;
-}
-
-.now {
-    margin-right: 16px;
-    font-size: 0.875rem;
-    color: var(--color-text-secondary);
-}
-
-.now .time {
-    font-weight: 600;
-    margin-left: 4px;
-}
-
-.top-actions {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.avatar img {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid var(--color-primary);
-    cursor: pointer;
-}
-
-/* Layout principal (Sidebar + Content) */
-.layout {
-    display: flex;
-    flex-grow: 1;
-    position: relative;
-}
-
-/* Sidebar */
-.sidebar {
-    width: var(--sidebar-width);
-    min-width: var(--sidebar-width);
-    background-color: var(--color-sidebar-bg);
-    border-right: 1px solid var(--color-border);
-    padding: 16px;
-    overflow-y: auto;
-    transition: transform 0.3s ease-in-out, width 0.3s ease-in-out;
-    flex-shrink: 0;
-}
-
-/* Conteúdo Principal */
-.content {
-    flex-grow: 1;
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
-}
-
-.content-header {
-    margin-bottom: 24px;
-}
-
-.view-title {
-    font-size: 1.875rem;
-    font-weight: 700;
-    color: var(--color-text-default);
-}
-
-/* Layout com Sidebar Fechada */
-.app[data-layout="without-sidebar"] .sidebar {
-    transform: translateX(-100%);
-    width: 0;
-    min-width: 0;
-    padding: 16px 0;
-}
-.app[data-layout="without-sidebar"] .content {
-    margin-left: 0;
-}
-
-.footer {
-    padding: 10px 20px;
-    text-align: center;
-    font-size: 0.75rem;
-    color: var(--color-text-default);
-    border-top: 1px solid var(--color-border);  
-}
-
-/* =================================================================
-   COMPONENTES GERAIS: Botões, Menu, Fields
-   ================================================================= */
-
-/* Botões */
-.btn {
-    padding: 8px 16px;
-    border: none;
-    border-radius: 6px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.2s, box-shadow 0.2s, opacity 0.2s;
-    background-color: var(--color-primary);
-    color: white;
-    font-size: 0.875rem;
-}
-
-.btn:hover {
-    background-color: var(--color-primary-dark);
-    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
-}
-
-.btn.ghost {
-    background-color: transparent;
-    color: var(--color-primary);
-    border: 1px solid var(--color-primary);
-    padding: 7px 15px;
-}
-
-.btn.ghost:hover {
-    background-color: var(--color-primary);
-    color: white;
-}
-
-.btn.icon.only {
-    padding: 8px;
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--color-primary);
-    color: white;
-}
-
-.btn.icon.only:hover {
-    background-color: var(--color-primary-dark);
-    color: white;
-    box-shadow: none;
-    border-radius: 8px;
-}
-
-.btn.small {
-    padding: 6px 17px;
-    font-size: 0.8rem;
-}
-
-.btn.danger {
-    background-color: var(--color-danger);
-    color: white;
-}
-.btn.danger.ghost {
-    color: var(--color-danger);
-    border-color: var(--color-danger);
-    background-color: transparent;
-}
-.btn.danger.ghost:hover {
-    background-color: var(--color-danger);
-    color: white;
-}
-
-/* Menu de Navegação */
-.section {
-    margin-bottom: 20px;
-}
-
-.section-title {
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    color: var(--color-text-secondary);
-    margin-bottom: 8px;
-    font-weight: 600;
-    font-size: 1rem;
-}
-
-.menu {
-    list-style: none;
-}
-
-.menu-link {
-    display: block;
-    padding: 8px 10px;
-    border-radius: 6px;
-    color: var(--color-text-default);
-    transition: background-color 0.2s, color 0.2s;
-    font-size: 1rem;
-}
-
-.menu-link:hover {
-    background-color: var(--color-primary);
-    color: white;
-    font-size: 1rem;
-}
-
-.menu-link.is-active {
-    background-color: var(--color-primary);
-    color: white;
-    font-weight: 600;
-    font-size: 1rem;
-}
-
-/* Etiquetas */
-.tags {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px 4px;
-    margin-bottom: 12px;
-}
-
-.tag {
-    font-size: 0.8rem;
-    padding: 2px 8px;
-    border-radius: 4px;
-    border: 1px solid var(--color-border);
-    color: var(--color-text-secondary);
-    transition: opacity 0.2s;
-}
-
-.tag:hover {
-    opacity: 0.8;
-}
-
-/* Formulários e Campos */
-.field {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 16px;
-}
-
-.field span {
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--color-text-default);
-    margin-bottom: 4px;
-}
-
-input[type="text"],
-input[type="date"],
-input[type="time"],
-select,
-textarea {
-    padding: 10px;
-    border: 1px solid var(--color-border);
-    border-radius: 6px;
-    font-size: 1rem;
-    background-color: var(--color-bg-alt);
-    color: var(--color-text-default);
-    transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-input:focus,
-select:focus,
-textarea:focus {
-    border-color: var(--color-primary);
-    box-shadow: 0 0 0 1px var(--color-primary);
-    outline: none;
-}
-
-textarea {
-    resize: vertical;
-}
-
-.grid {
-    display: grid;
-    gap: 16px;
-}
-.grid.two {
-    grid-template-columns: 1fr 1fr;
-}
-
-/* =================================================================
-   ESTILOS PARA PERÍODO PERSONALIZADO
-   ================================================================= */
-
-.period-type-selector {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-top: 8px;
-}
-
-.period-type-option {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px;
-  border-radius: 6px;
-  border: 1px solid var(--color-border);
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.period-type-option:hover {
-  background-color: var(--color-sidebar-bg);
-}
-
-.period-type-option input[type="radio"]:checked + span {
-  font-weight: 600;
-  color: var(--color-primary);
-}
-
-.period-section {
-  margin-top: 16px;
-  padding: 12px;
-  border: 1px solid var(--color-border);
-  border-radius: 6px;
-  background-color: var(--color-sidebar-bg);
-}
-
-.weekday-selector {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 8px;
-}
-
-.weekday-option {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  padding: 4px 8px;
-  border-radius: 4px;
-  border: 1px solid var(--color-border);
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.weekday-option:hover {
-  background-color: var(--color-primary);
-  color: white;
-}
-
-.weekday-option input[type="checkbox"]:checked + span {
-  font-weight: 600;
-  color: var(--color-primary);
-}
-
-.date-input-row {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 8px;
-  align-items: center;
-}
-
-.date-input-row input {
-  flex-grow: 1;
-}
-
-.remove-date {
-  background-color: var(--color-danger);
-  color: white;
-}
-
-#recurringIntervalField {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-#recurringIntervalField input {
-  width: 60px;
-}
-
-#recurringEndOptions label {
-  display: block;
-  margin-bottom: 8px;
-}
-
-#recurringEndOptions input[type="number"],
-#recurringEndOptions input[type="date"] {
-  margin-left: 8px;
-  padding: 4px;
-}
-
-/* Indicador visual para rotinas com múltiplas datas */
-.task.has-multiple-dates::after {
-  content: "📅";
-  margin-left: 8px;
-  font-size: 0.8rem;
-}
-
-.calendar-event.has-multiple-dates::after {
-  content: " 📅";
-  font-size: 0.7rem;
-}
-
-/* =================================================================
-   PAINEL DE DETALHES (ASIDE.DETAILS)
-   ================================================================= */
-.details {
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 400px;
-    height: 100%;
-    background-color: var(--color-bg-alt);
-    border-left: 1px solid var(--color-border);
-    box-shadow: -8px 0 16px rgba(0, 0, 0, 0.1);
-    transform: translateX(100%);
-    transition: transform 0.3s ease-in-out;
-    z-index: 1000;
-    display: flex;
-    flex-direction: column;
-}
-
-.details.is-open {
-    transform: translateX(0);
-}
-
-.actions {
-    display: flex;
-    gap: 8px;
-}
-
-.details-header {
-    display: flex;
-    align-items: center;
-    padding: 16px;
-    border-bottom: 1px solid var(--color-border);
-}
-
-.details-header h2 {
-    font-size: 1.25rem;
-    font-weight: 700;
-    flex-grow: 1;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.details-body {
-    flex-grow: 1;
-    overflow-y: auto;
-    padding: 16px;
-}
-
-.details-form .actions {
-    display: flex;
-    padding-top: 20px;
-    border-top: 1px solid var(--color-border);
-    margin-top: 20px;
-    position: sticky;
-    bottom: 0;
-    background-color: var(--color-bg-alt);
-}
-
-/* =================================================================
-   CONFIGURAÇÕES
-   ================================================================= */
-
-.config-body {
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.profile-container {
-  background-color: var(--color-bg-alt);
-  border-radius: 8px;
-  padding: 20px;
-  margin-bottom: 24px;
-}
-
-.profile-header {
-  text-align: center;
-  position: relative;
-  margin-bottom: 24px;
-}
-
-.profile-banner {
-  height: 120px;
-  background-color: var(--color-primary);
-  border-radius: 8px 8px 0 0;
-  margin: -20px -20px 20px -20px;
-}
-
-.profile-photo {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  border: 4px solid var(--color-bg);
-  margin-top: -50px;
-  object-fit: cover;
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  position: relative;
-}
-
-.profile-photo:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-/* Indicador visual de que a foto é editável */
-.profile-header {
-  position: relative;
-}
-
-.profile-photo::after {
-  content: '📷';
-  position: absolute;
-  bottom: 5px;
-  right: 5px;
-  background: var(--color-primary);
-  color: white;
-  border-radius: 50%;
-  width: 24px;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  opacity: 0;
-  transition: opacity 0.2s ease;
-}
-
-.profile-photo:hover::after {
-  opacity: 1;
-}
-
-.profile-info {
-  margin-top: 16px;
-}
-
-.account-info {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.info-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 0;
-  border-bottom: 1px solid var(--color-border);
-}
-
-.info-item label {
-  font-weight: 600;
-  color: var(--color-text-default);
-}
-
-.info-field {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.edit-btn, .link {
-  color: var(--color-primary);
-  font-size: 0.875rem;
-  cursor: pointer;
-  background: none;
-  border: none;
-  text-decoration: underline;
-}
-
-.config-title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin-bottom: 20px;
-  color: var(--color-text-default);
-}
-
-.config-option {
-  background-color: var(--color-bg-alt);
-  padding: 16px;
-  border-radius: 8px;
-  margin-bottom: 12px;
-  border: 1px solid var(--color-border);
-}
-
-.config-option label {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  font-weight: 500;
-  color: var(--color-text-default);
-}
-
-/* Switch Toggle */
-.switch {
-  position: relative;
-  display: inline-block;
-  color: var(--color-text-default);
-  width: 50px;
-  height: 24px;
-}
-
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  transition: .4s;
-  border-radius: 24px;
-}
-
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 16px;
-  width: 16px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  transition: .4s;
-  border-radius: 50%;
-}
-
-input:checked + .slider {
-  background-color: var(--color-primary);
-}
-
-input:checked + .slider:before {
-  transform: translateX(26px);
-}
-
-.form-actions {
-  display: flex;
-  gap: 12px;
-  justify-content: flex-end;
-  margin-top: 24px;
-  padding-top: 20px;
-  border-top: 1px solid var(--color-border);
-}
-
-.btn.primary {
-  background-color: var(--color-primary);
-  color: white;
-}
-
-.btn.secondary {
-  background-color: transparent;
-  color: var(--color-primary);
-  border: 1px solid var(--color-primary);
-}
-
-.btn.edit-profile {
-  background-color: transparent;
-  color: var(--color-primary);
-  border: 1px solid var(--color-primary);
-}
-
-.btn.edit-profile:hover {
-  background-color: var(--color-primary);
-  color: white;
-}
-
-.empty-state {
-  text-align: center;
-  padding: 40px 20px;
-  color: var(--color-text-secondary);
-  font-style: italic;
-}
-
-/* =================================================================
-   VISUALIZAÇÕES: LISTA, QUADRO (KANBAN), CALENDÁRIO
-   ================================================================= */
-
-.view {
-  display: none;
-}
-
-.view.is-active {
-  display: block;
-}
-
-/* Lista de Tarefas */
-.task-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.task-list li {
-  background: var(--color-bg-alt);
-  border: 1px solid var(--color-border);
-  padding: 8px 12px;
-  margin-bottom: 6px;
-  border-radius: 8px;
-}
-
-.task {
-    display: flex;
-    align-items: center;
-    background-color: var(--color-bg-alt);
-    border: 1px solid var(--color-border);
-    border-radius: 8px;
-    padding: 12px 16px;
-    margin-bottom: 8px;
-    transition: background-color 0.2s, box-shadow 0.2s;
-    cursor: grab;
-}
-
-.task:hover {
-    box-shadow: var(--shadow-sm);
-}
-
-.task.is-completed {
-    background-color: var(--color-sidebar-bg);
-    text-decoration: line-through;
-    font-style: italic;
-}
-
-.task-main {
-    flex-grow: 1;
-    margin: 0 16px;
-}
-
-.task-title {
-    font-weight: 600;
-    font-size: 1rem;
-    margin-bottom: 4px;
-    color: var(--color-text-default);
-}
-
-.task-meta {
-    display: flex;
-    gap: 12px;
-    font-size: 0.75rem;
-    color: var(--color-text-secondary);
-}
-
-.task-meta .priority {
-    font-weight: 600;
-    text-transform: capitalize;
-}
-
-.task-meta .priority.high { color: var(--color-priority-high); }
-.task-meta .priority.medium { color: var(--color-priority-medium); }
-.task-meta .priority.low { color: var(--color-priority-low); }
-
-.task-meta .due.overdue {
-    color: var(--color-danger);
-    font-weight: 500;
-}
-
-/* Checkbox Customizado */
-.checkbox {
-    display: inline-flex;
-    position: relative; 
-    cursor: pointer;
-}
-
-.checkbox input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-.check {
-    width: 20px;
-    height: 20px;
-    background-color: var(--color-bg);
-    border: 2px solid var(--color-border);
-    border-radius: 4px;
-    transition: background-color 0.2s, border-color 0.2s;
-    display: inline-block;
-}
-
-.checkbox input:checked + .check {
-    background-color: var(--color-primary);
-    border-color: var(--color-primary);
-}
-
-.checkbox input:checked + .check::after {
-    content: '✔';
-    color: white;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 0.8rem;
-}
-
-/* Quadro Kanban */
-.board {
-    display: flex;
-    gap: 20px;
-    overflow-x: auto;
-    padding-bottom: 10px;
-}
-
-.column {
-    min-width: 300px;
-    width: 33.33%;
-    background-color: var(--color-bg-alt);
-    border-radius: 8px;
-    padding: 12px;
-    transition: background-color 0.2s;
-}
-
-.column.drag-over {
-    background-color: var(--color-primary);
-    outline: 2px dashed var(--color-primary);
-    outline-offset: -4px;
-}
-
-.column-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-    padding: 0 4px;
-}
-
-.column-header h2 {
-    font-size: 1rem;
-    font-weight: 700;
-    color: var(--color-text-default);
-}
-
-.card-list {
-    list-style: none;
-    min-height: 50px;
-}
-
-.card {
-    background-color: var(--color-bg);
-    border-radius: 6px;
-    box-shadow: var(--shadow-sm);
-    padding: 12px;
-    margin-bottom: 8px;
-    border-left: 4px solid transparent;
-    transition: border-left-color 0.2s, box-shadow 0.2s;
-    cursor: grab;
-}
-
-.card:hover {
-    box-shadow: var(--shadow-md);
-}
-
-.card-head {
-    display: flex;
-    align-items: center;
-    margin-bottom: 8px;
-}
-
-.card-head .status {
-    display: inline-block;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    margin-right: 8px;
-}
-
-.card-title {
-    font-size: 0.9375rem;
-    font-weight: 600;
-    flex-grow: 1;
-}
-
-.card-meta {
-    font-size: 0.75rem;
-    color: var(--color-text-secondary);
-    display: flex;
-    gap: 8px;
-    margin-bottom: 8px;
-}
-
-.card-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 8px;
-}
-
-.count {
-    font-size: 0.8rem;
-    color: var(--color-text-secondary);
-    padding: 4px;
-}
-
-/* =================================================================
-   CALENDÁRIO - CORREÇÃO COMPLETA
-   ================================================================= */
-
-.calendar-toolbar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
-    margin-bottom: 20px;
-    padding: 0 8px;
-}
-
-/* Calendário */
-.calendar-toolbar {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 16px;
-    padding: 0 8px;
-}
-
-.calendar-title {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: var(--color-text-default);
-}
-
-.calendar-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    border: 1px solid var(--color-border);
-    border-radius: 15px;
-    overflow: hidden;
-    background-color: var(--color-bg-alt);
-    gap:  7px;
-    box-shadow: var(--shadow-sm);
-}
-
-.calendar-day-header {
-    text-align: center;
-    padding: 8px;
-    font-weight: 600;
-    color: white;
-    background-color: var(--color-primary);
-    border-radius: 10px;
-}
-
-.calendar-day {
-    min-height: 120px;
-    padding: 1px;
-    position: relative;
-    border-radius: 10px;
-    background-color: var(--color-bg);
-    box-shadow: var(--shadow-sm);
-}
-
-.calendar-day:nth-child(7n) {
-    border-right: none;
-}
-.calendar-day:nth-last-child(-n+7) {
-    border-bottom: none;
-}
-
-.calendar-day-number {
-    font-size: 1rem;
-    font-weight: 700;
-    text-align: right;
-    padding-right: 6px;
-    margin-bottom: 4px;
-    color: var(--color-text-default);
-}
-
-.calendar-day.other-month {
-    background-color: var(--color-sidebar-bg);
-    color: var(--color-text-secondary);
-}
-.calendar-day.other-month .calendar-day-number {
-    color: var(--color-text-secondary);
-}
-
-.calendar-day.today {
-    background-color: #111827;
-}
-.calendar-day.today .calendar-day-number {
-    color: white;
-    background-color: #ff5454;
-    border-radius: 12px;
-}
-
-.calendar-event {
-    display: block;
-    width: 130px;
-    text-align: left;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: 0.75rem;
-    padding: 2px 4px;
-    margin-bottom: 2px;
-    border-radius: 3px;
-    border: none;
-    cursor: pointer;
-    font-weight: 500;
-    background-color: var(--color-primary);
-    color: white;
-}
-.calendar-event.priority-high { background-color: var(--color-priority-high); }
-.calendar-event.priority-medium { background-color: var(--color-priority-medium); }
-.calendar-event.priority-low { background-color: var(--color-priority-low); }
-
-/* =================================================================
-   GRÁFICOS - CORREÇÕES E MELHORIAS
-   ================================================================= */
-
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-.container header {
-  text-align: center;
-  margin-bottom: 40px;
-}
-
-.container header h1 {
-  font-size: 2.5rem;
-  color: var(--color-text-default);
-  margin-bottom: 10px;
-}
-
-.subtitle {
-  font-size: 1.1rem;
-  color: var(--color-text-secondary);
-}
-
-.charts-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-  gap: 30px;
-  margin-bottom: 40px;
-}
-
-.chart-container {
-  background: var(--color-bg-alt);
-  border-radius: 12px;
-  padding: 25px;
-  border: 1px solid var(--color-border);
-  box-shadow: var(--shadow-sm);
-  transition: all 0.3s ease;
-}
-
-.chart-container:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow-md);
-}
-
-.chart-title {
-  font-size: 1.3rem;
-  font-weight: 600;
-  margin-bottom: 20px;
-  color: var(--color-text-default);
-  text-align: center;
-}
-
-.chart-wrapper {
-  position: relative;
-  height: 300px;
-  width: 100%;
-}
-
-.info-text {
-  text-align: center;
-  color: var(--color-text-secondary);
-  font-size: 0.9rem;
-  margin-top: 15px;
-  font-style: italic;
-}
-
-.container footer {
-  text-align: center;
-  padding: 20px;
-  color: var(--color-text-secondary);
-  border-top: 1px solid var(--color-border);
-  margin-top: 40px;
-}
-
-/* Ajustes para gráficos específicos */
-#weeklyProgressChart,
-#timeDistributionChart,
-#habitsOverTimeChart,
-#lifeBalanceChart,
-#monthlyGoalsChart,
-#dailyProductivityChart {
-  width: 100% !important;
-  height: 100% !important;
-}
-
-/* Ajustes para modo escuro */
-.app[data-theme="dark"] .chart-container {
-  background-color: var(--color-sidebar-bg);
-}
-
-.app[data-theme="dark"] .charts-section {
-  background-color: var(--color-bg);
-}
-
-/* =================================================================
-   MODAIS (DIALOG)
-   ================================================================= */
-.modal {
-    border: none;
-    padding: 0;
-    border-radius: 8px;
-    box-shadow: var(--shadow-md);
-    background-color: var(--color-bg-alt);
-    max-width: 500px;
-    width: 90%;
-}
-
-.modal::backdrop {
-    background-color: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(2px);
-}
-
-.modal.small {
-    max-width: 400px;
-}
-
-.modal-content {
-    padding: 0;
-}
-
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 16px;
-    border-bottom: 1px solid var(--color-border);
-}
-
-.modal-header h2 {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--color-text-default);
-}
-
-.modal-body {
-    padding: 16px;
-}
-
-.modal-footer {
-    display: flex;
-    justify-content: flex-end;
-    gap: 8px;
-    padding: 16px;
-    border-top: 1px solid var(--color-border);
-}
-
-/* =================================================================
-   TOASTS E RODAPÉ
-   ================================================================= */
-
-.toasts {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 2000;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.toast {
-    display: flex;
-    align-items: center;
-    padding: 10px 15px;
-    background-color: var(--color-bg-alt);
-    border-radius: 6px;
-    box-shadow: var(--shadow-md);
-    min-width: 250px;
-    border-left: 4px solid var(--color-primary);
-    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
-    color: var(--color-text-default);
-}
-
-.toast.success { border-color: var(--color-priority-low); }
-.toast.error { border-color: var(--color-danger); }
-.toast.info { border-color: var(--color-primary); }
-
-.toast-content {
-    flex-grow: 1;
-    font-size: 0.9rem;
-}
-
-.toast .toast-close {
-    margin-left: 10px;
-    width: 20px;
-    height: 20px;
-}
-
-.toast.fade-out {
-    opacity: 0;
-    transform: translateX(100%);
-}
-
-/* =================================================================
-   RESPONSIVIDADE (Celulares e Tablets)
-   ================================================================= */
-
-@media (max-width: 768px) {
-    /* Layout Mobile */
-    .app[data-layout="with-sidebar"] .sidebar {
-        position: fixed;
-        left: 0;
-        top: var(--header-height);
-        height: calc(100% - var(--header-height));
-        z-index: 500;
-        box-shadow: var(--shadow-md);
-        width: 280px;
+/* =================================================================================
+   script.js
+   Versão: Comentada linha a linha (didática)
+   Finalidade: Aplicativo de Rotinas (Lista / Quadro Kanban / Calendário)
+   Nota: este arquivo assume que o HTML tem os IDs / templates apresentados anteriormente.
+   ================================================================================= */
+
+/* ===========================
+   1) CONSTANTES E CONFIGURAÇÕES
+   =========================== */
+
+// Chave usada no localStorage para persistir os dados da aplicação
+const STORAGE_KEY = 'routineAppData';
+
+// Dados padrão usados na primeira execução (apenas exemplo/teste)
+const DEFAULT_DATA = {
+  // Rotinas iniciais de exemplo (ajuste como quiser)
+  routines: [
+    {
+      id: 't1',
+      title: 'Treino de força (peito e tríceps)',
+      description: 'Foco em progressão de carga.',
+      date: new Date().toISOString().split('T')[0], // data de hoje no formato YYYY-MM-DD
+      time: '08:00',
+      priority: 'high',
+      tag: 'saúde',
+      completed: false,
+      status: 'doing'
+    },
+    {
+      id: 't2',
+      title: 'Reunião de planejamento semanal',
+      description: 'Revisar metas e definir prioridades.',
+      date: new Date().toISOString().split('T')[0],
+      time: '10:30',
+      priority: 'medium',
+      tag: 'trabalho',
+      completed: false,
+      status: 'todo'
+    },
+    {
+      id: 't3',
+      title: 'Ler 50 páginas do livro "Atomic Habits"',
+      description: 'Hábito de leitura diário.',
+      date: new Date(Date.now() + 86400000).toISOString().split('T')[0], // amanhã
+      time: undefined,
+      priority: 'low',
+      tag: 'estudos',
+      completed: false,
+      status: 'todo'
+    },
+    {
+      id: 't4',
+      title: 'Pagar contas mensais',
+      description: 'Água, luz, internet.',
+      date: new Date().toISOString().split('T')[0],
+      time: undefined,
+      priority: 'high',
+      tag: 'pessoal',
+      completed: true,
+      status: 'done'
+    }
+  ],
+  // Etiquetas iniciais
+  tags: [
+    { id: 'tag1', name: 'pessoal', color: '#4f46e5' },
+    { id: 'tag2', name: 'trabalho', color: '#10b981' },
+    { id: 'tag3', name: 'saúde', color: '#ef4444' },
+    { id: 'tag4', name: 'estudos', color: '#f59e0b' }
+  ],
+  // Preferências iniciais
+  preferences: { 
+    theme: 'light', 
+    showCompleted: true,
+    notifications: true,
+    language: 'pt-BR',
+    fontFamily: 'Inter',
+    fontSize: '16'
+  },
+  // Perfil do usuário
+  profile: {
+    displayName: 'Carlos',
+    userName: 'onror',
+    email: 'exemplo@gmail.com'
+  }
+};
+
+/* ===========================
+   2) ESTADO DA APLICAÇÃO (mutável)
+   =========================== */
+
+// Estado global que guarda a informação atual do app (não persistida diretamente)
+let state = {
+  currentView: 'hoje',          // 'hoje' | 'todasRotinas' | 'calendario' | 'config'
+  currentViewMode: 'lista',     // 'lista' | 'quadro' | 'calendario' | 'config'
+  selectedTask: null,           // referência ao objeto de tarefa selecionado no painel de detalhes
+  currentDate: new Date(),      // data usada pelo calendário (mês/ano)
+  showSidebar: true,            // se a sidebar está visível
+  routines: [],                 // array de rotinas (será carregado do localStorage)
+  tags: [],                     // array de tags
+  preferences: {},              // preferências do usuário (tema, mostrar concluídas, etc.)
+  profile: {}                   // perfil do usuário
+};
+
+// Contador simples para gerar IDs únicos (inicia em 1000 para evitar colisão com IDs de exemplo)
+let nextId = 1000;
+
+/* ===========================
+   3) SELETORES DO DOM (cache de elementos)
+   =========================== */
+
+// Guardamos referências a elementos do DOM para evitar querySelector repetido
+const DOM = {
+  app: document.querySelector('.app'),
+  sidebar: document.getElementById('sidebar'),
+  btnToggleSidebar: document.getElementById('btnToggleSidebar'),
+  btnQuickAdd: document.getElementById('btnQuickAdd'),
+  todayDate: document.getElementById('todayDate'),
+  nowTime: document.getElementById('nowTime'),
+  menuLinks: document.querySelectorAll('.menu-link[data-view]'),
+  filterLinks: document.querySelectorAll('.menu-link[data-filter]'),
+  tagList: document.getElementById('tagList'),
+  btnAddTag: document.getElementById('btnAddTag'),
+  viewTitle: document.getElementById('viewTitle'),
+  viewHoje: document.getElementById('viewHoje'),
+  viewTodasRotinas: document.getElementById('viewTodasRotinas'),
+  viewQuadro: document.getElementById('viewQuadro'),
+  viewCalendario: document.getElementById('viewCalendario'),
+  viewConfig: document.getElementById('viewConfig'),
+  viewGraficos: document.getElementById('viewGraficos'),
+  taskListToday: document.getElementById('taskListToday'),
+  todoList: document.querySelector('[data-col="todo"] .card-list'),
+  doingList: document.querySelector('[data-col="doing"] .card-list'),
+  doneList: document.querySelector('[data-col="done"] .card-list'),
+  detailsPanel: document.getElementById('detailsPanel'),
+  detailsClose: document.getElementById('detailsClose'),
+  detailsForm: document.getElementById('detailsForm'),
+  taskTitle: document.getElementById('taskTitle'),
+  taskDesc: document.getElementById('taskDesc'),
+  taskDate: document.getElementById('taskDate'),
+  taskTime: document.getElementById('taskTime'),
+  taskPriority: document.getElementById('taskPriority'),
+  taskTag: document.getElementById('taskTag'),
+  btnSaveTask: document.getElementById('btnSaveTask'),
+  btnDeleteTask: document.getElementById('btnDeleteTask'),
+  btnDuplicateTask: document.getElementById('btnDuplicateTask'),
+  toastsContainer: document.getElementById('toasts'),
+  // Configurações
+  btnOpenConfig: document.getElementById('btnOpenConfig'),
+  themeToggle: document.getElementById('themeToggle'),
+  notificationsToggle: document.getElementById('notificationsToggle'),
+  appLanguage: document.getElementById('appLanguage'),
+  fontFamily: document.getElementById('fontFamily'),
+  fontSize: document.getElementById('fontSize'),
+  fontSizeValue: document.getElementById('fontSizeValue'),
+  btnSaveSettings: document.getElementById('btnSaveSettings'),
+  btnResetSettings: document.getElementById('btnResetSettings'),
+  btnEditProfile: document.getElementById('btnEditProfile'),
+  displayName: document.getElementById('displayName'),
+  userName: document.getElementById('userName'),
+  userEmail: document.getElementById('userEmail'),
+  showEmail: document.getElementById('showEmail'),
+  // Calendário - CORREÇÃO ADICIONADA
+  calTitle: document.getElementById('calTitle'),
+  calendarGrid: document.querySelector('.calendar-grid'),
+  calPrev: document.getElementById('calPrev'),
+  calNext: document.getElementById('calNext'),
+  // Período personalizado
+  modalCustomPeriod: document.getElementById('modalCustomPeriod'),
+  customPeriodForm: document.getElementById('customPeriodForm'),
+  customTitle: document.getElementById('customTitle'),
+  customDesc: document.getElementById('customDesc'),
+  customStartDate: document.getElementById('customStartDate'),
+  customEndDate: document.getElementById('customEndDate'),
+  customTime: document.getElementById('customTime'),
+  customPriority: document.getElementById('customPriority'),
+  customTag: document.getElementById('customTag'),
+  periodTypeRadios: document.querySelectorAll('input[name="periodType"]'),
+  periodRangeSection: document.getElementById('periodRangeSection'),
+  periodSpecificSection: document.getElementById('periodSpecificSection'),
+  periodRecurringSection: document.getElementById('periodRecurringSection'),
+  addDateBtn: document.getElementById('addDateBtn'),
+  specificDatesContainer: document.getElementById('specificDatesContainer'),
+  recurringFrequency: document.getElementById('recurringFrequency'),
+  recurringInterval: document.getElementById('recurringInterval'),
+  intervalUnit: document.getElementById('intervalUnit'),
+  recurringEndRadios: document.querySelectorAll('input[name="recurringEnd"]'),
+  recurringOccurrences: document.getElementById('recurringOccurrences'),
+  recurringEndDate: document.getElementById('recurringEndDate'),
+  recurringStartDate: document.getElementById('recurringStartDate')
+};
+
+// Templates <template> do HTML (clonamos estes quando precisamos criar elementos)
+const templates = {
+  taskItem: document.getElementById('tplTaskItem'),
+  boardCard: document.getElementById('tplBoardCard'),
+  toast: document.getElementById('tplToast')
+};
+
+/* ===========================
+   4) INICIALIZAÇÃO
+   =========================== */
+
+// Função de inicialização que configura tudo e renderiza o estado inicial
+function init() {
+  // Carrega dados do localStorage (ou DEFAULT_DATA)
+  loadData();
+
+  // Garante que nextId seja maior que quaisquer IDs existentes (evita colisão)
+  state.routines.forEach(t => {
+    // tenta extrair número do id (assumindo formato 'tN')
+    const match = String(t.id).replace(/^t/, '');
+    const idNum = parseInt(match, 10);
+    if (!isNaN(idNum) && idNum >= nextId) nextId = idNum + 1;
+  });
+
+  // Configura listeners de eventos (interações do usuário)
+  setupEventListeners();
+
+  // Atualiza relógio e agenda de atualização periódica
+  updateClock();
+  setInterval(updateClock, 60000); // atualiza a hora a cada minuto
+
+  // Inicializa drag & drop do Kanban
+  setupDragAndDrop();
+
+  // Carrega configurações
+  loadSettings();
+
+  // Renderiza a interface inicial de acordo com a view selecionada
+  render();
+}
+
+/* ===========================
+   5) PERSISTÊNCIA (localStorage)
+   =========================== */
+
+// Carrega os dados salvos no localStorage. Se não existir, usa DEFAULT_DATA
+function loadData() {
+  try {
+    const savedData = localStorage.getItem(STORAGE_KEY);
+    if (savedData) {
+      const parsedData = JSON.parse(savedData);
+      // Usa fallback para cada parte caso esteja indefinida
+      state.routines = parsedData.routines || DEFAULT_DATA.routines;
+      state.tags = parsedData.tags || DEFAULT_DATA.tags;
+      state.preferences = parsedData.preferences || DEFAULT_DATA.preferences;
+      state.profile = parsedData.profile || DEFAULT_DATA.profile;
+      state.showSidebar = parsedData.showSidebar !== undefined ? parsedData.showSidebar : true;
+    } else {
+      // Primeiro uso — carrega os dados padrão
+      state.routines = DEFAULT_DATA.routines.slice();
+      state.tags = DEFAULT_DATA.tags.slice();
+      state.preferences = Object.assign({}, DEFAULT_DATA.preferences);
+      state.profile = Object.assign({}, DEFAULT_DATA.profile);
+      state.showSidebar = true;
+      // Salva imediatamente para criar a chave no localStorage
+      saveData();
+    }
+
+    // Aplica preferências visuais (tema, sidebar layout)
+    if (DOM.app) {
+      DOM.app.setAttribute('data-theme', state.preferences.theme || 'light');
+      DOM.app.setAttribute('data-layout', state.showSidebar ? 'with-sidebar' : 'without-sidebar');
+    }
+  } catch (err) {
+    // Em caso de erro de parsing, restauramos o padrão para evitar travar a app
+    console.error('Erro ao carregar dados do storage:', err);
+    state.routines = DEFAULT_DATA.routines.slice();
+    state.tags = DEFAULT_DATA.tags.slice();
+    state.preferences = Object.assign({}, DEFAULT_DATA.preferences);
+    state.profile = Object.assign({}, DEFAULT_DATA.profile);
+    saveData();
+  }
+}
+
+// Salva o estado relevante no localStorage
+function saveData() {
+  try {
+    const dataToSave = {
+      routines: state.routines,
+      tags: state.tags,
+      preferences: state.preferences,
+      profile: state.profile,
+      showSidebar: state.showSidebar
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(dataToSave));
+  } catch (err) {
+    console.error('Erro ao salvar dados no storage:', err);
+  }
+}
+
+/* ===========================
+   6) UTILITÁRIOS (helpers)
+   =========================== */
+
+// Gera um ID único simples para novas rotinas (prefixo 't' + contador)
+function generateId() {
+  return 't' + (nextId++);
+}
+
+// Mostrar um toast (notificação temporária)
+// message: texto, type: 'info'|'success'|'error' (usado apenas para classes)
+function showToast(message, type = 'info', duration = 3000) {
+  if (!templates.toast || !DOM.toastsContainer) {
+    // fallback console se os elementos não existirem
+    console.log(`[${type}] ${message}`);
+    return;
+  }
+
+  // Clona o template do toast
+  const toastElement = templates.toast.content.cloneNode(true);
+  const toast = toastElement.querySelector('.toast');
+  // Insere o conteúdo e a classe de tipo
+  toast.querySelector('.toast-content').textContent = message;
+  toast.classList.add(type);
+
+  // Adiciona o toast ao container (prepend para mostrar em cima)
+  DOM.toastsContainer.prepend(toast);
+
+  // Fecha ao clicar no botão 'close' interno
+  const closeBtn = toast.querySelector('.toast-close');
+  if (closeBtn) closeBtn.addEventListener('click', () => toast.remove());
+
+  // Auto-destrói após 'duration' ms (aplica uma classe para animação, se existir)
+  setTimeout(() => {
+    toast.classList.add('fade-out');
+    // remove depois da transição (evita remoção imediata cortando animação)
+    toast.addEventListener('transitionend', () => {
+      try { toast.remove(); } catch(e) {}
+    });
+  }, duration);
+}
+
+// Converte um objeto Date em string 'YYYY-MM-DD' para inputs do tipo date
+function formatDateForInput(date) {
+  if (!date) return '';
+  // Se for string já no formato ISO, tenta apenas retornar a parte de data
+  if (typeof date === 'string' && /^\d{4}-\d{2}-\d{2}/.test(date)) {
+    return date.split('T')[0];
+  }
+  // Se for Date
+  if (date instanceof Date) {
+    const y = date.getFullYear();
+    const m = String(date.getMonth() + 1).padStart(2, '0');
+    const d = String(date.getDate()).padStart(2, '0');
+    return `${y}-${m}-${d}`;
+  }
+  return '';
+}
+
+// Normaliza string de tag removendo '#' e espaços
+function normalizeTag(tagStr) {
+  if (!tagStr) return undefined;
+  return tagStr.replace('#', '').trim();
+}
+
+/* ===========================
+   7) CRUD DE ROTINAS (Add / Toggle / Open / Save / Delete / Duplicate)
+   =========================== */
+
+// Adiciona uma nova rotina ao estado e salva
+function addNewRoutine({ title, description, date, time, priority, tag, status = 'todo', completed = false }) {
+  // Validação mínima
+  if (!title || !title.trim()) {
+    showToast('O título é obrigatório.', 'error');
+    return null;
+  }
+
+  const newRoutine = {
+    id: generateId(),
+    title: title.trim(),
+    description: description || '',
+    date: date || undefined,        // espera 'YYYY-MM-DD' ou undefined
+    time: time || undefined,        // espera 'HH:MM' ou undefined
+    priority: priority || 'medium', // 'low'|'medium'|'high'
+    tag: tag ? normalizeTag(tag) : undefined,
+    status: status,
+    completed: !!completed
+  };
+
+  state.routines.push(newRoutine);
+  saveData();
+  render(); // atualiza UI
+  showToast('Rotina adicionada com sucesso!', 'success');
+  return newRoutine;
+}
+
+// Alterna marcação de concluída/pendente para uma rotina pelo ID
+function toggleTaskCompletion(taskId) {
+  const task = state.routines.find(t => t.id === taskId);
+  if (!task) return;
+
+  // Inverte o booleano completed
+  task.completed = !task.completed;
+
+  // Ajuste do status se necessário
+  if (task.completed) {
+    task.status = 'done';
+    showToast(`Rotina "${task.title}" concluída!`, 'success');
+  } else {
+    // se estava 'done' e foi desmarcada, movemos para 'todo' por padrão
+    if (task.status === 'done') task.status = 'todo';
+    showToast(`Rotina "${task.title}" marcada como pendente.`, 'info');
+  }
+
+  saveData();
+  render();
+}
+
+// Abre painel de detalhes com o conteúdo da tarefa
+function openTaskDetails(taskId) {
+  const task = state.routines.find(t => t.id === taskId);
+  if (!task || !DOM.detailsPanel) return;
+
+  state.selectedTask = task;
+
+  // Preenche o formulário com os dados da tarefa
+  if (DOM.taskTitle) DOM.taskTitle.value = task.title || '';
+  if (DOM.taskDesc) DOM.taskDesc.value = task.description || '';
+  if (DOM.taskPriority) DOM.taskPriority.value = task.priority || 'medium';
+  if (DOM.taskTag) DOM.taskTag.value = task.tag ? `#${task.tag}` : '';
+
+  // Ajuste de data para input evitando problemas de timezone
+  if (task.date) {
+    // cria um objeto Date a partir do string 'YYYY-MM-DD'
+    const d = new Date(task.date + 'T00:00:00');
+    DOM.taskDate.value = formatDateForInput(d);
+  } else {
+    if (DOM.taskDate) DOM.taskDate.value = '';
+  }
+
+  if (DOM.taskTime) DOM.taskTime.value = task.time || '';
+
+  // Atualiza título do painel
+  const detailsTitle = document.getElementById('detailsTitle');
+  if (detailsTitle) detailsTitle.textContent = task.title;
+
+  // Exibe painel de detalhes (aria-hidden e classes para animação)
+  DOM.detailsPanel.setAttribute('aria-hidden', 'false');
+  DOM.detailsPanel.classList.add('is-open');
+}
+
+// Fecha painel de detalhes e limpa seleção
+function closeDetails() {
+  state.selectedTask = null;
+  if (!DOM.detailsPanel) return;
+  DOM.detailsPanel.setAttribute('aria-hidden', 'true');
+  DOM.detailsPanel.classList.remove('is-open');
+  // Reseta o formulário visualmente (não altera dados não salvos)
+  if (DOM.detailsForm) DOM.detailsForm.reset();
+}
+
+// Salva as alterações feitas no painel de detalhes
+function saveTaskDetails(e) {
+  // This function intended to be attached to detailsForm submit
+  if (e && e.preventDefault) e.preventDefault();
+  if (!state.selectedTask) return;
+
+  // Recupera os valores do formulário
+  const title = DOM.taskTitle ? DOM.taskTitle.value.trim() : '';
+  const description = DOM.taskDesc ? DOM.taskDesc.value : '';
+  const date = DOM.taskDate ? DOM.taskDate.value || undefined : undefined;
+  const time = DOM.taskTime ? DOM.taskTime.value || undefined : undefined;
+  const priority = DOM.taskPriority ? DOM.taskPriority.value : 'medium';
+  const tag = DOM.taskTag ? normalizeTag(DOM.taskTag.value) : undefined;
+
+  if (!title) {
+    showToast('O título da rotina é obrigatório.', 'error');
+    return;
+  }
+
+  // Atualiza o objeto no estado
+  const task = state.selectedTask;
+  task.title = title;
+  task.description = description;
+  task.date = date;
+  task.time = time;
+  task.priority = priority;
+  task.tag = tag;
+
+  // Persistência e re-render
+  saveData();
+  render();
+  closeDetails();
+  showToast('Rotina salva com sucesso!', 'success');
+}
+
+// Exclui a tarefa selecionada
+function deleteCurrentTask() {
+  if (!state.selectedTask) return;
+
+  const confirmed = confirm(`Deseja realmente excluir a rotina "${state.selectedTask.title}"?`);
+  if (!confirmed) return;
+
+  state.routines = state.routines.filter(t => t.id !== state.selectedTask.id);
+  saveData();
+  render();
+  closeDetails();
+  showToast('Rotina excluída com sucesso!', 'info');
+}
+
+// Duplica a tarefa selecionada
+function duplicateCurrentTask() {
+  if (!state.selectedTask) return;
+
+  const original = state.selectedTask;
+  const copy = Object.assign({}, original, {
+    id: generateId(),
+    title: `Cópia de ${original.title}`,
+    completed: false,
+    status: 'todo'
+  });
+
+  state.routines.push(copy);
+  saveData();
+  render();
+  closeDetails();
+  showToast('Rotina duplicada com sucesso!', 'success');
+}
+
+/* ===========================
+   8) GESTÃO DE ETIQUETAS (TAGS)
+   =========================== */
+
+// Adiciona nova etiqueta ao estado (verifica duplicidade por nome)
+function addNewTag({ name, color }) {
+  if (!name || !name.trim()) {
+    showToast('O nome da etiqueta é obrigatório.', 'error');
+    return;
+  }
+  const normalized = name.trim().toLowerCase();
+
+  // Verifica se já existe
+  if (state.tags.some(t => t.name.toLowerCase() === normalized)) {
+    showToast('Esta etiqueta já existe!', 'error');
+    return;
+  }
+
+  const newTag = {
+    id: `tag${state.tags.length + 1}`,
+    name: normalized,
+    color: color || '#888'
+  };
+
+  state.tags.push(newTag);
+  saveData();
+  renderTags(); // atualiza a sidebar
+  showToast(`Etiqueta #${newTag.name} adicionada!`, 'success');
+}
+
+// Renderiza as tags na sidebar e no datalist do formulário
+function renderTags() {
+  if (!DOM.tagList) return;
+  DOM.tagList.innerHTML = '';
+
+  // datalist para sugestões no input (ex.: #pessoal)
+  const datalist = document.getElementById('datalistTags');
+  if (datalist) datalist.innerHTML = '';
+
+  state.tags.forEach(tag => {
+    // Cria item na sidebar
+    const li = document.createElement('li');
+    const a = document.createElement('a');
+    a.className = 'tag';
+    a.href = '#';
+
+
+        a.dataset.tag = tag.name;
+    a.textContent = `#${tag.name}`;
+    // Aplicação visual simples: cor da borda
+    a.style.borderColor = tag.color;
+    // Clique em tag filtra por essa tag
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      // Ativa o filtro "por tag" (simples implementação: renderiza apenas tarefas com essa tag)
+      renderTaskListWithTasks(state.routines.filter(r => r.tag === tag.name));
+      showToast(`Filtrado por #${tag.name}`, 'info');
+    });
+
+    li.appendChild(a);
+    DOM.tagList.appendChild(li);
+
+    // Adiciona opção ao datalist para inputs
+    if (datalist) {
+      const option = document.createElement('option');
+      option.value = `#${tag.name}`;
+      datalist.appendChild(option);
+    }
+  });
+}
+
+/* ===========================
+   9) FILTRAGEM E LISTAGEM DE TAREFAS
+   =========================== */
+
+// Retorna um array de tarefas filtradas de acordo com a view atual e filtros rápidos
+function getFilteredTasks() {
+  // Começa com uma cópia de todas as tasks
+  let tasks = state.routines.slice();
+
+  // Constroi data de referência para hoje (00:00)
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  // Filtra conforme state.currentView
+  switch (state.currentView) {
+    case 'hoje':
+      tasks = tasks.filter(task => {
+        if (!task.date) return false;
+        const td = new Date(task.date + 'T00:00:00');
+        td.setHours(0,0,0,0);
+        return td.getTime() === today.getTime();
+      });
+      break;
+    case 'todasRotinas':
+      // sem filtro por data
+      break;
+    case 'calendario':
+      // Apenas tarefas com data aparecem no calendário
+      tasks = tasks.filter(task => task.date);
+      break;
+    default:
+      break;
+  }
+
+  // Filtros rápidos ativos na sidebar (um por vez)
+  const activeFilterLink = document.querySelector('.menu-link[data-filter].is-active');
+  if (activeFilterLink) {
+    const filter = activeFilterLink.dataset.filter;
+    switch (filter) {
+      case 'pendentes':
+        tasks = tasks.filter(t => !t.completed);
+        break;
+      case 'concluidas':
+        tasks = tasks.filter(t => t.completed);
+        break;
+      case 'alta':
+        tasks = tasks.filter(t => t.priority === 'high');
+        break;
+      case 'media':
+        tasks = tasks.filter(t => t.priority === 'medium');
+        break;
+      case 'baixa':
+        tasks = tasks.filter(t => t.priority === 'low');
+        break;
+      case 'semData':
+        tasks = tasks.filter(t => !t.date);
+        break;
+      default:
+        break;
+    }
+  } else {
+    // Se não houver filtro ativo, aplica preferência global de mostrar ou não concluídas
+    if (!state.preferences.showCompleted) {
+      tasks = tasks.filter(t => !t.completed);
+    }
+  }
+
+  return tasks;
+}
+
+/* ===========================
+   10) RENDERIZAÇÃO (Lista / Quadro / Calendário / Config)
+   =========================== */
+
+// Atualiza título da view (ex.: Hoje, Calendário)
+function updateViewTitle() {
+  const titles = {
+    'hoje': 'Hoje',
+    'todasRotinas': 'Todas as Rotinas',
+    'calendario': 'Calendário',
+    'config': 'Configurações',
+    'graficos': 'Gráficos'
+  };
+  if (DOM.viewTitle) DOM.viewTitle.textContent = titles[state.currentView] || 'Rotinas';
+}
+
+// Renderiza a lista principal (usada no modo 'lista')
+function renderTaskList() {
+  // Decide qual container usar dependendo da view ativa.
+  // Por padrão tentamos usar a .task-list dentro da view ativa.
+  let targetList = null;
+  const activeViewId = `view${state.currentView.charAt(0).toUpperCase()}${state.currentView.slice(1)}`; // ex: 'todasRotinas' -> 'viewTodasRotinas'
+  const activeView = document.getElementById(activeViewId);
+  if (activeView) {
+    targetList = activeView.querySelector('.task-list');
+  }
+  // fallback para o container padrão (hoje)
+  if (!targetList) targetList = DOM.taskListToday;
+  if (!targetList) return;
+  targetList.innerHTML = '';
+  const tasks = getFilteredTasks();
+  if (!tasks || tasks.length === 0) {
+    const empty = document.createElement('div');
+    empty.className = 'empty-state';
+    empty.textContent = 'Nenhuma rotina encontrada';
+    targetList.appendChild(empty);
+    return;
+  }
+  tasks.forEach(task => targetList.appendChild(createTaskElement(task)));
+}
+
+// Renderiza lista específica (usada quando filtramos por tag, por exemplo)
+function renderTaskListWithTasks(tasks) {
+  // Reusa a lógica de escolher o container correto (view-aware)
+  let targetList = null;
+  const activeViewId = `view${state.currentView.charAt(0).toUpperCase()}${state.currentView.slice(1)}`;
+  const activeView = document.getElementById(activeViewId);
+  if (activeView) targetList = activeView.querySelector('.task-list');
+  if (!targetList) targetList = DOM.taskListToday;
+  if (!targetList) return;
+  targetList.innerHTML = '';
+
+  if (!tasks || tasks.length === 0) {
+    const empty = document.createElement('div');
+    empty.className = 'empty-state';
+    empty.textContent = 'Nenhuma rotina encontrada';
+    DOM.taskListToday.appendChild(empty);
+    return;
+  }
+  tasks.forEach(task => {
+    const el = createTaskElement(task);
+    DOM.taskListToday.appendChild(el);
+  });
+}
+
+// Render principal que decide qual modo desenhar
+function render() {
+  updateViewTitle();
+  renderTags(); // garante que as tags estejam atualizadas
+
+  // Oculta todas as views primeiro
+  const views = document.querySelectorAll('.view');
+  views.forEach(view => view.classList.remove('is-active'));
+
+  // Mostra a view ativa baseada no currentView
+  switch (state.currentView) {
+    case 'hoje':
+      if (DOM.viewHoje) DOM.viewHoje.classList.add('is-active');
+      renderTaskList();
+      break;
+    case 'todasRotinas':
+      if (DOM.viewTodasRotinas) DOM.viewTodasRotinas.classList.add('is-active');
+      renderTaskList();
+      break;
+    case 'calendario':
+      if (DOM.viewCalendario) DOM.viewCalendario.classList.add('is-active');
+      renderCalendar(); // ← CORREÇÃO ADICIONADA AQUI
+      break;
+    case 'config':
+      if (DOM.viewConfig) DOM.viewConfig.classList.add('is-active');
+      renderProfile();
+      break;
+    case 'graficos':
+      if (DOM.viewGraficos) DOM.viewGraficos.classList.add('is-active');
+      break;
+    default:
+      if (DOM.viewHoje) DOM.viewHoje.classList.add('is-active');
+      renderTaskList();
+  }
+}
+
+/* ---------------------------
+   10.1) Render - Quadro Kanban
+   --------------------------- */
+
+// Renderiza o quadro Kanban preenchendo as colunas por status
+function renderBoard() {
+  if (!DOM.todoList || !DOM.doingList || !DOM.doneList) return;
+  DOM.todoList.innerHTML = '';
+  DOM.doingList.innerHTML = '';
+  DOM.doneList.innerHTML = '';
+
+  // Usa getFilteredTasks para respeitar filtros
+  const tasks = getFilteredTasks();
+
+  // Para cada tarefa, cria um card e o coloca na coluna correta
+  tasks.forEach(task => {
+    const card = createBoardCard(task);
+    if (task.status === 'done') DOM.doneList.appendChild(card);
+    else if (task.status === 'doing') DOM.doingList.appendChild(card);
+    else DOM.todoList.appendChild(card);
+  });
+
+  // Atualiza contadores (se existirem no DOM)
+  const todoCount = document.getElementById('todoCount');
+  const doingCount = document.getElementById('doingCount');
+  const doneCount = document.getElementById('doneCount');
+  if (todoCount) todoCount.textContent = `${DOM.todoList.children.length} itens`;
+  if (doingCount) doingCount.textContent = `${DOM.doingList.children.length} itens`;
+  if (doneCount) doneCount.textContent = `${DOM.doneList.children.length} itens`;
+}
+
+/* ---------------------------
+   10.2) Render - Calendário - CORREÇÃO COMPLETA
+   --------------------------- */
+
+// Renderiza o calendário do mês atual (state.currentDate)
+function renderCalendar() {
+  if (!DOM.calendarGrid || !DOM.calTitle) return;
+
+  // Limpa grid
+  DOM.calendarGrid.innerHTML = '';
+
+  // Ano e mês atuais
+  const year = state.currentDate.getFullYear();
+  const month = state.currentDate.getMonth();
+
+  // Nome do mês (em PT-BR)
+  const monthNames = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+  DOM.calTitle.textContent = `${monthNames[month]} ${year}`;
+
+  // Determina primeiro dia da semana do mês e quantidade de dias
+  const firstDayOfMonth = new Date(year, month, 1).getDay(); // 0 = domingo
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const prevMonthDays = new Date(year, month, 0).getDate();
+
+  // Cabeçalho (dias da semana)
+  const dayNames = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+  dayNames.forEach(d => {
+    const header = document.createElement('div');
+    header.className = 'calendar-day-header';
+    header.textContent = d;
+    DOM.calendarGrid.appendChild(header);
+  });
+
+  // Dias do mês anterior (preenchimento)
+  for (let i = firstDayOfMonth - 1; i >= 0; i--) {
+    const dayEl = createCalendarDay(prevMonthDays - i, true);
+    DOM.calendarGrid.appendChild(dayEl);
+  }
+
+  // Dias do mês atual
+  const today = new Date();
+  for (let d = 1; d <= daysInMonth; d++) {
+    const isToday = (today.getDate() === d && today.getMonth() === month && today.getFullYear() === year);
+    const fullDate = new Date(year, month, d);
+    const dayEl = createCalendarDay(d, false, isToday, fullDate);
+    DOM.calendarGrid.appendChild(dayEl);
+  }
+
+  // Preenchimento do próximo mês para completar 6 linhas (42 células)
+  const totalCells = 42;
+  const daysSoFar = firstDayOfMonth + daysInMonth;
+  const nextMonthDays = totalCells - daysSoFar;
+  for (let i = 1; i <= nextMonthDays; i++) {
+    const dayEl = createCalendarDay(i, true);
+    DOM.calendarGrid.appendChild(dayEl);
+  }
+}
+
+/* Cria um elemento de dia para o calendário
+   day: número do dia
+   isOtherMonth: boolean, se o dia pertence a outro mês (visualmente diferenciado)
+   isToday: boolean
+   fullDate: Date (opcional) - se fornecido, busca eventos para esse dia
+*/
+function createCalendarDay(day, isOtherMonth, isToday = false, fullDate = null) {
+  const cell = document.createElement('div');
+  cell.className = 'calendar-day';
+  if (isOtherMonth) cell.classList.add('other-month');
+  if (isToday) cell.classList.add('today');
+
+  // Número do dia
+  const number = document.createElement('div');
+  number.className = 'calendar-day-number';
+  number.textContent = day;
+  cell.appendChild(number);
+
+  // Se fullDate é passado, queremos também colocar eventos desse dia
+  if (fullDate) {
+    // Busca tarefas cuja data corresponde ao fullDate
+    const tasksForDay = state.routines.filter(task => {
+      if (!task.date) return false;
+      // Normaliza para midnight local
+      const taskDate = new Date(task.date + 'T00:00:00');
+      return taskDate.getDate() === fullDate.getDate()
+        && taskDate.getMonth() === fullDate.getMonth()
+        && taskDate.getFullYear() === fullDate.getFullYear();
+    });
+
+    // Para cada tarefa, adiciona um botão/evento no dia
+    tasksForDay.forEach(task => {
+      const ev = document.createElement('button');
+      ev.className = `calendar-event priority-${task.priority || 'medium'}`;
+      // Adicionar classe se a tarefa faz parte de uma rotina com múltiplas datas
+      if (task.isRecurring || task.parentRoutineId) {
+        ev.classList.add('has-multiple-dates');
+      }
+      // Pode truncar o título se for muito grande (ex.: 30 chars)
+      ev.textContent = task.title.length > 30 ? task.title.slice(0, 27) + '...' : task.title;
+      // Ao clicar no evento, abre detalhes
+      ev.addEventListener('click', (e) => {
+        e.stopPropagation(); // evita que o clique dispare outras ações
+        openTaskDetails(task.id);
+      });
+      cell.appendChild(ev);
+    });
+
+    // Ao clicar no dia (fora de eventos), abre modal de período personalizado com a data preenchida
+    cell.addEventListener('click', (e) => {
+      // Se o clique for num evento, já tratamos acima
+      if (e.target && e.target.matches('.calendar-event')) return;
+      if (!DOM.modalCustomPeriod) return;
+      const dateStr = formatDateForInput(fullDate);
+      if (DOM.customStartDate) DOM.customStartDate.value = dateStr;
+      if (DOM.customEndDate) DOM.customEndDate.value = dateStr;
+      if (DOM.recurringStartDate) DOM.recurringStartDate.value = dateStr;
+      openCustomPeriodModal();
+    });
+  }
+
+  return cell;
+}
+
+/* ===========================
+   11) CRIAÇÃO DE ELEMENTOS (task item e board card)
+   =========================== */
+
+// Cria e retorna um elemento li.populado para a lista usando o template tplTaskItem
+function createTaskElement(task) {
+  if (!templates.taskItem) {
+    // fallback simples
+    const li = document.createElement('li');
+    li.textContent = task.title;
+    return li;
+  }
+
+  // Clona o template
+  const clone = templates.taskItem.content.cloneNode(true);
+  const li = clone.querySelector('li');
+  // Marca ID no dataset para referência
+  li.dataset.taskId = task.id;
+  // Adiciona classe visual se concluída
+  if (task.completed) li.classList.add('is-completed');
+  // Adicionar classe se a tarefa faz parte de uma rotina com múltiplas datas
+  if (task.isRecurring || task.parentRoutineId) {
+    li.classList.add('has-multiple-dates');
+  }
+
+  // Checkbox para concluir/toggle
+  const checkbox = clone.querySelector('.checkbox input');
+  if (checkbox) {
+    checkbox.checked = !!task.completed;
+    checkbox.addEventListener('change', () => toggleTaskCompletion(task.id));
+  }
+
+  // Título
+  const titleEl = clone.querySelector('.task-title');
+  if (titleEl) titleEl.textContent = task.title || '';
+
+  // Due / data
+  const dueEl = clone.querySelector('.due');
+  if (dueEl) {
+    if (task.date) {
+      const d = new Date(task.date + 'T00:00:00');
+      dueEl.textContent = d.toLocaleDateString('pt-BR');
+      // marca atraso se não concluída e data passada
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      if (!task.completed && d < today) dueEl.classList.add('overdue');
+      else dueEl.classList.remove('overdue');
+    } else {
+      dueEl.textContent = 'Sem data';
+    }
+  }
+
+  // Priority
+  const prioEl = clone.querySelector('.priority');
+  if (prioEl) {
+    prioEl.className = 'priority'; // reset classes
+    prioEl.textContent = task.priority === 'high' ? 'Alta' : (task.priority === 'low' ? 'Baixa' : 'Média');
+    prioEl.classList.add(task.priority || 'medium'); // adiciona classe 'high'|'medium'|'low' para estilo
+  }
+
+  // Tag
+  const tagEl = clone.querySelector('.tag');
+  if (tagEl) {
+    if (task.tag) {
+      tagEl.textContent = `#${task.tag}`;
+      const tagInfo = state.tags.find(t => t.name === task.tag);
+      if (tagInfo) {
+        // define cor de fundo levemente translúcida e cor do texto
+        tagEl.style.backgroundColor = tagInfo.color + '20'; // adiciona transparência simples
+        tagEl.style.color = tagInfo.color;
+      }
+    } else {
+      tagEl.textContent = '#geral';
+    }
+  }
+
+  // Botão abrir detalhes
+  const openBtn = clone.querySelector('.task-open');
+  if (openBtn) openBtn.addEventListener('click', () => openTaskDetails(task.id));
+
+  // Drag start (para Kanban)
+  li.addEventListener('dragstart', (e) => {
+    e.dataTransfer.setData('text/plain', task.id);
+  });
+
+  // Retorna o fragmento (elemento li)
+  return clone;
+}
+
+// Cria e retorna um card para o quadro a partir do template tplBoardCard
+function createBoardCard(task) {
+  if (!templates.boardCard) {
+    const div = document.createElement('div');
+    div.textContent = task.title;
+    return div;
+  }
+
+  const clone = templates.boardCard.content.cloneNode(true);
+  const card = clone.querySelector('.card');
+  card.dataset.taskId = task.id;
+  card.draggable = true;
+  if (task.completed) card.classList.add('is-completed');
+  // Adicionar classe se a tarefa faz parte de uma rotina com múltiplas datas
+  if (task.isRecurring || task.parentRoutineId) {
+    card.classList.add('has-multiple-dates');
+  }
+
+  // Título
+  const title = clone.querySelector('.card-title');
+  if (title) title.textContent = task.title;
+
+  // Due date
+  const dueEl = clone.querySelector('.due');
+  if (dueEl) {
+    if (task.date) {
+      const d = new Date(task.date + 'T00:00:00');
+      dueEl.textContent = d.toLocaleDateString('pt-BR');
+      const today = new Date(); today.setHours(0,0,0,0);
+      if (!task.completed && d < today) dueEl.classList.add('overdue');
+      else dueEl.classList.remove('overdue');
+    } else {
+      dueEl.textContent = 'Sem data';
+    }
+  }
+
+  // Priority
+  const prioEl = clone.querySelector('.priority');
+  if (prioEl) {
+    prioEl.className = 'priority';
+    prioEl.textContent = task.priority === 'high' ? 'Alta' : (task.priority === 'low' ? 'Baixa' : 'Média');
+    prioEl.classList.add(task.priority || 'medium');
+  }
+
+  // Tag
+  const tagEl = clone.querySelector('.tag');
+  if (tagEl) {
+    if (task.tag) {
+      tagEl.textContent = `#${task.tag}`;
+      const tagInfo = state.tags.find(t => t.name === task.tag);
+      if (tagInfo) {
+        tagEl.style.backgroundColor = tagInfo.color + '20';
+        tagEl.style.color = tagInfo.color;
+      }
+    } else {
+      tagEl.textContent = '#geral';
+    }
+  }
+
+  // Status visual
+  const statusEl = clone.querySelector('.status');
+  if (statusEl) {
+    if (task.status === 'done') statusEl.style.backgroundColor = '#10b981';
+    else if (task.status === 'doing') statusEl.style.backgroundColor = '#f59e0b';
+    else statusEl.style.backgroundColor = '#e5e7eb';
+  }
+
+  // Ações (detalhes e concluir/desfazer)
+  const actionButtons = clone.querySelectorAll('.card-actions button');
+  if (actionButtons.length >= 2) {
+    actionButtons[0].addEventListener('click', () => openTaskDetails(task.id)); // Detalhes
+    // Botão concluir / desfazer
+    actionButtons[1].textContent = task.completed ? 'Desfazer' : 'Concluir';
+    actionButtons[1].addEventListener('click', () => toggleTaskCompletion(task.id));
+  }
+
+  // Drag start
+  card.addEventListener('dragstart', (e) => {
+    e.dataTransfer.setData('text/plain', task.id);
+  });
+
+  return clone;
+}
+
+/* ===========================
+   12) DRAG & DROP (Kanban)
+   =========================== */
+
+// Configura eventos de drag & drop nas colunas
+function setupDragAndDrop() {
+  // Seleciona colunas .column
+  const columns = document.querySelectorAll('.column');
+  if (!columns || columns.length === 0) return;
+
+  columns.forEach(col => {
+    // Quando um item é arrastado por cima de uma coluna
+    col.addEventListener('dragenter', (e) => {
+      e.preventDefault();
+      col.classList.add('drag-over');
+    });
+    col.addEventListener('dragover', (e) => {
+      e.preventDefault(); // necessário para permitir drop
+    });
+    col.addEventListener('dragleave', () => {
+      col.classList.remove('drag-over');
+    });
+    // Evento drop final que move a tarefa entre status
+    col.addEventListener('drop', handleDrop);
+  });
+
+  // Garante que o documento permita drops (evita abrir arquivos arrastados)
+  document.addEventListener('dragover', (e) => { e.preventDefault(); });
+}
+
+// Handler quando um item é dropado em uma coluna
+function handleDrop(e) {
+  e.preventDefault();
+  const col = e.currentTarget;
+  col.classList.remove('drag-over');
+
+  // Recupera o taskId do dataTransfer
+  const taskId = e.dataTransfer.getData('text/plain');
+  if (!taskId) return;
+
+  const newStatus = col.dataset.col; // espera 'todo' | 'doing' | 'done'
+  const task = state.routines.find(t => t.id === taskId);
+  if (!task) return;
+
+  // Atualiza status e completed de acordo
+  task.status = newStatus || 'todo';
+  task.completed = newStatus === 'done';
+
+  // Persistência e render
+  saveData();
+  render(); // chama render (ou renderBoard para menor custo)
+  showToast(`Rotina movida para: ${newStatus === 'todo' ? 'A fazer' : newStatus === 'doing' ? 'Em progresso' : 'Concluído'}`, 'info');
+}
+
+/* ===========================
+   13) CONFIGURAÇÕES E PREFERÊNCIAS
+   =========================== */
+
+// Carrega as configurações salvas
+function loadSettings() {
+  if (state.preferences) {
+    // Tema
+    if (state.preferences.theme) {
+      DOM.app.setAttribute('data-theme', state.preferences.theme);
+      if (DOM.themeToggle) DOM.themeToggle.checked = state.preferences.theme === 'dark';
     }
     
-    .app[data-layout="without-sidebar"] .sidebar {
-         transform: translateX(-100%);
-    }
-
-    /* Topbar */
-    .topbar .now {
-        display: none;
-    }
-    .topbar .brand-name {
-        display: none;
+    // Notificações
+    if (DOM.notificationsToggle && state.preferences.notifications !== undefined) {
+      DOM.notificationsToggle.checked = state.preferences.notifications;
     }
     
-    .btn#btnQuickAdd {
-        font-size: 0;
-        padding: 8px 10px;
-    }
-    .btn#btnQuickAdd::before {
-        content: '+';
-        font-size: 1rem;
-    }
-
-    /* Quadro Kanban */
-    .board {
-        flex-direction: column;
-        gap: 16px;
-        padding-right: 0;
+    // Idioma
+    if (DOM.appLanguage && state.preferences.language) {
+      DOM.appLanguage.value = state.preferences.language;
     }
     
-    .column {
-        min-width: 100%;
-        width: 100%;
-    }
-
-    /* Painel de Detalhes */
-    .details {
-        width: 100%;
+    // Fonte
+    if (DOM.fontFamily && state.preferences.fontFamily) {
+      DOM.fontFamily.value = state.preferences.fontFamily;
+      document.body.style.fontFamily = state.preferences.fontFamily;
     }
     
-    /* Modais */
-    .modal {
-        margin: auto 10px;
+    // Tamanho da fonte
+    if (DOM.fontSize && state.preferences.fontSize) {
+      DOM.fontSize.value = state.preferences.fontSize;
+      if (DOM.fontSizeValue) DOM.fontSizeValue.textContent = state.preferences.fontSize + 'px';
+      document.body.style.fontSize = state.preferences.fontSize + 'px';
     }
+  }
+}
 
-    /* Configurações */
-    .config-option label {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-    }
-
-    .info-item {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-    }
-
-    .info-field {
-        width: 100%;
-        justify-content: space-between;
-    }
-
-  .charts-grid {
-    grid-template-columns: 1fr;
-    gap: 16px;
+// Salva as configurações
+function saveSettings() {
+  state.preferences = {
+    theme: DOM.themeToggle && DOM.themeToggle.checked ? 'dark' : 'light',
+    notifications: DOM.notificationsToggle ? DOM.notificationsToggle.checked : true,
+    language: DOM.appLanguage ? DOM.appLanguage.value : 'pt-BR',
+    fontFamily: DOM.fontFamily ? DOM.fontFamily.value : 'Inter',
+    fontSize: DOM.fontSize ? DOM.fontSize.value : '16',
+    showCompleted: state.preferences.showCompleted !== undefined ? state.preferences.showCompleted : true
+  };
+  
+  // Aplica as configurações
+  DOM.app.setAttribute('data-theme', state.preferences.theme);
+  if (DOM.fontFamily) document.body.style.fontFamily = state.preferences.fontFamily;
+  if (DOM.fontSize) {
+    document.body.style.fontSize = state.preferences.fontSize + 'px';
+    if (DOM.fontSizeValue) DOM.fontSizeValue.textContent = state.preferences.fontSize + 'px';
   }
   
-  .charts-section {
-    padding: 16px;
-    margin-top: 24px;
-  }
+  saveData();
+  showToast('Configurações salvas com sucesso!', 'success');
+}
+
+// Restaura configurações padrão
+function resetSettings() {
+  const confirmed = confirm('Deseja restaurar as configurações padrão?');
+  if (!confirmed) return;
   
-  .chart-wrapper {
-    height: 220px;
-  }
+  state.preferences = {
+    theme: 'light',
+    notifications: true,
+    language: 'pt-BR',
+    fontFamily: 'Inter',
+    fontSize: '16',
+    showCompleted: true
+  };
   
-  .charts-header {
-    flex-direction: column;
-    gap: 12px;
-    align-items: flex-start;
-  }
+  loadSettings();
+  saveData();
+  showToast('Configurações restauradas para o padrão!', 'info');
+}
 
-  /* Calendário Mobile */
-  .calendar-grid {
-    grid-template-columns: repeat(7, 1fr);
-    gap: 0;
-  }
+// Alterna o tema
+function toggleTheme() {
+  const newTheme = DOM.themeToggle.checked ? 'dark' : 'light';
+  DOM.app.setAttribute('data-theme', newTheme);
+  state.preferences.theme = newTheme;
+  saveData();
+}
 
-  .calendar-day {
-    min-height: 80px;
-    padding: 4px;
+// Renderiza o perfil do usuário
+function renderProfile() {
+  if (DOM.displayName && state.profile.displayName) {
+    DOM.displayName.textContent = state.profile.displayName;
   }
-
-  .calendar-day-header {
-    padding: 8px 4px;
-    font-size: 0.75rem;
+  if (DOM.userName && state.profile.userName) {
+    DOM.userName.textContent = state.profile.userName;
   }
-
-  .calendar-day-number {
-    font-size: 0.75rem;
-  }
-
-  .calendar-event {
-    font-size: 0.7rem;
-    padding: 1px 2px;
+  if (DOM.userEmail && state.profile.email) {
+    DOM.userEmail.textContent = state.profile.email;
   }
 }
+
+/* ===========================
+   14) SISTEMA DE PERÍODO PERSONALIZADO
+   =========================== */
+
+// Abrir modal de período personalizado
+function openCustomPeriodModal() {
+  if (!DOM.modalCustomPeriod) return;
+  
+  // Definir data mínima como hoje
+  const today = new Date().toISOString().split('T')[0];
+  if (DOM.customStartDate) DOM.customStartDate.min = today;
+  if (DOM.customEndDate) DOM.customEndDate.min = today;
+  if (DOM.recurringStartDate) DOM.recurringStartDate.min = today;
+  
+  // Limpar formulário
+  DOM.customPeriodForm.reset();
+  
+  // Mostrar seção padrão (intervalo)
+  showPeriodSection('range');
+  
+  // Abrir modal
+  if (DOM.modalCustomPeriod.showModal) DOM.modalCustomPeriod.showModal();
+  if (DOM.customTitle) DOM.customTitle.focus();
+}
+
+// Mostrar seção específica baseada no tipo de período selecionado
+function showPeriodSection(type) {
+  // Esconder todas as seções
+  if (DOM.periodRangeSection) DOM.periodRangeSection.style.display = 'none';
+  if (DOM.periodSpecificSection) DOM.periodSpecificSection.style.display = 'none';
+  if (DOM.periodRecurringSection) DOM.periodRecurringSection.style.display = 'none';
+  
+  // Mostrar a seção selecionada
+  switch(type) {
+    case 'range':
+      if (DOM.periodRangeSection) DOM.periodRangeSection.style.display = 'block';
+      break;
+    case 'specific':
+      if (DOM.periodSpecificSection) DOM.periodSpecificSection.style.display = 'block';
+      break;
+    case 'recurring':
+      if (DOM.periodRecurringSection) DOM.periodRecurringSection.style.display = 'block';
+      break;
+  }
+}
+
+// Adicionar campo de data para dias específicos
+function addSpecificDateField() {
+  if (!DOM.specificDatesContainer) return;
+  
+  const dateRow = document.createElement('div');
+  dateRow.className = 'date-input-row';
+  
+  const dateInput = document.createElement('input');
+  dateInput.type = 'date';
+  dateInput.className = 'specific-date';
+  
+  const removeBtn = document.createElement('button');
+  removeBtn.type = 'button';
+  removeBtn.className = 'btn icon only remove-date';
+  removeBtn.setAttribute('aria-label', 'Remover data');
+  removeBtn.textContent = '✕';
+  
+  removeBtn.addEventListener('click', function() {
+    dateRow.remove();
+  });
+  
+  dateRow.appendChild(dateInput);
+  dateRow.appendChild(removeBtn);
+  DOM.specificDatesContainer.appendChild(dateRow);
+}
+
+// Atualizar unidade de intervalo baseada na frequência
+function updateIntervalUnit() {
+  if (!DOM.recurringFrequency || !DOM.intervalUnit) return;
+  
+  const frequency = DOM.recurringFrequency.value;
+  let unit = 'dia(s)';
+  
+  switch(frequency) {
+    case 'weekly':
+      unit = 'semana(s)';
+      break;
+    case 'monthly':
+      unit = 'mês(es)';
+      break;
+  }
+  
+  DOM.intervalUnit.textContent = unit;
+}
+
+// Habilitar/desabilitar campos de término baseado na seleção
+function toggleRecurringEndFields() {
+  const selectedValue = document.querySelector('input[name="recurringEnd"]:checked').value;
+  
+  if (DOM.recurringOccurrences) {
+    DOM.recurringOccurrences.disabled = selectedValue !== 'after';
+  }
+  
+  if (DOM.recurringEndDate) {
+    DOM.recurringEndDate.disabled = selectedValue !== 'on';
+  }
+}
+
+// Gerar todas as datas para uma rotina baseada no tipo de período
+function generateRoutineDates(periodType, formData) {
+  let dates = [];
+  
+  switch(periodType) {
+    case 'range':
+      // Gerar datas entre início e fim, considerando apenas os dias da semana selecionados
+      const start = new Date(formData.startDate);
+      const end = new Date(formData.endDate);
+      const selectedDays = formData.selectedDays || [1, 2, 3, 4, 5]; // Padrão: dias de semana
+      
+      let current = new Date(start);
+      while (current <= end) {
+        if (selectedDays.includes(current.getDay())) {
+          dates.push(formatDateForInput(current));
+        }
+        current.setDate(current.getDate() + 1);
+      }
+      break;
+      
+    case 'specific':
+      // Usar as datas específicas fornecidas
+      dates = formData.specificDates.filter(date => date.trim() !== '');
+      break;
+      
+    case 'recurring':
+      // Gerar datas baseadas na recorrência
+      dates = generateRecurringDates(formData);
+      break;
+  }
+  
+  return dates;
+}
+
+// Gerar datas para rotinas recorrentes
+function generateRecurringDates(formData) {
+  const dates = [];
+  const startDate = new Date(formData.startDate);
+  const frequency = formData.frequency;
+  const interval = parseInt(formData.interval) || 1;
+  
+  let currentDate = new Date(startDate);
+  let occurrenceCount = 0;
+  const maxOccurrences = formData.endType === 'after' ? parseInt(formData.occurrences) : Infinity;
+  const endDate = formData.endType === 'on' ? new Date(formData.endDate) : null;
+  
+  while (
+    (formData.endType === 'never' || 
+     (formData.endType === 'after' && occurrenceCount < maxOccurrences) ||
+     (formData.endType === 'on' && currentDate <= endDate))
+  ) {
+    dates.push(formatDateForInput(currentDate));
+    occurrenceCount++;
+    
+    // Avançar para a próxima data baseada na frequência
+    switch(frequency) {
+      case 'daily':
+        currentDate.setDate(currentDate.getDate() + interval);
+        break;
+      case 'weekly':
+        currentDate.setDate(currentDate.getDate() + (7 * interval));
+        break;
+      case 'monthly':
+        currentDate.setMonth(currentDate.getMonth() + interval);
+        break;
+    }
+    
+    // Limitar a um número razoável de ocorrências para evitar loops infinitos
+    if (occurrenceCount > 365) break;
+  }
+  
+  return dates;
+}
+
+// Adicionar múltiplas rotinas baseadas nas datas geradas
+function addRoutinesWithCustomPeriod(formData) {
+  const dates = generateRoutineDates(formData.periodType, formData);
+  
+  if (dates.length === 0) {
+    showToast('Nenhuma data válida foi gerada para esta rotina.', 'error');
+    return;
+  }
+  
+  let createdCount = 0;
+  
+  dates.forEach(date => {
+    const routineData = {
+      title: formData.title,
+      description: formData.description,
+      date: date,
+      time: formData.time,
+      priority: formData.priority,
+      tag: formData.tag,
+      status: 'todo',
+      completed: false,
+      isRecurring: formData.periodType === 'recurring'
+    };
+    
+    const result = addNewRoutine(routineData);
+    if (result) createdCount++;
+  });
+  
+  showToast(`${createdCount} rotina(s) criada(s) com sucesso!`, 'success');
+}
+
+// Processar formulário de período personalizado
+function processCustomPeriodForm(e) {
+  if (e && e.preventDefault) e.preventDefault();
+  
+  // Coletar dados do formulário
+  const title = DOM.customTitle ? DOM.customTitle.value.trim() : '';
+  const description = DOM.customDesc ? DOM.customDesc.value : '';
+  const time = DOM.customTime ? DOM.customTime.value || undefined : undefined;
+  const priority = DOM.customPriority ? DOM.customPriority.value : 'medium';
+  const tag = DOM.customTag ? normalizeTag(DOM.customTag.value) : undefined;
+  
+  if (!title) {
+    showToast('O título da rotina é obrigatório.', 'error');
+    return;
+  }
+  
+  // Determinar tipo de período selecionado
+  const periodType = document.querySelector('input[name="periodType"]:checked').value;
+  let formData = {
+    title,
+    description,
+    time,
+    priority,
+    tag,
+    periodType
+  };
+  
+  // Coletar dados específicos do tipo de período
+  switch(periodType) {
+    case 'range':
+      const startDate = DOM.customStartDate ? DOM.customStartDate.value : '';
+      const endDate = DOM.customEndDate ? DOM.customEndDate.value : '';
+      
+      if (!startDate || !endDate) {
+        showToast('As datas de início e término são obrigatórias.', 'error');
+        return;
+      }
+      
+      if (new Date(startDate) > new Date(endDate)) {
+        showToast('A data de início não pode ser posterior à data de término.', 'error');
+        return;
+      }
+      
+      // Coletar dias da semana selecionados
+      const selectedDays = [];
+      document.querySelectorAll('.weekday-option input[type="checkbox"]:checked').forEach(cb => {
+        selectedDays.push(parseInt(cb.value));
+      });
+      
+      formData.startDate = startDate;
+      formData.endDate = endDate;
+      formData.selectedDays = selectedDays;
+      break;
+      
+    case 'specific':
+      const specificDates = [];
+      document.querySelectorAll('.specific-date').forEach(input => {
+        if (input.value) specificDates.push(input.value);
+      });
+      
+      if (specificDates.length === 0) {
+        showToast('Pelo menos uma data específica deve ser fornecida.', 'error');
+        return;
+      }
+      
+      formData.specificDates = specificDates;
+      break;
+      
+    case 'recurring':
+      const recurringStartDate = DOM.recurringStartDate ? DOM.recurringStartDate.value : '';
+      const frequency = DOM.recurringFrequency ? DOM.recurringFrequency.value : 'weekly';
+      const interval = DOM.recurringInterval ? DOM.recurringInterval.value : '1';
+      const endType = document.querySelector('input[name="recurringEnd"]:checked').value;
+      
+      if (!recurringStartDate) {
+        showToast('A data de início é obrigatória para rotinas recorrentes.', 'error');
+        return;
+      }
+      
+      formData.startDate = recurringStartDate;
+      formData.frequency = frequency;
+      formData.interval = interval;
+      formData.endType = endType;
+      
+      if (endType === 'after') {
+        formData.occurrences = DOM.recurringOccurrences ? DOM.recurringOccurrences.value : '10';
+      } else if (endType === 'on') {
+        formData.endDate = DOM.recurringEndDate ? DOM.recurringEndDate.value : '';
+        
+        if (!formData.endDate) {
+          showToast('A data de término é obrigatória quando selecionada.', 'error');
+          return;
+        }
+      }
+      break;
+  }
+  
+  // Criar as rotinas
+  addRoutinesWithCustomPeriod(formData);
+  
+  // Fechar modal
+  DOM.customPeriodForm.reset();
+  if (DOM.modalCustomPeriod.close) DOM.modalCustomPeriod.close();
+}
+
+/* ===========================
+   15) EVENTOS GERAIS E LIGAÇÕES
+   =========================== */
+
+// Configura todos os listeners de UI (botões, formulários, links, etc.)
+function setupEventListeners() {
+  // Toggle sidebar
+  if (DOM.btnToggleSidebar) DOM.btnToggleSidebar.addEventListener('click', toggleSidebar);
+
+  // Botão de adicionar rápida
+  if (DOM.btnQuickAdd && DOM.modalCustomPeriod) {
+    DOM.btnQuickAdd.addEventListener('click', openCustomPeriodModal);
+  }
+
+  // Navegação principal (links com data-view)
+  if (DOM.menuLinks && DOM.menuLinks.length) {
+    DOM.menuLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const view = link.dataset.view;
+        setCurrentView(view);
+      });
+    });
+  }
+
+  // Filtros rápidos (data-filter)
+  if (DOM.filterLinks && DOM.filterLinks.length) {
+    DOM.filterLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const wasActive = link.classList.contains('is-active');
+        // limpa todos
+        DOM.filterLinks.forEach(l => l.classList.remove('is-active'));
+        // alterna
+        if (!wasActive) link.classList.add('is-active');
+        render();
+      });
+    });
+  }
+
+  // Modal adicionar tag
+  if (DOM.btnAddTag && DOM.modalAddTag) {
+    DOM.btnAddTag.addEventListener('click', () => {
+      if (DOM.modalAddTag.showModal) DOM.modalAddTag.showModal();
+      if (DOM.tagName) DOM.tagName.focus();
+    });
+  }
+
+  // Fechar painel detalhes
+  if (DOM.detailsClose) DOM.detailsClose.addEventListener('click', closeDetails);
+
+  // Submit do formulário de detalhes (salvar)
+  if (DOM.detailsForm) DOM.detailsForm.addEventListener('submit', saveTaskDetails);
+
+  // Botões excluir e duplicar no painel de detalhes
+  if (DOM.btnDeleteTask) DOM.btnDeleteTask.addEventListener('click', deleteCurrentTask);
+  if (DOM.btnDuplicateTask) DOM.btnDuplicateTask.addEventListener('click', duplicateCurrentTask);
+
+  // Event listeners para o modal de período personalizado
+  if (DOM.periodTypeRadios) {
+    DOM.periodTypeRadios.forEach(radio => {
+      radio.addEventListener('change', function() {
+        showPeriodSection(this.value);
+      });
+    });
+  }
+  
+  if (DOM.addDateBtn) {
+    DOM.addDateBtn.addEventListener('click', addSpecificDateField);
+  }
+  
+  if (DOM.recurringFrequency) {
+    DOM.recurringFrequency.addEventListener('change', updateIntervalUnit);
+  }
+  
+  if (DOM.recurringEndRadios) {
+    DOM.recurringEndRadios.forEach(radio => {
+      radio.addEventListener('change', toggleRecurringEndFields);
+    });
+  }
+  
+  if (DOM.customPeriodForm) {
+    DOM.customPeriodForm.addEventListener('submit', processCustomPeriodForm);
+    
+    // Botão cancelar
+    const cancelBtn = DOM.customPeriodForm.querySelector('button[value="cancel"]');
+    if (cancelBtn) {
+      cancelBtn.addEventListener('click', () => {
+        DOM.customPeriodForm.reset();
+        if (DOM.modalCustomPeriod.close) DOM.modalCustomPeriod.close();
+      });
+    }
+  }
+
+  // Navegação do calendário (mudar mês) - CORREÇÃO ADICIONADA
+  if (DOM.calPrev) DOM.calPrev.addEventListener('click', () => {
+    state.currentDate.setMonth(state.currentDate.getMonth() - 1);
+    renderCalendar();
+  });
+  if (DOM.calNext) DOM.calNext.addEventListener('click', () => {
+    state.currentDate.setMonth(state.currentDate.getMonth() + 1);
+    renderCalendar();
+  });
+
+  // Configurações
+  if (DOM.themeToggle) {
+    DOM.themeToggle.addEventListener('change', toggleTheme);
+  }
+  
+  if (DOM.btnSaveSettings) {
+    DOM.btnSaveSettings.addEventListener('click', saveSettings);
+  }
+  
+  if (DOM.btnResetSettings) {
+    DOM.btnResetSettings.addEventListener('click', resetSettings);
+  }
+  
+  if (DOM.btnOpenConfig) {
+    DOM.btnOpenConfig.addEventListener('click', (e) => {
+      e.preventDefault();
+      setCurrentView('config');
+    });
+  }
+  
+  // Controles de configuração em tempo real
+  if (DOM.fontSize) {
+    DOM.fontSize.addEventListener('input', (e) => {
+      document.body.style.fontSize = e.target.value + 'px';
+      if (DOM.fontSizeValue) DOM.fontSizeValue.textContent = e.target.value + 'px';
+    });
+  }
+  
+  if (DOM.fontFamily) {
+    DOM.fontFamily.addEventListener('change', (e) => {
+      document.body.style.fontFamily = e.target.value;
+    });
+  }
+
+  // Perfil
+  if (DOM.showEmail) {
+    DOM.showEmail.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (DOM.userEmail.textContent.includes('*')) {
+        DOM.userEmail.textContent = state.profile.email;
+        DOM.showEmail.textContent = 'Ocultar';
+      } else {
+        DOM.userEmail.textContent = '*****************@gmail.com';
+        DOM.showEmail.textContent = 'Mostrar';
+      }
+    });
+  }
+
+  // Botões de edição do perfil
+  const editButtons = document.querySelectorAll('.edit-btn');
+  editButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const field = e.target.dataset.edit;
+      const currentValue = state.profile[field];
+      const newValue = prompt(`Editar ${field}:`, currentValue);
+      if (newValue && newValue.trim()) {
+        state.profile[field] = newValue.trim();
+        saveData();
+        renderProfile();
+        showToast(`${field} atualizado com sucesso!`, 'success');
+      }
+    });
+  });
+}
+
+/* ===========================
+   16) FUNÇÕES AUXILIARES (UI/Helpers)
+   =========================== */
+
+// Alterna a sidebar visível / escondida e persiste a preferência
+function toggleSidebar() {
+  state.showSidebar = !state.showSidebar;
+  if (DOM.app) DOM.app.setAttribute('data-layout', state.showSidebar ? 'with-sidebar' : 'without-sidebar');
+  saveData();
+}
+
+// Muda a view principal (Hoje / Semana / Calendário / Todas / Config)
+function setCurrentView(view) {
+  // Ajusta estado
+  // normalize view to string and lower-case for safety
+  const v = (view || 'hoje').toString();
+  state.currentView = v;
+
+  // Atualiza classes ativas nos links do menu
+  if (DOM.menuLinks && DOM.menuLinks.length) {
+    DOM.menuLinks.forEach(link => {
+      // compare case-insensitive to avoid mismatch between html/data-view and state
+      const linkView = (link.dataset.view || '').toString();
+      link.classList.toggle('is-active', linkView.toLowerCase() === String(state.currentView).toLowerCase());
+    });
+  }
+
+  // Limpa filtros rápidos ao trocar de view
+  if (DOM.filterLinks && DOM.filterLinks.length) {
+    DOM.filterLinks.forEach(l => l.classList.remove('is-active'));
+  }
+
+  render();
+}
+
+// Atualiza relógio e data na UI
+function updateClock() {
+  const now = new Date();
+  if (DOM.todayDate) DOM.todayDate.textContent = now.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+  if (DOM.nowTime) DOM.nowTime.textContent = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+}
+
+/* ===========================
+   17) INICIALIZAÇÃO DA APLICAÇÃO
+   =========================== */
+
+// Inicializar a aplicação
+init();
