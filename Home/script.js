@@ -1,6 +1,6 @@
-/* ===========================
+/*
    1) CONSTANTES E CONFIGURAÇÕES
-   =========================== */
+*/
 
 // Chave usada no localStorage para persistir os dados da aplicação
 const STORAGE_KEY = 'routineAppData_v2_multilang';
@@ -731,11 +731,12 @@ const I18N = {
     'es-ES': ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'],
     'fr-FR': ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam']
   }
+
 };
 
-/* ===========================
-   2) ESTADO DA APLICAÇÃO (mutável)
-   =========================== */
+/*
+   2) ESTADO DA APLICAÇÃO
+*/
 
 // Estado global que guarda a informação atual do app (não persistida diretamente)
 let state = {
@@ -753,9 +754,9 @@ let state = {
 // Contador simples para gerar IDs únicos (inicia em 1000 para evitar colisão com IDs de exemplo)
 let nextId = 1000;
 
-/* ===========================
-   3) SELETORES DO DOM (cache de elementos)
-   =========================== */
+/*
+   3) SELETORES DO DOM
+*/
 
 // Guardamos referências a elementos do DOM para evitar querySelector repetido
 const DOM = {
@@ -845,9 +846,9 @@ const templates = {
   toast: document.getElementById('tplToast')
 };
 
-/* ===========================
-   4) SISTEMA DE TRADUÇÃO
-   =========================== */
+/*
+  4) SISTEMA DE TRADUÇÃO
+*/
 
 // Obtém idioma atual (padrão pt-BR)
 function getLang() {
@@ -973,9 +974,9 @@ function changeLanguage(newLang) {
   showToastTranslation('toast.saved', 'success');
 }
 
-/* ===========================
+/*
    5) INICIALIZAÇÃO
-   =========================== */
+*/
 
 // Função de inicialização que configura tudo e renderiza o estado inicial
 function init() {
@@ -1015,9 +1016,9 @@ function init() {
   render();
 }
 
-/* ===========================
-   6) PERSISTÊNCIA (localStorage)
-   =========================== */
+/*
+   6) PERSISTÊNCIA 
+*/
 
 // Carrega os dados salvos no localStorage. Se não existir, usa DEFAULT_DATA
 function loadData() {
@@ -1079,9 +1080,9 @@ function saveData() {
   }
 }
 
-/* ===========================
-   7) UTILITÁRIOS (helpers)
-   =========================== */
+/*
+   7) UTILITÁRIOS
+*/
 
 // Gera um ID único simples para novas rotinas (prefixo 't' + contador)
 function generateId() {
@@ -1144,9 +1145,9 @@ function normalizeTag(tagStr) {
   return tagStr.replace('#', '').trim();
 }
 
-/* ===========================
+/*
    8) CRUD DE ROTINAS (Add / Toggle / Open / Save / Delete / Duplicate)
-   =========================== */
+*/
 
 // Adiciona uma nova rotina ao estado e salva
 function addNewRoutine({ title, description, date, time, priority, tag, status = 'todo', completed = false }) {
@@ -1308,9 +1309,9 @@ function duplicateCurrentTask() {
   showToastTranslation('toast.copied', 'success');
 }
 
-/* ===========================
-   9) GESTÃO DE ETIQUETAS (TAGS)
-   =========================== */
+/*
+  9) GESTÃO DE ETIQUETAS
+*/
 
 // Adiciona nova etiqueta ao estado (verifica duplicidade por nome)
 function addNewTag({ name, color }) {
@@ -1377,9 +1378,9 @@ function renderTags() {
   });
 }
 
-/* ===========================
+/*
    10) FILTRAGEM E LISTAGEM DE TAREFAS
-   =========================== */
+*/
 
 // Retorna um array de tarefas filtradas de acordo com a view atual e filtros rápidos
 function getFilteredTasks() {
@@ -1447,9 +1448,9 @@ function getFilteredTasks() {
   return tasks;
 }
 
-/* ===========================
+/*
    11) RENDERIZAÇÃO (Lista / Quadro / Calendário / Config)
-   =========================== */
+*/
 
 // Atualiza título da view (ex.: Hoje, Calendário)
 function updateViewTitle() {
@@ -1549,9 +1550,9 @@ function render() {
   }
 }
 
-/* ---------------------------
+/*
    11.1) Render - Quadro Kanban
-   --------------------------- */
+*/
 
 // Renderiza o quadro Kanban preenchendo as colunas por status
 function renderBoard() {
@@ -1580,9 +1581,9 @@ function renderBoard() {
   if (doneCount) doneCount.textContent = `${DOM.doneList.children.length} itens`;
 }
 
-/* ---------------------------
-   11.2) Render - Calendário - CORREÇÃO COMPLETA
-   --------------------------- */
+/*
+   11.2) Render - Calendário
+*/
 
 // Renderiza o calendário do mês atual (state.currentDate)
 function renderCalendar() {
@@ -1703,9 +1704,9 @@ function createCalendarDay(day, isOtherMonth, isToday = false, fullDate = null) 
   return cell;
 }
 
-/* ===========================
-   12) CRIAÇÃO DE ELEMENTOS (task item e board card)
-   =========================== */
+/*
+   12) CRIAÇÃO DE ELEMENTOS
+*/
 
 // Cria e retorna um elemento li.populado para a lista usando o template tplTaskItem
 function createTaskElement(task) {
@@ -1886,9 +1887,9 @@ function createBoardCard(task) {
   return clone;
 }
 
-/* ===========================
+/*
    13) DRAG & DROP (Kanban)
-   =========================== */
+*/
 
 // Configura eventos de drag & drop nas colunas
 function setupDragAndDrop() {
@@ -1946,9 +1947,9 @@ function handleDrop(e) {
   showToast(`Rotina movida para: ${statusText[newStatus] || 'A fazer'}`, 'info');
 }
 
-/* ===========================
+/*
    14) CONFIGURAÇÕES E PREFERÊNCIAS
-   =========================== */
+*/
 
 // Carrega as configurações salvas
 function loadSettings() {
@@ -2048,9 +2049,9 @@ function renderProfile() {
   }
 }
 
-/* ===========================
+/*
    15) SISTEMA DE PERÍODO PERSONALIZADO
-   =========================== */
+*/
 
 // Abrir modal de período personalizado
 function openCustomPeriodModal() {
@@ -2379,9 +2380,9 @@ function processCustomPeriodForm(e) {
   closeCustomPeriodModal();
 }
 
-/* ===========================
+/*
    16) EVENTOS GERAIS E LIGAÇÕES
-   =========================== */
+*/
 
 // Configura todos os listeners de UI (botões, formulários, links, etc.)
 function setupEventListeners() {
@@ -2554,9 +2555,9 @@ function setupEventListeners() {
   });
 }
 
-/* ===========================
-   17) FUNÇÕES AUXILIARES (UI/Helpers)
-   =========================== */
+/*
+   17) FUNÇÕES AUXILIARES
+ */
 
 // Alterna a sidebar visível / escondida e persiste a preferência
 function toggleSidebar() {
@@ -2597,9 +2598,9 @@ function updateClock() {
   if (DOM.nowTime) DOM.nowTime.textContent = now.toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' });
 }
 
-/* ===========================
-   18) SISTEMA DE GRÁFICOS - VERSÃO CORRIGIDA
-   =========================== */
+/*
+   18) SISTEMA DE GRÁFICOS
+*/
 
 // Inicializar todos os gráficos
 function initCharts() {
@@ -2781,9 +2782,9 @@ function renderEmptyCharts() {
   });
 }
 
-/* ===========================
+/*
    19) INICIALIZAÇÃO DA APLICAÇÃO
-   =========================== */
+*/
 
 // Inicializar a aplicação
 document.addEventListener('DOMContentLoaded', init);
