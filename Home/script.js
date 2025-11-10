@@ -62,8 +62,8 @@ const DEFAULT_DATA = {
     { id: 'tag4', name: 'estudos', color: '#f59e0b' }
   ],
   // Preferências iniciais
-  preferences: {
-    theme: 'light',
+  preferences: { 
+    theme: 'light', 
     showCompleted: true,
     notifications: true,
     language: 'pt-BR',
@@ -79,7 +79,7 @@ const DEFAULT_DATA = {
 };
 
 /* ===========================
-   1.1) TRADUÇÕES MULTILÍNGUE (PT / EN / ES / FR)
+   1.1) TRADUÇÕES MULTILÍNGUE (PT / EN / ES / FR) - VERSÃO COMPLETA
    =========================== */
 
 const I18N = {
@@ -113,11 +113,13 @@ const I18N = {
     'es-ES': 'Configuración',
     'fr-FR': 'Paramètres'
   },
+
+  // Menu principal
   'menu.visaoGeral': {
     'pt-BR': 'Visão Geral',
     'en-US': 'Overview',
-    'es-ES': 'Visión general',
-    'fr-FR': 'Aperçu'
+    'es-ES': 'Resumen',
+    'fr-FR': 'Vue d\'ensemble'
   },
   'menu.etiquetas': {
     'pt-BR': 'Etiquetas',
@@ -131,6 +133,8 @@ const I18N = {
     'es-ES': 'Filtros',
     'fr-FR': 'Filtres'
   },
+
+  // Filtros
   'filter.pendentes': {
     'pt-BR': 'Pendentes',
     'en-US': 'Pending',
@@ -167,11 +171,49 @@ const I18N = {
     'es-ES': 'Sin fecha',
     'fr-FR': 'Sans date'
   },
+
+  // Botões
   'button.novaRotina': {
     'pt-BR': '+ Nova rotina',
     'en-US': '+ New routine',
     'es-ES': '+ Nueva rutina',
     'fr-FR': '+ Nouvelle routine'
+  },
+  'button.novaEtiqueta': {
+    'pt-BR': '+ Nova etiqueta',
+    'en-US': '+ New tag',
+    'es-ES': '+ Nueva etiqueta',
+    'fr-FR': '+ Nouvelle étiquette'
+  },
+  'button.salvar': {
+    'pt-BR': 'Salvar',
+    'en-US': 'Save',
+    'es-ES': 'Guardar',
+    'fr-FR': 'Enregistrer'
+  },
+  'button.cancelar': {
+    'pt-BR': 'Cancelar',
+    'en-US': 'Cancel',
+    'es-ES': 'Cancelar',
+    'fr-FR': 'Annuler'
+  },
+  'button.adicionar': {
+    'pt-BR': 'Adicionar',
+    'en-US': 'Add',
+    'es-ES': 'Añadir',
+    'fr-FR': 'Ajouter'
+  },
+  'button.excluir': {
+    'pt-BR': 'Excluir',
+    'en-US': 'Delete',
+    'es-ES': 'Eliminar',
+    'fr-FR': 'Supprimer'
+  },
+  'button.duplicar': {
+    'pt-BR': 'Duplicar',
+    'en-US': 'Duplicate',
+    'es-ES': 'Duplicar',
+    'fr-FR': 'Dupliquer'
   },
   'button.saveSettings': {
     'pt-BR': 'Salvar Configurações',
@@ -185,11 +227,31 @@ const I18N = {
     'es-ES': 'Restaurar valores',
     'fr-FR': 'Restaurer par défaut'
   },
+  'button.editarPerfil': {
+    'pt-BR': 'Editar perfil de usuário',
+    'en-US': 'Edit user profile',
+    'es-ES': 'Editar perfil de usuario',
+    'fr-FR': 'Modifier le profil utilisateur'
+  },
+  'button.adicionarTarefa': {
+    'pt-BR': '+ Adicionar',
+    'en-US': '+ Add',
+    'es-ES': '+ Añadir',
+    'fr-FR': '+ Ajouter'
+  },
+
+  // Configurações
   'label.darkMode': {
     'pt-BR': 'Modo escuro',
     'en-US': 'Dark Mode',
     'es-ES': 'Modo oscuro',
     'fr-FR': 'Mode sombre'
+  },
+  'label.notifications': {
+    'pt-BR': 'Ativar notificações do navegador',
+    'en-US': 'Enable browser notifications',
+    'es-ES': 'Activar notificaciones del navegador',
+    'fr-FR': "Activer les notifications du navigateur"
   },
   'label.appLanguage': {
     'pt-BR': 'Idioma do aplicativo',
@@ -209,25 +271,13 @@ const I18N = {
     'es-ES': 'Tamaño de fuente',
     'fr-FR': 'Taille de police'
   },
-  'label.notifications': {
-    'pt-BR': 'Ativar notificações do navegador',
-    'en-US': 'Enable browser notifications',
-    'es-ES': 'Activar notificaciones del navegador',
-    'fr-FR': "Activer les notifications du navigateur"
-  },
 
-  // Profile related
+  // Perfil
   'profile.meuPerfil': {
     'pt-BR': 'Meu perfil',
     'en-US': 'My profile',
     'es-ES': 'Mi perfil',
     'fr-FR': 'Mon profil'
-  },
-  'profile.editarPerfil': {
-    'pt-BR': 'Editar perfil de usuário',
-    'en-US': 'Edit user profile',
-    'es-ES': 'Editar perfil',
-    'fr-FR': "Modifier le profil d'utilisateur"
   },
   'profile.nomeExibido': {
     'pt-BR': 'Nome exibido',
@@ -244,75 +294,327 @@ const I18N = {
   'profile.email': {
     'pt-BR': 'E-mail',
     'en-US': 'Email',
-    'es-ES': 'Correo',
+    'es-ES': 'Correo electrónico',
     'fr-FR': 'Email'
   },
+  'profile.mostrar': {
+    'pt-BR': 'Mostrar',
+    'en-US': 'Show',
+    'es-ES': 'Mostrar',
+    'fr-FR': 'Afficher'
+  },
+  'profile.ocultar': {
+    'pt-BR': 'Ocultar',
+    'en-US': 'Hide',
+    'es-ES': 'Ocultar',
+    'fr-FR': 'Cacher'
+  },
+  'profile.editar': {
+    'pt-BR': 'Editar',
+    'en-US': 'Edit',
+    'es-ES': 'Editar',
+    'fr-FR': 'Modifier'
+  },
 
-  // Details panel
-  'details.title': {
+  // Painel de detalhes
+  'details.titulo': {
     'pt-BR': 'Título',
     'en-US': 'Title',
     'es-ES': 'Título',
     'fr-FR': 'Titre'
   },
-  'details.description': {
+  'details.descricao': {
     'pt-BR': 'Descrição',
     'en-US': 'Description',
     'es-ES': 'Descripción',
     'fr-FR': 'Description'
   },
-  'details.date': {
+  'details.data': {
     'pt-BR': 'Data',
     'en-US': 'Date',
     'es-ES': 'Fecha',
     'fr-FR': 'Date'
   },
-  'details.time': {
+  'details.hora': {
     'pt-BR': 'Hora',
     'en-US': 'Time',
     'es-ES': 'Hora',
     'fr-FR': 'Heure'
   },
-  'details.priority': {
+  'details.prioridade': {
     'pt-BR': 'Prioridade',
     'en-US': 'Priority',
     'es-ES': 'Prioridad',
     'fr-FR': 'Priorité'
   },
-  'details.tag': {
+  'details.etiqueta': {
     'pt-BR': 'Etiqueta',
     'en-US': 'Tag',
     'es-ES': 'Etiqueta',
     'fr-FR': 'Étiquette'
   },
-  'details.delete': {
-    'pt-BR': 'Excluir',
-    'en-US': 'Delete',
-    'es-ES': 'Eliminar',
-    'fr-FR': 'Supprimer'
+
+  // Prioridades
+  'priority.alta': {
+    'pt-BR': 'Alta',
+    'en-US': 'High',
+    'es-ES': 'Alta',
+    'fr-FR': 'Haute'
   },
-  'details.duplicate': {
-    'pt-BR': 'Duplicar',
-    'en-US': 'Duplicate',
-    'es-ES': 'Duplicar',
-    'fr-FR': 'Dupliquer'
+  'priority.media': {
+    'pt-BR': 'Média',
+    'en-US': 'Medium',
+    'es-ES': 'Media',
+    'fr-FR': 'Moyenne'
   },
-  'details.save': {
-    'pt-BR': 'Salvar',
-    'en-US': 'Save',
-    'es-ES': 'Guardar',
-    'fr-FR': 'Enregistrer'
+  'priority.baixa': {
+    'pt-BR': 'Baixa',
+    'en-US': 'Low',
+    'es-ES': 'Baja',
+    'fr-FR': 'Basse'
   },
 
-  // Empty / empty state
+  // Estados
+  'status.todo': {
+    'pt-BR': 'A fazer',
+    'en-US': 'To do',
+    'es-ES': 'Por hacer',
+    'fr-FR': 'À faire'
+  },
+  'status.doing': {
+    'pt-BR': 'Em progresso',
+    'en-US': 'In progress',
+    'es-ES': 'En progreso',
+    'fr-FR': 'En cours'
+  },
+  'status.done': {
+    'pt-BR': 'Concluído',
+    'en-US': 'Done',
+    'es-ES': 'Completado',
+    'fr-FR': 'Terminé'
+  },
+
+  // Modal período personalizado
+  'modal.periodoPersonalizado': {
+    'pt-BR': 'Adicionar rotina com período personalizado',
+    'en-US': 'Add routine with custom period',
+    'es-ES': 'Agregar rutina con período personalizado',
+    'fr-FR': 'Ajouter une routine avec période personnalisée'
+  },
+  'modal.tipoPeriodo': {
+    'pt-BR': 'Tipo de período',
+    'en-US': 'Period type',
+    'es-ES': 'Tipo de período',
+    'fr-FR': 'Type de période'
+  },
+  'modal.periodo': {
+    'pt-BR': 'Período (início e fim)',
+    'en-US': 'Range (start and end)',
+    'es-ES': 'Período (inicio y fin)',
+    'fr-FR': 'Période (début et fin)'
+  },
+  'modal.diasEspecificos': {
+    'pt-BR': 'Dias específicos',
+    'en-US': 'Specific days',
+    'es-ES': 'Días específicos',
+    'fr-FR': 'Jours spécifiques'
+  },
+  'modal.recorrente': {
+    'pt-BR': 'Recorrente (semanal/mensal)',
+    'en-US': 'Recurring (weekly/monthly)',
+    'es-ES': 'Recurrente (semanal/mensual)',
+    'fr-FR': 'Récurrent (hebdomadaire/mensuel)'
+  },
+  'modal.dataInicio': {
+    'pt-BR': 'Data de início',
+    'en-US': 'Start date',
+    'es-ES': 'Fecha de inicio',
+    'fr-FR': 'Date de début'
+  },
+  'modal.dataTermino': {
+    'pt-BR': 'Data de término',
+    'en-US': 'End date',
+    'es-ES': 'Fecha de fin',
+    'fr-FR': 'Date de fin'
+  },
+  'modal.repetirDias': {
+    'pt-BR': 'Repetir nos dias da semana',
+    'en-US': 'Repeat on weekdays',
+    'es-ES': 'Repetir en días de semana',
+    'fr-FR': 'Répéter les jours de semaine'
+  },
+  'modal.selecionarDatas': {
+    'pt-BR': 'Selecionar datas',
+    'en-US': 'Select dates',
+    'es-ES': 'Seleccionar fechas',
+    'fr-FR': 'Sélectionner les dates'
+  },
+  'modal.adicionarData': {
+    'pt-BR': '+ Adicionar data',
+    'en-US': '+ Add date',
+    'es-ES': '+ Añadir fecha',
+    'fr-FR': '+ Ajouter date'
+  },
+  'modal.inicio': {
+    'pt-BR': 'Início',
+    'en-US': 'Start',
+    'es-ES': 'Inicio',
+    'fr-FR': 'Début'
+  },
+  'modal.frequencia': {
+    'pt-BR': 'Frequência',
+    'en-US': 'Frequency',
+    'es-ES': 'Frecuencia',
+    'fr-FR': 'Fréquence'
+  },
+  'modal.repetirCada': {
+    'pt-BR': 'Repetir a cada',
+    'en-US': 'Repeat every',
+    'es-ES': 'Repetir cada',
+    'fr-FR': 'Répéter chaque'
+  },
+  'modal.terminar': {
+    'pt-BR': 'Terminar',
+    'en-US': 'End',
+    'es-ES': 'Terminar',
+    'fr-FR': 'Terminer'
+  },
+  'modal.nunca': {
+    'pt-BR': 'Nunca',
+    'en-US': 'Never',
+    'es-ES': 'Nunca',
+    'fr-FR': 'Jamais'
+  },
+  'modal.aposOcorrencias': {
+    'pt-BR': 'Após ocorrências',
+    'en-US': 'After occurrences',
+    'es-ES': 'Después de ocurrencias',
+    'fr-FR': 'Après occurrences'
+  },
+  'modal.emData': {
+    'pt-BR': 'Em data',
+    'en-US': 'On date',
+    'es-ES': 'En fecha',
+    'fr-FR': 'À date'
+  },
+  'modal.criarRotina': {
+    'pt-BR': 'Criar rotina',
+    'en-US': 'Create routine',
+    'es-ES': 'Crear rutina',
+    'fr-FR': 'Créer routine'
+  },
+
+  // Dias da semana
+  'weekday.dom': {
+    'pt-BR': 'Dom',
+    'en-US': 'Sun',
+    'es-ES': 'Dom',
+    'fr-FR': 'Dim'
+  },
+  'weekday.seg': {
+    'pt-BR': 'Seg',
+    'en-US': 'Mon',
+    'es-ES': 'Lun',
+    'fr-FR': 'Lun'
+  },
+  'weekday.ter': {
+    'pt-BR': 'Ter',
+    'en-US': 'Tue',
+    'es-ES': 'Mar',
+    'fr-FR': 'Mar'
+  },
+  'weekday.qua': {
+    'pt-BR': 'Qua',
+    'en-US': 'Wed',
+    'es-ES': 'Mié',
+    'fr-FR': 'Mer'
+  },
+  'weekday.qui': {
+    'pt-BR': 'Qui',
+    'en-US': 'Thu',
+    'es-ES': 'Jue',
+    'fr-FR': 'Jeu'
+  },
+  'weekday.sex': {
+    'pt-BR': 'Sex',
+    'en-US': 'Fri',
+    'es-ES': 'Vie',
+    'fr-FR': 'Ven'
+  },
+  'weekday.sab': {
+    'pt-BR': 'Sáb',
+    'en-US': 'Sat',
+    'es-ES': 'Sáb',
+    'fr-FR': 'Sam'
+  },
+
+  // Frequências
+  'frequency.daily': {
+    'pt-BR': 'Diária',
+    'en-US': 'Daily',
+    'es-ES': 'Diaria',
+    'fr-FR': 'Quotidienne'
+  },
+  'frequency.weekly': {
+    'pt-BR': 'Semanal',
+    'en-US': 'Weekly',
+    'es-ES': 'Semanal',
+    'fr-FR': 'Hebdomadaire'
+  },
+  'frequency.monthly': {
+    'pt-BR': 'Mensal',
+    'en-US': 'Monthly',
+    'es-ES': 'Mensual',
+    'fr-FR': 'Mensuelle'
+  },
+
+  // Etiquetas existentes
+  'tag.pessoal': {
+    'pt-BR': '#pessoal',
+    'en-US': '#personal',
+    'es-ES': '#personal',
+    'fr-FR': '#personnel'
+  },
+  'tag.trabalho': {
+    'pt-BR': '#trabalho',
+    'en-US': '#work',
+    'es-ES': '#trabajo',
+    'fr-FR': '#travail'
+  },
+  'tag.saude': {
+    'pt-BR': '#saúde',
+    'en-US': '#health',
+    'es-ES': '#salud',
+    'fr-FR': '#santé'
+  },
+  'tag.estudos': {
+    'pt-BR': '#estudos',
+    'en-US': '#studies',
+    'es-ES': '#estudios',
+    'fr-FR': '#études'
+  },
+  'tag.geral': {
+    'pt-BR': '#geral',
+    'en-US': '#general',
+    'es-ES': '#general',
+    'fr-FR': '#général'
+  },
+
+  // Estados vazios
   'empty.none': {
     'pt-BR': 'Nenhuma rotina encontrada',
     'en-US': 'No routines found',
     'es-ES': 'No se encontraron rutinas',
     'fr-FR': "Aucune routine trouvée"
   },
+  'empty.addRoutines': {
+    'pt-BR': 'Adicione rotinas para ver os gráficos',
+    'en-US': 'Add routines to see charts',
+    'es-ES': 'Agregue rutinas para ver gráficos',
+    'fr-FR': 'Ajoutez des routines pour voir les graphiques'
+  },
 
-  // Toasts (we will use keys and pass to showToastTranslation)
+  // Toasts
   'toast.added': {
     'pt-BR': 'Rotina adicionada com sucesso!',
     'en-US': 'Routine added successfully!',
@@ -337,39 +639,97 @@ const I18N = {
     'es-ES': '¡Rutina duplicada con éxito!',
     'fr-FR': 'Routine dupliquée avec succès !'
   },
+  'toast.requiredTitle': {
+    'pt-BR': 'O título é obrigatório!',
+    'en-US': 'Title is required!',
+    'es-ES': '¡El título es obligatorio!',
+    'fr-FR': 'Le titre est obligatoire !'
+  },
 
-  // Chart titles
+  // Gráficos
   'chart.weeklyProgress': {
     'pt-BR': 'Progresso Semanal de Tarefas',
     'en-US': 'Weekly Task Progress',
-    'es-ES': 'Progreso semanal de tareas',
-    'fr-FR': "Progression hebdomadaire des tâches"
+    'es-ES': 'Progreso Semanal de Tareas',
+    'fr-FR': "Progression Hebdomadaire des Tâches"
   },
   'chart.timeDistribution': {
     'pt-BR': 'Distribuição do Tempo',
     'en-US': 'Time Distribution',
-    'es-ES': 'Distribución del tiempo',
-    'fr-FR': "Répartition du temps"
+    'es-ES': 'Distribución del Tiempo',
+    'fr-FR': "Répartition du Temps"
   },
   'chart.habitsOverTime': {
     'pt-BR': 'Evolução de Hábitos',
     'en-US': 'Habits Over Time',
-    'es-ES': 'Evolución de hábitos',
-    'fr-FR': "Évolution des habitudes"
+    'es-ES': 'Evolución de Hábitos',
+    'fr-FR': "Évolution des Habitudes"
+  },
+  'chart.infoWeekly': {
+    'pt-BR': 'Acompanhe sua produtividade ao longo da semana',
+    'en-US': 'Track your productivity throughout the week',
+    'es-ES': 'Sigue tu productividad durante la semana',
+    'fr-FR': 'Suivez votre productivité tout au long de la semaine'
+  },
+  'chart.infoTime': {
+    'pt-BR': 'Veja como você distribui seu tempo entre diferentes atividades',
+    'en-US': 'See how you distribute your time between different activities',
+    'es-ES': 'Vea cómo distribuye su tiempo entre diferentes actividades',
+    'fr-FR': 'Voyez comment vous répartissez votre temps entre différentes activités'
+  },
+  'chart.infoHabits': {
+    'pt-BR': 'Monitore a consistência dos seus hábitos ao longo do tempo',
+    'en-US': 'Monitor the consistency of your habits over time',
+    'es-ES': 'Monitore la consistencia de sus hábitos a lo largo del tiempo',
+    'fr-FR': 'Surveillez la cohérence de vos habitudes au fil du temps'
   },
 
-  // Calendar month/day names (we'll use these programmatically)
+  // Modal nova etiqueta
+  'modal.novaEtiqueta': {
+    'pt-BR': 'Nova etiqueta',
+    'en-US': 'New tag',
+    'es-ES': 'Nueva etiqueta',
+    'fr-FR': 'Nouvelle étiquette'
+  },
+  'modal.nomeEtiqueta': {
+    'pt-BR': 'Nome da etiqueta',
+    'en-US': 'Tag name',
+    'es-ES': 'Nombre de etiqueta',
+    'fr-FR': 'Nom de l\'étiquette'
+  },
+  'modal.cor': {
+    'pt-BR': 'Cor',
+    'en-US': 'Color',
+    'es-ES': 'Color',
+    'fr-FR': 'Couleur'
+  },
+
+  // Calendário
+  'calendar.mesAnterior': {
+    'pt-BR': 'Mês anterior',
+    'en-US': 'Previous month',
+    'es-ES': 'Mes anterior',
+    'fr-FR': 'Mois précédent'
+  },
+  'calendar.proximoMes': {
+    'pt-BR': 'Próximo mês',
+    'en-US': 'Next month',
+    'es-ES': 'Próximo mes',
+    'fr-FR': 'Mois suivant'
+  },
+
+  // Meses e dias da semana
   'months': {
-    'pt-BR': ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
-    'en-US': ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-    'es-ES': ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-    'fr-FR': ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre']
+    'pt-BR': ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+    'en-US': ['January','February','March','April','May','June','July','August','September','October','November','December'],
+    'es-ES': ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+    'fr-FR': ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre']
   },
   'weekdays': {
-    'pt-BR': ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
-    'en-US': ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-    'es-ES': ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'],
-    'fr-FR': ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam']
+    'pt-BR': ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'],
+    'en-US': ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],
+    'es-ES': ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'],
+    'fr-FR': ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam']
   }
 };
 
@@ -448,7 +808,7 @@ const DOM = {
   userName: document.getElementById('userName'),
   userEmail: document.getElementById('userEmail'),
   showEmail: document.getElementById('showEmail'),
-  // Calendário - CORREÇÃO ADICIONADA
+  // Calendário
   calTitle: document.getElementById('calTitle'),
   calendarGrid: document.querySelector('.calendar-grid'),
   calPrev: document.getElementById('calPrev'),
@@ -505,6 +865,8 @@ function t(key) {
 // Aplica tradução nos elementos com data-i18n
 function applyLanguageToDOM() {
   const lang = getLang();
+  
+  // Traduz elementos com data-i18n
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
     if (I18N[key] && I18N[key][lang]) {
@@ -512,25 +874,103 @@ function applyLanguageToDOM() {
     }
   });
 
-  // Atualiza textos dinâmicos (por ex. títulos de view)
-  updateViewTitle();
+  // Traduz placeholders
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    if (I18N[key] && I18N[key][lang]) {
+      el.placeholder = I18N[key][lang];
+    }
+  });
 
-  // Atualiza textos do calendário e dos gráficos, se existirem
+  // Atualiza textos dinâmicos
+  updateViewTitle();
+  updateDynamicTexts();
+
+  // Atualiza calendário e gráficos
   if (typeof renderCalendar === 'function') renderCalendar();
   if (typeof initCharts === 'function') initCharts();
+  
+  // Atualiza textos específicos que não usam data-i18n
+  updateSpecificTexts();
 }
 
-// Recarrega a página ao trocar idioma
-function changeLanguage(newLang) {
-  state.preferences.language = newLang;
-  saveData();
-  window.location.reload(); // funciona localmente (file://)
+function updateDynamicTexts() {
+  const lang = getLang();
+  
+  // Atualiza botão de nova rotina
+  const quickAddBtn = document.getElementById('btnQuickAdd');
+  if (quickAddBtn && I18N['button.novaRotina']) {
+    quickAddBtn.textContent = I18N['button.novaRotina'][lang];
+  }
+
+  // Atualiza botão de nova etiqueta
+  const addTagBtn = document.getElementById('btnAddTag');
+  if (addTagBtn && I18N['button.novaEtiqueta']) {
+    addTagBtn.textContent = I18N['button.novaEtiqueta'][lang];
+  }
+}
+
+function updateSpecificTexts() {
+  const lang = getLang();
+  
+  // Atualiza dias da semana no modal de período personalizado
+  const weekdayLabels = {
+    0: 'weekday.dom', 1: 'weekday.seg', 2: 'weekday.ter', 
+    3: 'weekday.qua', 4: 'weekday.qui', 5: 'weekday.sex', 6: 'weekday.sab'
+  };
+  
+  document.querySelectorAll('.weekday-option').forEach((option, index) => {
+    const span = option.querySelector('span');
+    const key = weekdayLabels[index];
+    if (span && key && I18N[key] && I18N[key][lang]) {
+      span.textContent = I18N[key][lang];
+    }
+  });
+
+  // Atualiza opções de frequência
+  const frequencyOptions = document.querySelectorAll('#recurringFrequency option');
+  if (frequencyOptions.length >= 3) {
+    frequencyOptions[0].textContent = I18N['frequency.daily'][lang];
+    frequencyOptions[1].textContent = I18N['frequency.weekly'][lang];
+    frequencyOptions[2].textContent = I18N['frequency.monthly'][lang];
+  }
+
+  // Atualiza opções de prioridade
+  updatePriorityOptions();
+}
+
+function updatePriorityOptions() {
+  const lang = getLang();
+  
+  // Atualiza no painel de detalhes
+  const priorityOptions = document.querySelectorAll('#taskPriority option');
+  if (priorityOptions.length >= 3) {
+    priorityOptions[0].textContent = I18N['priority.baixa'][lang];
+    priorityOptions[1].textContent = I18N['priority.media'][lang];
+    priorityOptions[2].textContent = I18N['priority.alta'][lang];
+  }
+
+  // Atualiza no modal personalizado
+  const customPriorityOptions = document.querySelectorAll('#customPriority option');
+  if (customPriorityOptions.length >= 3) {
+    customPriorityOptions[0].textContent = I18N['priority.baixa'][lang];
+    customPriorityOptions[1].textContent = I18N['priority.media'][lang];
+    customPriorityOptions[2].textContent = I18N['priority.alta'][lang];
+  }
 }
 
 // Toast multilíngue
 function showToastTranslation(key, type = 'info') {
   const msg = t(key);
   showToast(msg, type);
+}
+
+// Recarrega a página ao trocar idioma
+function changeLanguage(newLang) {
+  state.preferences.language = newLang;
+  saveData();
+  applyLanguageToDOM();
+  showToastTranslation('toast.saved', 'success');
 }
 
 /* ===========================
@@ -629,7 +1069,7 @@ function saveData() {
       showSidebar: state.showSidebar
     };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(dataToSave));
-
+    
     // Se estiver na view de gráficos, atualizar os gráficos
     if (state.currentView === 'graficos') {
       initCharts();
@@ -676,7 +1116,7 @@ function showToast(message, type = 'info', duration = 3000) {
     toast.classList.add('fade-out');
     // remove depois da transição (evita remoção imediata cortando animação)
     toast.addEventListener('transitionend', () => {
-      try { toast.remove(); } catch (e) { }
+      try { toast.remove(); } catch(e) {}
     });
   }, duration);
 }
@@ -956,7 +1396,7 @@ function getFilteredTasks() {
       tasks = tasks.filter(task => {
         if (!task.date) return false;
         const td = new Date(task.date + 'T00:00:00');
-        td.setHours(0, 0, 0, 0);
+        td.setHours(0,0,0,0);
         return td.getTime() === today.getTime();
       });
       break;
@@ -1321,7 +1761,7 @@ function createTaskElement(task) {
     prioEl.className = 'priority'; // reset classes
     const priorityText = {
       'high': t('filter.alta'),
-      'medium': t('filter.media'),
+      'medium': t('filter.media'), 
       'low': t('filter.baixa')
     };
     prioEl.textContent = priorityText[task.priority] || t('filter.media');
@@ -1385,7 +1825,7 @@ function createBoardCard(task) {
     if (task.date) {
       const d = new Date(task.date + 'T00:00:00');
       dueEl.textContent = d.toLocaleDateString(getLang());
-      const today = new Date(); today.setHours(0, 0, 0, 0);
+      const today = new Date(); today.setHours(0,0,0,0);
       if (!task.completed && d < today) dueEl.classList.add('overdue');
       else dueEl.classList.remove('overdue');
     } else {
@@ -1434,7 +1874,7 @@ function createBoardCard(task) {
   if (actionButtons.length >= 2) {
     actionButtons[0].addEventListener('click', () => openTaskDetails(task.id)); // Detalhes
     // Botão concluir / desfazer
-    actionButtons[1].textContent = task.completed ? t('details.undo') : t('details.complete');
+    actionButtons[1].textContent = task.completed ? t('button.desfazer') : t('button.concluir');
     actionButtons[1].addEventListener('click', () => toggleTaskCompletion(task.id));
   }
 
@@ -1497,10 +1937,10 @@ function handleDrop(e) {
   // Persistência e render
   saveData();
   render(); // chama render (ou renderBoard para menor custo)
-
+  
   const statusText = {
     'todo': 'A fazer',
-    'doing': 'Em progresso',
+    'doing': 'Em progresso', 
     'done': 'Concluído'
   };
   showToast(`Rotina movida para: ${statusText[newStatus] || 'A fazer'}`, 'info');
@@ -1518,23 +1958,23 @@ function loadSettings() {
       DOM.app.setAttribute('data-theme', state.preferences.theme);
       if (DOM.themeToggle) DOM.themeToggle.checked = state.preferences.theme === 'dark';
     }
-
+    
     // Notificações
     if (DOM.notificationsToggle && state.preferences.notifications !== undefined) {
       DOM.notificationsToggle.checked = state.preferences.notifications;
     }
-
+    
     // Idioma
     if (DOM.appLanguage && state.preferences.language) {
       DOM.appLanguage.value = state.preferences.language;
     }
-
+    
     // Fonte
     if (DOM.fontFamily && state.preferences.fontFamily) {
       DOM.fontFamily.value = state.preferences.fontFamily;
       document.body.style.fontFamily = state.preferences.fontFamily;
     }
-
+    
     // Tamanho da fonte
     if (DOM.fontSize && state.preferences.fontSize) {
       DOM.fontSize.value = state.preferences.fontSize;
@@ -1554,7 +1994,7 @@ function saveSettings() {
     fontSize: DOM.fontSize ? DOM.fontSize.value : '16',
     showCompleted: state.preferences.showCompleted !== undefined ? state.preferences.showCompleted : true
   };
-
+  
   // Aplica as configurações
   DOM.app.setAttribute('data-theme', state.preferences.theme);
   if (DOM.fontFamily) document.body.style.fontFamily = state.preferences.fontFamily;
@@ -1562,7 +2002,7 @@ function saveSettings() {
     document.body.style.fontSize = state.preferences.fontSize + 'px';
     if (DOM.fontSizeValue) DOM.fontSizeValue.textContent = state.preferences.fontSize + 'px';
   }
-
+  
   saveData();
   showToastTranslation('toast.saved', 'success');
 }
@@ -1571,7 +2011,7 @@ function saveSettings() {
 function resetSettings() {
   const confirmed = confirm('Deseja restaurar as configurações padrão?');
   if (!confirmed) return;
-
+  
   state.preferences = {
     theme: 'light',
     notifications: true,
@@ -1580,7 +2020,7 @@ function resetSettings() {
     fontSize: '16',
     showCompleted: true
   };
-
+  
   loadSettings();
   saveData();
   applyLanguageToDOM();
@@ -1615,19 +2055,19 @@ function renderProfile() {
 // Abrir modal de período personalizado
 function openCustomPeriodModal() {
   if (!DOM.modalCustomPeriod) return;
-
+  
   // Definir data mínima como hoje
   const today = new Date().toISOString().split('T')[0];
   if (DOM.customStartDate) DOM.customStartDate.min = today;
   if (DOM.customEndDate) DOM.customEndDate.min = today;
   if (DOM.recurringStartDate) DOM.recurringStartDate.min = today;
-
+  
   // Limpar formulário
   DOM.customPeriodForm.reset();
-
+  
   // Mostrar seção padrão (intervalo)
   showPeriodSection('range');
-
+  
   // Abrir modal
   if (DOM.modalCustomPeriod.showModal) DOM.modalCustomPeriod.showModal();
   if (DOM.customTitle) DOM.customTitle.focus();
@@ -1636,10 +2076,10 @@ function openCustomPeriodModal() {
 // Função para fechar o modal de período personalizado
 function closeCustomPeriodModal() {
   if (!DOM.modalCustomPeriod) return;
-
+  
   // Limpar formulário
   if (DOM.customPeriodForm) DOM.customPeriodForm.reset();
-
+  
   // Fechar modal
   if (DOM.modalCustomPeriod.close) DOM.modalCustomPeriod.close();
 }
@@ -1650,9 +2090,9 @@ function showPeriodSection(type) {
   if (DOM.periodRangeSection) DOM.periodRangeSection.style.display = 'none';
   if (DOM.periodSpecificSection) DOM.periodSpecificSection.style.display = 'none';
   if (DOM.periodRecurringSection) DOM.periodRecurringSection.style.display = 'none';
-
+  
   // Mostrar a seção selecionada
-  switch (type) {
+  switch(type) {
     case 'range':
       if (DOM.periodRangeSection) DOM.periodRangeSection.style.display = 'block';
       break;
@@ -1668,24 +2108,24 @@ function showPeriodSection(type) {
 // Adicionar campo de data para dias específicos
 function addSpecificDateField() {
   if (!DOM.specificDatesContainer) return;
-
+  
   const dateRow = document.createElement('div');
   dateRow.className = 'date-input-row';
-
+  
   const dateInput = document.createElement('input');
   dateInput.type = 'date';
   dateInput.className = 'specific-date';
-
+  
   const removeBtn = document.createElement('button');
   removeBtn.type = 'button';
   removeBtn.className = 'btn icon only remove-date';
   removeBtn.setAttribute('aria-label', 'Remover data');
   removeBtn.textContent = '✕';
-
-  removeBtn.addEventListener('click', function () {
+  
+  removeBtn.addEventListener('click', function() {
     dateRow.remove();
   });
-
+  
   dateRow.appendChild(dateInput);
   dateRow.appendChild(removeBtn);
   DOM.specificDatesContainer.appendChild(dateRow);
@@ -1694,11 +2134,11 @@ function addSpecificDateField() {
 // Atualizar unidade de intervalo baseada na frequência
 function updateIntervalUnit() {
   if (!DOM.recurringFrequency || !DOM.intervalUnit) return;
-
+  
   const frequency = DOM.recurringFrequency.value;
   let unit = 'dia(s)';
-
-  switch (frequency) {
+  
+  switch(frequency) {
     case 'weekly':
       unit = 'semana(s)';
       break;
@@ -1706,18 +2146,18 @@ function updateIntervalUnit() {
       unit = 'mês(es)';
       break;
   }
-
+  
   DOM.intervalUnit.textContent = unit;
 }
 
 // Habilitar/desabilitar campos de término baseado na seleção
 function toggleRecurringEndFields() {
   const selectedValue = document.querySelector('input[name="recurringEnd"]:checked').value;
-
+  
   if (DOM.recurringOccurrences) {
     DOM.recurringOccurrences.disabled = selectedValue !== 'after';
   }
-
+  
   if (DOM.recurringEndDate) {
     DOM.recurringEndDate.disabled = selectedValue !== 'on';
   }
@@ -1726,14 +2166,14 @@ function toggleRecurringEndFields() {
 // Gerar todas as datas para uma rotina baseada no tipo de período
 function generateRoutineDates(periodType, formData) {
   let dates = [];
-
-  switch (periodType) {
+  
+  switch(periodType) {
     case 'range':
       // Gerar datas entre início e fim, considerando apenas os dias da semana selecionados
       const start = new Date(formData.startDate);
       const end = new Date(formData.endDate);
       const selectedDays = formData.selectedDays || [1, 2, 3, 4, 5]; // Padrão: dias de semana
-
+      
       let current = new Date(start);
       while (current <= end) {
         if (selectedDays.includes(current.getDay())) {
@@ -1742,18 +2182,18 @@ function generateRoutineDates(periodType, formData) {
         current.setDate(current.getDate() + 1);
       }
       break;
-
+      
     case 'specific':
       // Usar as datas específicas fornecidas
       dates = formData.specificDates.filter(date => date.trim() !== '');
       break;
-
+      
     case 'recurring':
       // Gerar datas baseadas na recorrência
       dates = generateRecurringDates(formData);
       break;
   }
-
+  
   return dates;
 }
 
@@ -1763,22 +2203,22 @@ function generateRecurringDates(formData) {
   const startDate = new Date(formData.startDate);
   const frequency = formData.frequency;
   const interval = parseInt(formData.interval) || 1;
-
+  
   let currentDate = new Date(startDate);
   let occurrenceCount = 0;
   const maxOccurrences = formData.endType === 'after' ? parseInt(formData.occurrences) : Infinity;
   const endDate = formData.endType === 'on' ? new Date(formData.endDate) : null;
-
+  
   while (
-    (formData.endType === 'never' ||
-      (formData.endType === 'after' && occurrenceCount < maxOccurrences) ||
-      (formData.endType === 'on' && currentDate <= endDate))
+    (formData.endType === 'never' || 
+     (formData.endType === 'after' && occurrenceCount < maxOccurrences) ||
+     (formData.endType === 'on' && currentDate <= endDate))
   ) {
     dates.push(formatDateForInput(currentDate));
     occurrenceCount++;
-
+    
     // Avançar para a próxima data baseada na frequência
-    switch (frequency) {
+    switch(frequency) {
       case 'daily':
         currentDate.setDate(currentDate.getDate() + interval);
         break;
@@ -1789,25 +2229,25 @@ function generateRecurringDates(formData) {
         currentDate.setMonth(currentDate.getMonth() + interval);
         break;
     }
-
+    
     // Limitar a um número razoável de ocorrências para evitar loops infinitos
     if (occurrenceCount > 365) break;
   }
-
+  
   return dates;
 }
 
 // Adicionar múltiplas rotinas baseadas nas datas geradas
 function addRoutinesWithCustomPeriod(formData) {
   const dates = generateRoutineDates(formData.periodType, formData);
-
+  
   if (dates.length === 0) {
     showToast('Nenhuma data válida foi gerada para esta rotina.', 'error');
     return;
   }
-
+  
   let createdCount = 0;
-
+  
   dates.forEach(date => {
     const routineData = {
       title: formData.title,
@@ -1820,37 +2260,37 @@ function addRoutinesWithCustomPeriod(formData) {
       completed: false,
       isRecurring: formData.periodType === 'recurring'
     };
-
+    
     const result = addNewRoutine(routineData);
     if (result) createdCount++;
   });
-
+  
   showToast(`${createdCount} rotina(s) criada(s) com sucesso!`, 'success');
 }
 
 // Processar formulário de período personalizado
 function processCustomPeriodForm(e) {
   if (e && e.preventDefault) e.preventDefault();
-
+  
   // Verificar se é o botão cancelar
   const submitter = e.submitter;
   if (submitter && submitter.value === 'cancel') {
     closeCustomPeriodModal();
     return;
   }
-
+  
   // Coletar dados do formulário
   const title = DOM.customTitle ? DOM.customTitle.value.trim() : '';
   const description = DOM.customDesc ? DOM.customDesc.value : '';
   const time = DOM.customTime ? DOM.customTime.value || undefined : undefined;
   const priority = DOM.customPriority ? DOM.customPriority.value : 'medium';
   const tag = DOM.customTag ? normalizeTag(DOM.customTag.value) : undefined;
-
+  
   if (!title) {
     showToastTranslation('toast.requiredTitle', 'error');
     return;
   }
-
+  
   // Determinar tipo de período selecionado
   const periodType = document.querySelector('input[name="periodType"]:checked').value;
   let formData = {
@@ -1861,69 +2301,69 @@ function processCustomPeriodForm(e) {
     tag,
     periodType
   };
-
+  
   // Coletar dados específicos do tipo de período
-  switch (periodType) {
+  switch(periodType) {
     case 'range':
       const startDate = DOM.customStartDate ? DOM.customStartDate.value : '';
       const endDate = DOM.customEndDate ? DOM.customEndDate.value : '';
-
+      
       if (!startDate || !endDate) {
         showToast('As datas de início e término são obrigatórias.', 'error');
         return;
       }
-
+      
       if (new Date(startDate) > new Date(endDate)) {
         showToast('A data de início não pode ser posterior à data de término.', 'error');
         return;
       }
-
+      
       // Coletar dias da semana selecionados
       const selectedDays = [];
       document.querySelectorAll('.weekday-option input[type="checkbox"]:checked').forEach(cb => {
         selectedDays.push(parseInt(cb.value));
       });
-
+      
       formData.startDate = startDate;
       formData.endDate = endDate;
       formData.selectedDays = selectedDays;
       break;
-
+      
     case 'specific':
       const specificDates = [];
       document.querySelectorAll('.specific-date').forEach(input => {
         if (input.value) specificDates.push(input.value);
       });
-
+      
       if (specificDates.length === 0) {
         showToast('Pelo menos uma data específica deve ser fornecida.', 'error');
         return;
       }
-
+      
       formData.specificDates = specificDates;
       break;
-
+      
     case 'recurring':
       const recurringStartDate = DOM.recurringStartDate ? DOM.recurringStartDate.value : '';
       const frequency = DOM.recurringFrequency ? DOM.recurringFrequency.value : 'weekly';
       const interval = DOM.recurringInterval ? DOM.recurringInterval.value : '1';
       const endType = document.querySelector('input[name="recurringEnd"]:checked').value;
-
+      
       if (!recurringStartDate) {
         showToast('A data de início é obrigatória para rotinas recorrentes.', 'error');
         return;
       }
-
+      
       formData.startDate = recurringStartDate;
       formData.frequency = frequency;
       formData.interval = interval;
       formData.endType = endType;
-
+      
       if (endType === 'after') {
         formData.occurrences = DOM.recurringOccurrences ? DOM.recurringOccurrences.value : '10';
       } else if (endType === 'on') {
         formData.endDate = DOM.recurringEndDate ? DOM.recurringEndDate.value : '';
-
+        
         if (!formData.endDate) {
           showToast('A data de término é obrigatória quando selecionada.', 'error');
           return;
@@ -1931,10 +2371,10 @@ function processCustomPeriodForm(e) {
       }
       break;
   }
-
+  
   // Criar as rotinas
   addRoutinesWithCustomPeriod(formData);
-
+  
   // Fechar modal
   closeCustomPeriodModal();
 }
@@ -2000,29 +2440,29 @@ function setupEventListeners() {
   // Event listeners para o modal de período personalizado
   if (DOM.periodTypeRadios) {
     DOM.periodTypeRadios.forEach(radio => {
-      radio.addEventListener('change', function () {
+      radio.addEventListener('change', function() {
         showPeriodSection(this.value);
       });
     });
   }
-
+  
   if (DOM.addDateBtn) {
     DOM.addDateBtn.addEventListener('click', addSpecificDateField);
   }
-
+  
   if (DOM.recurringFrequency) {
     DOM.recurringFrequency.addEventListener('change', updateIntervalUnit);
   }
-
+  
   if (DOM.recurringEndRadios) {
     DOM.recurringEndRadios.forEach(radio => {
       radio.addEventListener('change', toggleRecurringEndFields);
     });
   }
-
+  
   if (DOM.customPeriodForm) {
     DOM.customPeriodForm.addEventListener('submit', processCustomPeriodForm);
-
+    
     // Botão cancelar
     const cancelBtn = DOM.customPeriodForm.querySelector('button[value="cancel"]');
     if (cancelBtn) {
@@ -2032,7 +2472,7 @@ function setupEventListeners() {
     }
   }
 
-  // Navegação do calendário (mudar mês) - CORREÇÃO ADICIONADA
+  // Navegação do calendário (mudar mês)
   if (DOM.calPrev) DOM.calPrev.addEventListener('click', () => {
     state.currentDate.setMonth(state.currentDate.getMonth() - 1);
     renderCalendar();
@@ -2046,15 +2486,15 @@ function setupEventListeners() {
   if (DOM.themeToggle) {
     DOM.themeToggle.addEventListener('change', toggleTheme);
   }
-
+  
   if (DOM.btnSaveSettings) {
     DOM.btnSaveSettings.addEventListener('click', saveSettings);
   }
-
+  
   if (DOM.btnResetSettings) {
     DOM.btnResetSettings.addEventListener('click', resetSettings);
   }
-
+  
   if (DOM.btnOpenConfig) {
     DOM.btnOpenConfig.addEventListener('click', (e) => {
       e.preventDefault();
@@ -2068,7 +2508,7 @@ function setupEventListeners() {
       changeLanguage(e.target.value);
     });
   }
-
+  
   // Controles de configuração em tempo real
   if (DOM.fontSize) {
     DOM.fontSize.addEventListener('input', (e) => {
@@ -2076,7 +2516,7 @@ function setupEventListeners() {
       if (DOM.fontSizeValue) DOM.fontSizeValue.textContent = e.target.value + 'px';
     });
   }
-
+  
   if (DOM.fontFamily) {
     DOM.fontFamily.addEventListener('change', (e) => {
       document.body.style.fontFamily = e.target.value;
@@ -2089,10 +2529,10 @@ function setupEventListeners() {
       e.preventDefault();
       if (DOM.userEmail.textContent.includes('*')) {
         DOM.userEmail.textContent = state.profile.email;
-        DOM.showEmail.textContent = 'Ocultar';
+        DOM.showEmail.textContent = t('profile.ocultar');
       } else {
         DOM.userEmail.textContent = '*****************@gmail.com';
-        DOM.showEmail.textContent = 'Mostrar';
+        DOM.showEmail.textContent = t('profile.mostrar');
       }
     });
   }
@@ -2163,156 +2603,182 @@ function updateClock() {
 
 // Inicializar todos os gráficos
 function initCharts() {
-  console.log('Inicializando gráficos...');
-
-  if (!state.routines || state.routines.length === 0) {
-    console.log('Nenhuma rotina encontrada para gráficos');
-    renderEmptyCharts();
-    return;
-  }
-
-  try {
-    renderWeeklyProgressChart();
-    renderTimeDistributionChart();
-    renderHabitsOverTimeChart();
-    console.log('Gráficos inicializados com sucesso!');
-  } catch (error) {
-    console.error('Erro ao inicializar gráficos:', error);
-    renderEmptyCharts();
-  }
+    console.log('Inicializando gráficos...');
+    
+    if (!state.routines || state.routines.length === 0) {
+        console.log('Nenhuma rotina encontrada para gráficos');
+        renderEmptyCharts();
+        return;
+    }
+    
+    try {
+        renderWeeklyProgressChart();
+        renderTimeDistributionChart();
+        renderHabitsOverTimeChart();
+        console.log('Gráficos inicializados com sucesso!');
+    } catch (error) {
+        console.error('Erro ao inicializar gráficos:', error);
+        renderEmptyCharts();
+    }
 }
 
 // Renderizar gráfico de progresso semanal - VERSÃO SIMPLIFICADA
 function renderWeeklyProgressChart() {
-  const ctx = document.getElementById('weeklyProgressChart');
-  if (!ctx) {
-    console.log('Elemento weeklyProgressChart não encontrado');
-    return;
-  }
-
-  // Destruir gráfico anterior se existir
-  if (ctx.chartInstance) {
-    ctx.chartInstance.destroy();
-  }
-
-  // Dados de exemplo para teste
-  const weeklyData = [5, 8, 6, 9, 7, 4, 3];
-
-  ctx.chartInstance = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: I18N.weekdays[getLang()],
-      datasets: [{
-        label: t('chart.weeklyProgress'),
-        data: weeklyData,
-        backgroundColor: '#ff5454',
-        borderColor: '#ff2c2c',
-        borderWidth: 1
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      }
+    const ctx = document.getElementById('weeklyProgressChart');
+    if (!ctx) {
+        console.log('Elemento weeklyProgressChart não encontrado');
+        return;
     }
-  });
+    
+    // Destruir gráfico anterior se existir
+    if (ctx.chartInstance) {
+        ctx.chartInstance.destroy();
+    }
+    
+    const weeklyData = [5, 8, 6, 9, 7, 4, 3];
+    const lang = getLang();
+    
+    ctx.chartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: I18N.weekdays[lang],
+            datasets: [{
+                label: t('chart.weeklyProgress'),
+                data: weeklyData,
+                backgroundColor: '#ff5454',
+                borderColor: '#ff2c2c',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    // Atualiza texto informativo
+    const infoText = ctx.closest('.chart-container').querySelector('.info-text');
+    if (infoText) {
+        infoText.textContent = t('chart.infoWeekly');
+    }
 }
 
 // Renderizar gráfico de distribuição de tempo - VERSÃO SIMPLIFICADA
 function renderTimeDistributionChart() {
-  const ctx = document.getElementById('timeDistributionChart');
-  if (!ctx) return;
-
-  if (ctx.chartInstance) {
-    ctx.chartInstance.destroy();
-  }
-
-  // Dados de exemplo
-  ctx.chartInstance = new Chart(ctx, {
-    type: 'doughnut',
-    data: {
-      labels: [t('filter.trabalho'), t('filter.saude'), t('filter.estudos'), t('filter.pessoal')],
-      datasets: [{
-        data: [30, 20, 25, 25],
-        backgroundColor: ['#ff5454', '#4f46e5', '#10b981', '#f59e0b'],
-        borderWidth: 2
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false
+    const ctx = document.getElementById('timeDistributionChart');
+    if (!ctx) return;
+    
+    if (ctx.chartInstance) {
+        ctx.chartInstance.destroy();
     }
-  });
+    
+    const lang = getLang();
+    
+    ctx.chartInstance = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: [t('tag.trabalho'), t('tag.saude'), t('tag.estudos'), t('tag.pessoal')],
+            datasets: [{
+                data: [30, 20, 25, 25],
+                backgroundColor: ['#ff5454', '#4f46e5', '#10b981', '#f59e0b'],
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+
+    // Atualiza texto informativo
+    const infoText = ctx.closest('.chart-container').querySelector('.info-text');
+    if (infoText) {
+        infoText.textContent = t('chart.infoTime');
+    }
 }
 
 // Renderizar gráfico de hábitos ao longo do tempo - VERSÃO SIMPLIFICADA
 function renderHabitsOverTimeChart() {
-  const ctx = document.getElementById('habitsOverTimeChart');
-  if (!ctx) return;
-
-  if (ctx.chartInstance) {
-    ctx.chartInstance.destroy();
-  }
-
-  const lang = getLang();
-  const monthNames = I18N.months[lang];
-
-  ctx.chartInstance = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: ['01/03', '02/03', '03/03', '04/03', '05/03', '06/03', '07/03'],
-      datasets: [{
-        label: t('chart.habitsOverTime'),
-        data: [3, 5, 2, 6, 4, 7, 8],
-        borderColor: '#ff5454',
-        backgroundColor: 'rgba(255, 84, 84, 0.1)',
-        borderWidth: 2,
-        fill: true
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false
+    const ctx = document.getElementById('habitsOverTimeChart');
+    if (!ctx) return;
+    
+    if (ctx.chartInstance) {
+        ctx.chartInstance.destroy();
     }
-  });
+    
+    const lang = getLang();
+    
+    ctx.chartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['01/03', '02/03', '03/03', '04/03', '05/03', '06/03', '07/03'],
+            datasets: [{
+                label: t('chart.habitsOverTime'),
+                data: [3, 5, 2, 6, 4, 7, 8],
+                borderColor: '#ff5454',
+                backgroundColor: 'rgba(255, 84, 84, 0.1)',
+                borderWidth: 2,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+
+    // Atualiza texto informativo
+    const infoText = ctx.closest('.chart-container').querySelector('.info-text');
+    if (infoText) {
+        infoText.textContent = t('chart.infoHabits');
+    }
 }
 
 function renderEmptyCharts() {
-  const chartIds = [
-    'weeklyProgressChart',
-    'timeDistributionChart',
-    'habitsOverTimeChart'
-  ];
+    const chartIds = [
+        'weeklyProgressChart',
+        'timeDistributionChart', 
+        'habitsOverTimeChart'
+    ];
+    
+    chartIds.forEach(chartId => {
+        const ctx = document.getElementById(chartId);
+        if (ctx) {
+            if (ctx.chartInstance) {
+                ctx.chartInstance.destroy();
+            }
+            
+            const lang = getLang();
+            
+            // Criar gráfico vazio
+            ctx.chartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: [t('empty.none')],
+                    datasets: [{
+                        label: t('empty.addRoutines'),
+                        data: [1],
+                        backgroundColor: '#e5e7eb'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
 
-  chartIds.forEach(chartId => {
-    const ctx = document.getElementById(chartId);
-    if (ctx) {
-      if (ctx.chartInstance) {
-        ctx.chartInstance.destroy();
-      }
-
-      // Criar gráfico vazio
-      ctx.chartInstance = new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: [t('empty.none')],
-          datasets: [{
-            label: t('empty.addRoutines'),
-            data: [1],
-            backgroundColor: '#e5e7eb'
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false
+            // Atualiza texto informativo
+            const infoText = ctx.closest('.chart-container').querySelector('.info-text');
+            if (infoText) {
+                infoText.textContent = t('empty.addRoutines');
+            }
         }
-      });
-    }
-  });
+    });
 }
 
 /* ===========================
