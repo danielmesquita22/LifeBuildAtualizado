@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Rotinas</title>
+  <title data-i18n="view.hoje">Rotinas</title>
   <meta name="description" content="App de rotinas com visual inspirado no Asana, feito com HTML, CSS e JS separados." />
   <link rel="stylesheet" href="style.css" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,7 +30,7 @@
           </div>
 
           <nav class="top-actions" aria-label="Ações rápidas">
-            <button class="btn ghost" id="btnQuickAdd" aria-haspopup="dialog">+ Nova rotina</button>
+            <button class="btn ghost" id="btnQuickAdd" data-i18n="button.novaRotina">+ Nova rotina</button>
             <div class="profile" id="profileMenu" aria-haspopup="menu">
               <a class="avatar" href="#" aria-label="Abrir menu do usuário" id="btnOpenConfig">
                 <img src="img/Ryo.jpg" alt="Avatar do usuário" />
@@ -42,48 +42,48 @@
     <div class="layout">
       <aside class="sidebar" id="sidebar" aria-label="Menu principal">
         <section class="section">
-          <h2 class="section-title">Visão Geral</h2>
+          <h2 class="section-title" data-i18n="menu.visaoGeral">Visão Geral</h2>
           <ul class="menu" role="list">
-            <li><a class="menu-link is-active" href="#viewHoje" data-view="hoje">Hoje</a></li>
-            <li><a class="menu-link" href="#viewTodasRotinas" data-view="todasRotinas">Todas as Rotinas</a></li>
-            <li><a class="menu-link" href="#viewCalendario" data-view="calendario">Calendário</a></li>
-            <li><a class="menu-link" href="#viewGraficos" data-view="graficos">Gráficos</a></li>
+            <li><a class="menu-link is-active" href="#viewHoje" data-view="hoje" data-i18n="view.hoje">Hoje</a></li>
+            <li><a class="menu-link" href="#viewTodasRotinas" data-view="todasRotinas" data-i18n="view.todasRotinas">Todas as Rotinas</a></li>
+            <li><a class="menu-link" href="#viewCalendario" data-view="calendario" data-i18n="view.calendario">Calendário</a></li>
+            <li><a class="menu-link" href="#viewGraficos" data-view="graficos" data-i18n="view.graficos">Gráficos</a></li>
           </ul>
         </section>
 
         <section class="section">
-          <h2 class="section-title">Etiquetas</h2>
+          <h2 class="section-title" data-i18n="menu.etiquetas">Etiquetas</h2>
           <ul class="tags" role="list" id="tagList">
-            <li><a class="tag" href="#" data-tag="pessoal">#pessoal</a></li>
-            <li><a class="tag" href="#" data-tag="trabalho">#trabalho</a></li>
-            <li><a class="tag" href="#" data-tag="saude">#saúde</a></li>
-            <li><a class="tag" href="#" data-tag="estudos">#estudos</a></li>
+            <li><a class="tag" href="#" data-tag="pessoal" data-i18n="tag.pessoal">#pessoal</a></li>
+            <li><a class="tag" href="#" data-tag="trabalho" data-i18n="tag.trabalho">#trabalho</a></li>
+            <li><a class="tag" href="#" data-tag="saude" data-i18n="tag.saude">#saúde</a></li>
+            <li><a class="tag" href="#" data-tag="estudos" data-i18n="tag.estudos">#estudos</a></li>
           </ul>
-          <button class="btn small" id="btnAddTag">+ Nova etiqueta</button>
+          <button class="btn small" id="btnAddTag" data-i18n="button.novaEtiqueta">+ Nova etiqueta</button>
         </section>
 
         <section class="section">
-          <h2 class="section-title">Filtros</h2>
+          <h2 class="section-title" data-i18n="menu.filtros">Filtros</h2>
           <ul class="menu" role="list">
-            <li><a class="menu-link" href="#" data-filter="pendentes">Pendentes</a></li>
-            <li><a class="menu-link" href="#" data-filter="concluidas">Concluídas</a></li>
-            <li><a class="menu-link" href="#" data-filter="alta">Prioridade alta</a></li>
-            <li><a class="menu-link" href="#" data-filter="media">Prioridade média</a></li>
-            <li><a class="menu-link" href="#" data-filter="baixa">Prioridade baixa</a></li>
-            <li><a class="menu-link" href="#" data-filter="semData">Sem data</a></li>
+            <li><a class="menu-link" href="#" data-filter="pendentes" data-i18n="filter.pendentes">Pendentes</a></li>
+            <li><a class="menu-link" href="#" data-filter="concluidas" data-i18n="filter.concluidas">Concluídas</a></li>
+            <li><a class="menu-link" href="#" data-filter="alta" data-i18n="filter.alta">Prioridade alta</a></li>
+            <li><a class="menu-link" href="#" data-filter="media" data-i18n="filter.media">Prioridade média</a></li>
+            <li><a class="menu-link" href="#" data-filter="baixa" data-i18n="filter.baixa">Prioridade baixa</a></li>
+            <li><a class="menu-link" href="#" data-filter="semData" data-i18n="filter.semData">Sem data</a></li>
           </ul>
         </section>
 
         <section class="section">
           <ul class="menu" role="list">
-            <li><a class="menu-link" href="#viewConfig" data-view="config">Configurações</a></li>
+            <li><a class="menu-link" href="#viewConfig" data-view="config" data-i18n="view.config">Configurações</a></li>
           </ul>
         </section>
       </aside>
 
       <main class="content">
         <header class="content-header">
-          <h1 class="view-title" id="viewTitle">Hoje</h1>
+          <h1 class="view-title" id="viewTitle" data-i18n="view.hoje">Hoje</h1>
           <div class="view-actions"></div>
         </header>
 
@@ -100,24 +100,24 @@
           <div class="board" role="region" aria-label="Quadro de tarefas">
             <div class="column" data-col="todo" aria-label="A fazer">
               <header class="column-header">
-                <h2>A fazer</h2>
-                <button class="btn small ghost" data-add-to="todo">+ Adicionar</button>
+                <h2 data-i18n="status.todo">A fazer</h2>
+                <button class="btn small ghost" data-add-to="todo" data-i18n="button.adicionarTarefa">+ Adicionar</button>
               </header>
               <ul class="card-list" role="list" aria-describedby="todoCount"></ul>
               <div id="todoCount" class="count" aria-live="polite">0 itens</div>
             </div>
             <div class="column" data-col="doing" aria-label="Em progresso">
               <header class="column-header">
-                <h2>Em progresso</h2>
-                <button class="btn small ghost" data-add-to="doing">+ Adicionar</button>
+                <h2 data-i18n="status.doing">Em progresso</h2>
+                <button class="btn small ghost" data-add-to="doing" data-i18n="button.adicionarTarefa">+ Adicionar</button>
               </header>
               <ul class="card-list" role="list" aria-describedby="doingCount"></ul>
               <div id="doingCount" class="count" aria-live="polite">0 itens</div>
             </div>
             <div class="column" data-col="done" aria-label="Concluído">
               <header class="column-header">
-                <h2>Concluído</h2>
-                <button class="btn small ghost" data-add-to="done">+ Adicionar</button>
+                <h2 data-i18n="status.done">Concluído</h2>
+                <button class="btn small ghost" data-add-to="done" data-i18n="button.adicionarTarefa">+ Adicionar</button>
               </header>
               <ul class="card-list" role="list" aria-describedby="doneCount"></ul>
               <div id="doneCount" class="count" aria-live="polite">0 itens</div>
@@ -140,29 +140,29 @@
             <div class="charts-grid">
                 <!-- Gráfico de Barras - Progresso Semanal -->
                 <div class="chart-container">
-                    <h2 class="chart-title">Progresso Semanal de Tarefas</h2>
+                    <h2 class="chart-title" data-i18n="chart.weeklyProgress">Progresso Semanal de Tarefas</h2>
                     <div class="chart-wrapper">
                         <canvas id="weeklyProgressChart"></canvas>
                     </div>
-                    <p class="info-text">Acompanhe sua produtividade ao longo da semana</p>
+                    <p class="info-text" data-i18n="chart.infoWeekly">Acompanhe sua produtividade ao longo da semana</p>
                 </div>
                 
                 <!-- Gráfico de Pizza - Distribuição de Tempo -->
                 <div class="chart-container">
-                    <h2 class="chart-title">Distribuição do Tempo</h2>
+                    <h2 class="chart-title" data-i18n="chart.timeDistribution">Distribuição do Tempo</h2>
                     <div class="chart-wrapper">
                         <canvas id="timeDistributionChart"></canvas>
                     </div>
-                    <p class="info-text">Veja como você distribui seu tempo entre diferentes atividades</p>
+                    <p class="info-text" data-i18n="chart.infoTime">Veja como você distribui seu tempo entre diferentes atividades</p>
                 </div>
                 
                 <!-- Gráfico de Linha - Hábitos ao Longo do Tempo -->
                 <div class="chart-container">
-                    <h2 class="chart-title">Evolução de Hábitos</h2>
+                    <h2 class="chart-title" data-i18n="chart.habitsOverTime">Evolução de Hábitos</h2>
                     <div class="chart-wrapper">
                         <canvas id="habitsOverTimeChart"></canvas>
                     </div>
-                    <p class="info-text">Monitore a consistência dos seus hábitos ao longo do tempo</p>
+                    <p class="info-text" data-i18n="chart.infoHabits">Monitore a consistência dos seus hábitos ao longo do tempo</p>
                 </div>
             </div>
           </div>
@@ -177,32 +177,32 @@
                   <img src="img/Ryo.jpg" alt="Foto do perfil" class="profile-photo" />
                   <input type="file" id="profilePhotoInput" accept="image/*" style="display:none;" />
                   <div class="profile-info">
-                    <button class="btn edit-profile" id="btnEditProfile">Editar perfil de usuário</button>
+                    <button class="btn edit-profile" id="btnEditProfile" data-i18n="button.editarPerfil">Editar perfil de usuário</button>
                   </div>
                 </section>
 
                 <section class="account-info">
                   <div class="info-item">
-                    <label>Nome exibido</label>
+                    <label data-i18n="profile.nomeExibido">Nome exibido</label>
                     <div class="info-field">
                       <span id="displayName">Carlos</span>
-                      <button class="edit-btn" data-edit="displayName">Editar</button>
+                      <button class="edit-btn" data-edit="displayName" data-i18n="profile.editar">Editar</button>
                     </div>
                   </div>
 
                   <div class="info-item">
-                    <label>Nome de usuário</label>
+                    <label data-i18n="profile.nomeUsuario">Nome de usuário</label>
                     <div class="info-field">
                       <span id="userName">onror</span>
-                      <button class="edit-btn" data-edit="userName">Editar</button>
+                      <button class="edit-btn" data-edit="userName" data-i18n="profile.editar">Editar</button>
                     </div>
                   </div>
 
                   <div class="info-item">
-                    <label>E-mail</label>
+                    <label data-i18n="profile.email">E-mail</label>
                     <div class="info-field">
                       <span id="userEmail">*****************@gmail.com</span>
-                      <a href="#" class="link" id="showEmail">Mostrar</a>
+                      <a href="#" class="link" id="showEmail" data-i18n="profile.mostrar">Mostrar</a>
                     </div>
                   </div>
                 </section>
@@ -265,43 +265,43 @@
       <div class="details-body">
         <form class="details-form" id="detailsForm">
           <label class="field">
-            <span>Título</span>
-            <input type="text" id="taskTitle" placeholder="Nome da rotina" required />
+            <span data-i18n="details.titulo">Título</span>
+            <input type="text" id="taskTitle" data-i18n-placeholder="details.titulo" placeholder="Nome da rotina" required />
           </label>
           <label class="field">
-            <span>Descrição</span>
-            <textarea id="taskDesc" rows="6" placeholder="Detalhes, comentários, notas..."></textarea>
+            <span data-i18n="details.descricao">Descrição</span>
+            <textarea id="taskDesc" rows="6" data-i18n-placeholder="details.descricao" placeholder="Detalhes, comentários, notas..."></textarea>
           </label>
           <div class="grid two">
             <label class="field">
-              <span>Data</span>
+              <span data-i18n="details.data">Data</span>
               <input type="date" id="taskDate" />
             </label>
             <label class="field">
-              <span>Hora</span>
+              <span data-i18n="details.hora">Hora</span>
               <input type="time" id="taskTime" />
             </label>
           </div>
           <div class="grid two">
             <label class="field">
-              <span>Prioridade</span>
+              <span data-i18n="details.prioridade">Prioridade</span>
               <select id="taskPriority">
-                <option value="low">Baixa</option>
-                <option value="medium" selected>Média</option>
-                <option value="high">Alta</option>
+                <option value="low" data-i18n="priority.baixa">Baixa</option>
+                <option value="medium" selected data-i18n="priority.media">Média</option>
+                <option value="high" data-i18n="priority.alta">Alta</option>
               </select>
             </label>
             <label class="field">
-              <span>Etiqueta</span>
-              <input type="text" id="taskTag" list="datalistTags" placeholder="#pessoal, #trabalho" />
+              <span data-i18n="details.etiqueta">Etiqueta</span>
+              <input type="text" id="taskTag" list="datalistTags" data-i18n-placeholder="details.etiqueta" placeholder="#pessoal, #trabalho" />
               <datalist id="datalistTags"></datalist>
             </label>
           </div>
           <div class="actions">
-            <button type="button" class="btn danger ghost" id="btnDeleteTask">Excluir</button>
+            <button type="button" class="btn danger ghost" id="btnDeleteTask" data-i18n="button.excluir">Excluir</button>
             <div class="spacer"></div>
-            <button type="button" class="btn ghost" id="btnDuplicateTask">Duplicar</button>
-            <button type="submit" class="btn" id="btnSaveTask">Salvar</button>
+            <button type="button" class="btn ghost" id="btnDuplicateTask" data-i18n="button.duplicar">Duplicar</button>
+            <button type="submit" class="btn" id="btnSaveTask" data-i18n="button.salvar">Salvar</button>
           </div>
         </form>
       </div>
@@ -311,33 +311,33 @@
     <dialog class="modal" id="modalCustomPeriod" aria-labelledby="modalCustomPeriodTitle" aria-modal="true">
       <form method="dialog" class="modal-content" id="customPeriodForm">
         <header class="modal-header">
-          <h2 id="modalCustomPeriodTitle">Adicionar rotina com período personalizado</h2>
+          <h2 id="modalCustomPeriodTitle" data-i18n="modal.periodoPersonalizado">Adicionar rotina com período personalizado</h2>
           <button class="btn icon only" value="cancel" aria-label="Fechar">✕</button>
         </header>
         <div class="modal-body">
           <label class="field">
-            <span>Título</span>
-            <input type="text" id="customTitle" placeholder="Ex.: Curso de programação" required />
+            <span data-i18n="details.titulo">Título</span>
+            <input type="text" id="customTitle" data-i18n-placeholder="details.titulo" placeholder="Nome da rotina" required />
           </label>
           <label class="field">
-            <span>Descrição</span>
-            <textarea id="customDesc" rows="3" placeholder="Detalhes da rotina..."></textarea>
+            <span data-i18n="details.descricao">Descrição</span>
+            <textarea id="customDesc" rows="3" data-i18n-placeholder="details.descricao" placeholder="Detalhes da rotina..."></textarea>
           </label>
           
           <div class="field">
-            <span>Tipo de período</span>
+            <span data-i18n="modal.tipoPeriodo">Tipo de período</span>
             <div class="period-type-selector">
               <label class="period-type-option">
                 <input type="radio" name="periodType" value="range" checked />
-                <span>Período (início e fim)</span>
+                <span data-i18n="modal.periodo">Período (início e fim)</span>
               </label>
               <label class="period-type-option">
                 <input type="radio" name="periodType" value="specific" />
-                <span>Dias específicos</span>
+                <span data-i18n="modal.diasEspecificos">Dias específicos</span>
               </label>
               <label class="period-type-option">
                 <input type="radio" name="periodType" value="recurring" />
-                <span>Recorrente (semanal/mensal)</span>
+                <span data-i18n="modal.recorrente">Recorrente (semanal/mensal)</span>
               </label>
             </div>
           </div>
@@ -346,24 +346,24 @@
           <div class="period-section" id="periodRangeSection">
             <div class="grid two">
               <label class="field">
-                <span>Data de início</span>
+                <span data-i18n="modal.dataInicio">Data de início</span>
                 <input type="date" id="customStartDate" required />
               </label>
               <label class="field">
-                <span>Data de término</span>
+                <span data-i18n="modal.dataTermino">Data de término</span>
                 <input type="date" id="customEndDate" required />
               </label>
             </div>
             <div class="field">
-              <span>Repetir nos dias da semana</span>
+              <span data-i18n="modal.repetirDias">Repetir nos dias da semana</span>
               <div class="weekday-selector">
-                <label class="weekday-option"><input type="checkbox" value="0" /> Dom</label>
-                <label class="weekday-option"><input type="checkbox" value="1" checked /> Seg</label>
-                <label class="weekday-option"><input type="checkbox" value="2" checked /> Ter</label>
-                <label class="weekday-option"><input type="checkbox" value="3" checked /> Qua</label>
-                <label class="weekday-option"><input type="checkbox" value="4" checked /> Qui</label>
-                <label class="weekday-option"><input type="checkbox" value="5" checked /> Sex</label>
-                <label class="weekday-option"><input type="checkbox" value="6" /> Sáb</label>
+                <label class="weekday-option"><input type="checkbox" value="0" /> <span data-i18n="weekday.dom">Dom</span></label>
+                <label class="weekday-option"><input type="checkbox" value="1" checked /> <span data-i18n="weekday.seg">Seg</span></label>
+                <label class="weekday-option"><input type="checkbox" value="2" checked /> <span data-i18n="weekday.ter">Ter</span></label>
+                <label class="weekday-option"><input type="checkbox" value="3" checked /> <span data-i18n="weekday.qua">Qua</span></label>
+                <label class="weekday-option"><input type="checkbox" value="4" checked /> <span data-i18n="weekday.qui">Qui</span></label>
+                <label class="weekday-option"><input type="checkbox" value="5" checked /> <span data-i18n="weekday.sex">Sex</span></label>
+                <label class="weekday-option"><input type="checkbox" value="6" /> <span data-i18n="weekday.sab">Sáb</span></label>
               </div>
             </div>
           </div>
@@ -371,14 +371,14 @@
           <!-- Dias específicos -->
           <div class="period-section" id="periodSpecificSection" style="display:none;">
             <label class="field">
-              <span>Selecionar datas</span>
+              <span data-i18n="modal.selecionarDatas">Selecionar datas</span>
               <div id="specificDatesContainer">
                 <div class="date-input-row">
                   <input type="date" class="specific-date" />
                   <button type="button" class="btn icon only remove-date" aria-label="Remover data">✕</button>
                 </div>
               </div>
-              <button type="button" class="btn small ghost" id="addDateBtn">+ Adicionar data</button>
+              <button type="button" class="btn small ghost" id="addDateBtn" data-i18n="modal.adicionarData">+ Adicionar data</button>
             </label>
           </div>
           
@@ -386,55 +386,55 @@
           <div class="period-section" id="periodRecurringSection" style="display:none;">
             <div class="grid two">
               <label class="field">
-                <span>Início</span>
+                <span data-i18n="modal.inicio">Início</span>
                 <input type="date" id="recurringStartDate" />
               </label>
               <label class="field">
-                <span>Frequência</span>
+                <span data-i18n="modal.frequencia">Frequência</span>
                 <select id="recurringFrequency">
-                  <option value="daily">Diária</option>
-                  <option value="weekly" selected>Semanal</option>
-                  <option value="monthly">Mensal</option>
+                  <option value="daily" data-i18n="frequency.daily">Diária</option>
+                  <option value="weekly" selected data-i18n="frequency.weekly">Semanal</option>
+                  <option value="monthly" data-i18n="frequency.monthly">Mensal</option>
                 </select>
               </label>
             </div>
             <div class="field" id="recurringIntervalField">
-              <span>Repetir a cada</span>
+              <span data-i18n="modal.repetirCada">Repetir a cada</span>
               <input type="number" id="recurringInterval" min="1" value="1" />
               <span id="intervalUnit">semana(s)</span>
             </div>
             <div class="field" id="recurringEndOptions">
-              <span>Terminar</span>
+              <span data-i18n="modal.terminar">Terminar</span>
               <div>
-                <label><input type="radio" name="recurringEnd" value="never" checked /> Nunca</label>
-                <label><input type="radio" name="recurringEnd" value="after" /> Após <input type="number" id="recurringOccurrences" min="1" value="10" disabled /> ocorrências</label>
-                <label><input type="radio" name="recurringEnd" value="on" /> Em <input type="date" id="recurringEndDate" disabled /></label>
+                <label><input type="radio" name="recurringEnd" value="never" checked /> <span data-i18n="modal.nunca">Nunca</span></label>
+                <label><input type="radio" name="recurringEnd" value="after" /> <span data-i18n="modal.aposOcorrencias">Após</span> <input type="number" id="recurringOccurrences" min="1" value="10" disabled /> <span data-i18n="modal.aposOcorrencias">ocorrências</span></label>
+                <label><input type="radio" name="recurringEnd" value="on" /> <span data-i18n="modal.emData">Em</span> <input type="date" id="recurringEndDate" disabled /></label>
               </div>
             </div>
           </div>
           
           <div class="grid two">
             <label class="field">
-              <span>Hora (opcional)</span>
+              <span data-i18n="details.hora">Hora (opcional)</span>
               <input type="time" id="customTime" />
             </label>
             <label class="field">
-              <span>Prioridade</span>
+              <span data-i18n="details.prioridade">Prioridade</span>
               <select id="customPriority">
-                <option value="low">Baixa</option>
-                <option value="medium" selected>Média</option>
-                <option value="high">Alta</option>
+                <option value="low" data-i18n="priority.baixa">Baixa</option>
+                <option value="medium" selected data-i18n="priority.media">Média</option>
+                <option value="high" data-i18n="priority.alta">Alta</option>
               </select>
             </label>
           </div>
           <label class="field">
-            <span>Etiqueta</span>
-            <input type="text" id="customTag" placeholder="#pessoal" />
+            <span data-i18n="details.etiqueta">Etiqueta</span>
+            <input type="text" id="customTag" data-i18n-placeholder="details.etiqueta" placeholder="#pessoal" />
           </label>
         </div>
         <footer class="modal-footer">
-          <button class="btn ghost" value="cancel">Cancelar</button>
-          <button class="btn" value="confirm">Criar rotina</button>
+          <button class="btn ghost" value="cancel" data-i18n="button.cancelar">Cancelar</button>
+          <button class="btn" value="confirm" data-i18n="modal.criarRotina">Criar rotina</button>
         </footer>
       </form>
     </dialog>
@@ -442,22 +442,22 @@
     <dialog class="modal small" id="modalAddTag" aria-labelledby="modalAddTagTitle" aria-modal="true">
       <form method="dialog" class="modal-content" id="addTagForm">
         <header class="modal-header">
-          <h2 id="modalAddTagTitle">Nova etiqueta</h2>
+          <h2 id="modalAddTagTitle" data-i18n="modal.novaEtiqueta">Nova etiqueta</h2>
           <button class="btn icon only" value="cancel" aria-label="Fechar">✕</button>
         </header>
         <div class="modal-body">
           <label class="field">
-            <span>Nome da etiqueta</span>
-            <input type="text" id="tagName" placeholder="Ex.: fitness" required />
+            <span data-i18n="modal.nomeEtiqueta">Nome da etiqueta</span>
+            <input type="text" id="tagName" data-i18n-placeholder="modal.nomeEtiqueta" placeholder="Ex.: fitness" required />
           </label>
           <label class="field">
-            <span>Cor</span>
+            <span data-i18n="modal.cor">Cor</span>
             <input type="color" id="tagColor" value="#4f46e5" />
           </label>
         </div>
         <footer class="modal-footer">
-          <button class="btn ghost" value="cancel">Cancelar</button>
-          <button class="btn" value="confirm">Adicionar</button>
+          <button class="btn ghost" value="cancel" data-i18n="button.cancelar">Cancelar</button>
+          <button class="btn" value="confirm" data-i18n="button.adicionar">Adicionar</button>
         </footer>
       </form>
     </dialog>
@@ -478,9 +478,9 @@
       <div class="task-main">
         <div class="task-title">Nova rotina</div>
         <div class="task-meta">
-          <span class="due">Sem data</span>
-          <span class="priority medium">Média</span>
-          <span class="tag">#geral</span>
+          <span class="due" data-i18n="filter.semData">Sem data</span>
+          <span class="priority medium" data-i18n="priority.media">Média</span>
+          <span class="tag" data-i18n="tag.geral">#geral</span>
         </div>
       </div>
       <button class="btn icon only task-open" aria-label="Abrir detalhes">›</button>
@@ -494,13 +494,13 @@
         <h3 class="card-title">Nova tarefa</h3>
       </header>
       <div class="card-meta">
-        <span class="due">Sem data</span>
-        <span class="priority medium">Média</span>
-        <span class="tag">#geral</span>
+        <span class="due" data-i18n="filter.semData">Sem data</span>
+        <span class="priority medium" data-i18n="priority.media">Média</span>
+        <span class="tag" data-i18n="tag.geral">#geral</span>
       </div>
       <footer class="card-actions">
-        <button class="btn tiny ghost">Detalhes</button>
-        <button class="btn tiny ghost">Concluir</button>
+        <button class="btn tiny ghost" data-i18n="button.detalhes">Detalhes</button>
+        <button class="btn tiny ghost" data-i18n="button.concluir">Concluir</button>
       </footer>
     </li>
   </template>

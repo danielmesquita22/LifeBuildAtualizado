@@ -1,6 +1,6 @@
-/* ===========================
+/* 
    1) CONSTANTES E CONFIGURAÇÕES
-   =========================== */
+*/
 
 // Chave usada no localStorage para persistir os dados da aplicação
 const STORAGE_KEY = 'routineAppData_v2_multilang';
@@ -78,9 +78,9 @@ const DEFAULT_DATA = {
   }
 };
 
-/* ===========================
+/*
    1.1) TRADUÇÕES MULTILÍNGUE (PT / EN / ES / FR)
-   =========================== */
+*/
 
 const I18N = {
   'view.hoje': {
@@ -113,11 +113,13 @@ const I18N = {
     'es-ES': 'Configuración',
     'fr-FR': 'Paramètres'
   },
+
+  // Menu principal
   'menu.visaoGeral': {
     'pt-BR': 'Visão Geral',
     'en-US': 'Overview',
-    'es-ES': 'Visión general',
-    'fr-FR': 'Aperçu'
+    'es-ES': 'Resumen',
+    'fr-FR': 'Vue d\'ensemble'
   },
   'menu.etiquetas': {
     'pt-BR': 'Etiquetas',
@@ -131,6 +133,8 @@ const I18N = {
     'es-ES': 'Filtros',
     'fr-FR': 'Filtres'
   },
+
+  // Filtros
   'filter.pendentes': {
     'pt-BR': 'Pendentes',
     'en-US': 'Pending',
@@ -167,11 +171,49 @@ const I18N = {
     'es-ES': 'Sin fecha',
     'fr-FR': 'Sans date'
   },
+
+  // Botões
   'button.novaRotina': {
     'pt-BR': '+ Nova rotina',
     'en-US': '+ New routine',
     'es-ES': '+ Nueva rutina',
     'fr-FR': '+ Nouvelle routine'
+  },
+  'button.novaEtiqueta': {
+    'pt-BR': '+ Nova etiqueta',
+    'en-US': '+ New tag',
+    'es-ES': '+ Nueva etiqueta',
+    'fr-FR': '+ Nouvelle étiquette'
+  },
+  'button.salvar': {
+    'pt-BR': 'Salvar',
+    'en-US': 'Save',
+    'es-ES': 'Guardar',
+    'fr-FR': 'Enregistrer'
+  },
+  'button.cancelar': {
+    'pt-BR': 'Cancelar',
+    'en-US': 'Cancel',
+    'es-ES': 'Cancelar',
+    'fr-FR': 'Annuler'
+  },
+  'button.adicionar': {
+    'pt-BR': 'Adicionar',
+    'en-US': 'Add',
+    'es-ES': 'Añadir',
+    'fr-FR': 'Ajouter'
+  },
+  'button.excluir': {
+    'pt-BR': 'Excluir',
+    'en-US': 'Delete',
+    'es-ES': 'Eliminar',
+    'fr-FR': 'Supprimer'
+  },
+  'button.duplicar': {
+    'pt-BR': 'Duplicar',
+    'en-US': 'Duplicate',
+    'es-ES': 'Duplicar',
+    'fr-FR': 'Dupliquer'
   },
   'button.saveSettings': {
     'pt-BR': 'Salvar Configurações',
@@ -185,11 +227,31 @@ const I18N = {
     'es-ES': 'Restaurar valores',
     'fr-FR': 'Restaurer par défaut'
   },
+  'button.editarPerfil': {
+    'pt-BR': 'Editar perfil de usuário',
+    'en-US': 'Edit user profile',
+    'es-ES': 'Editar perfil de usuario',
+    'fr-FR': 'Modifier le profil utilisateur'
+  },
+  'button.adicionarTarefa': {
+    'pt-BR': '+ Adicionar',
+    'en-US': '+ Add',
+    'es-ES': '+ Añadir',
+    'fr-FR': '+ Ajouter'
+  },
+
+  // Configurações
   'label.darkMode': {
     'pt-BR': 'Modo escuro',
     'en-US': 'Dark Mode',
     'es-ES': 'Modo oscuro',
     'fr-FR': 'Mode sombre'
+  },
+  'label.notifications': {
+    'pt-BR': 'Ativar notificações do navegador',
+    'en-US': 'Enable browser notifications',
+    'es-ES': 'Activar notificaciones del navegador',
+    'fr-FR': "Activer les notifications du navigateur"
   },
   'label.appLanguage': {
     'pt-BR': 'Idioma do aplicativo',
@@ -209,25 +271,13 @@ const I18N = {
     'es-ES': 'Tamaño de fuente',
     'fr-FR': 'Taille de police'
   },
-  'label.notifications': {
-    'pt-BR': 'Ativar notificações do navegador',
-    'en-US': 'Enable browser notifications',
-    'es-ES': 'Activar notificaciones del navegador',
-    'fr-FR': "Activer les notifications du navigateur"
-  },
 
-  // Profile related
+  // Perfil
   'profile.meuPerfil': {
     'pt-BR': 'Meu perfil',
     'en-US': 'My profile',
     'es-ES': 'Mi perfil',
     'fr-FR': 'Mon profil'
-  },
-  'profile.editarPerfil': {
-    'pt-BR': 'Editar perfil de usuário',
-    'en-US': 'Edit user profile',
-    'es-ES': 'Editar perfil',
-    'fr-FR': "Modifier le profil d'utilisateur"
   },
   'profile.nomeExibido': {
     'pt-BR': 'Nome exibido',
@@ -244,75 +294,327 @@ const I18N = {
   'profile.email': {
     'pt-BR': 'E-mail',
     'en-US': 'Email',
-    'es-ES': 'Correo',
+    'es-ES': 'Correo electrónico',
     'fr-FR': 'Email'
   },
+  'profile.mostrar': {
+    'pt-BR': 'Mostrar',
+    'en-US': 'Show',
+    'es-ES': 'Mostrar',
+    'fr-FR': 'Afficher'
+  },
+  'profile.ocultar': {
+    'pt-BR': 'Ocultar',
+    'en-US': 'Hide',
+    'es-ES': 'Ocultar',
+    'fr-FR': 'Cacher'
+  },
+  'profile.editar': {
+    'pt-BR': 'Editar',
+    'en-US': 'Edit',
+    'es-ES': 'Editar',
+    'fr-FR': 'Modifier'
+  },
 
-  // Details panel
-  'details.title': {
+  // Painel de detalhes
+  'details.titulo': {
     'pt-BR': 'Título',
     'en-US': 'Title',
     'es-ES': 'Título',
     'fr-FR': 'Titre'
   },
-  'details.description': {
+  'details.descricao': {
     'pt-BR': 'Descrição',
     'en-US': 'Description',
     'es-ES': 'Descripción',
     'fr-FR': 'Description'
   },
-  'details.date': {
+  'details.data': {
     'pt-BR': 'Data',
     'en-US': 'Date',
     'es-ES': 'Fecha',
     'fr-FR': 'Date'
   },
-  'details.time': {
+  'details.hora': {
     'pt-BR': 'Hora',
     'en-US': 'Time',
     'es-ES': 'Hora',
     'fr-FR': 'Heure'
   },
-  'details.priority': {
+  'details.prioridade': {
     'pt-BR': 'Prioridade',
     'en-US': 'Priority',
     'es-ES': 'Prioridad',
     'fr-FR': 'Priorité'
   },
-  'details.tag': {
+  'details.etiqueta': {
     'pt-BR': 'Etiqueta',
     'en-US': 'Tag',
     'es-ES': 'Etiqueta',
     'fr-FR': 'Étiquette'
   },
-  'details.delete': {
-    'pt-BR': 'Excluir',
-    'en-US': 'Delete',
-    'es-ES': 'Eliminar',
-    'fr-FR': 'Supprimer'
+
+  // Prioridades
+  'priority.alta': {
+    'pt-BR': 'Alta',
+    'en-US': 'High',
+    'es-ES': 'Alta',
+    'fr-FR': 'Haute'
   },
-  'details.duplicate': {
-    'pt-BR': 'Duplicar',
-    'en-US': 'Duplicate',
-    'es-ES': 'Duplicar',
-    'fr-FR': 'Dupliquer'
+  'priority.media': {
+    'pt-BR': 'Média',
+    'en-US': 'Medium',
+    'es-ES': 'Media',
+    'fr-FR': 'Moyenne'
   },
-  'details.save': {
-    'pt-BR': 'Salvar',
-    'en-US': 'Save',
-    'es-ES': 'Guardar',
-    'fr-FR': 'Enregistrer'
+  'priority.baixa': {
+    'pt-BR': 'Baixa',
+    'en-US': 'Low',
+    'es-ES': 'Baja',
+    'fr-FR': 'Basse'
   },
 
-  // Empty / empty state
+  // Estados
+  'status.todo': {
+    'pt-BR': 'A fazer',
+    'en-US': 'To do',
+    'es-ES': 'Por hacer',
+    'fr-FR': 'À faire'
+  },
+  'status.doing': {
+    'pt-BR': 'Em progresso',
+    'en-US': 'In progress',
+    'es-ES': 'En progreso',
+    'fr-FR': 'En cours'
+  },
+  'status.done': {
+    'pt-BR': 'Concluído',
+    'en-US': 'Done',
+    'es-ES': 'Completado',
+    'fr-FR': 'Terminé'
+  },
+
+  // Modal período personalizado
+  'modal.periodoPersonalizado': {
+    'pt-BR': 'Adicionar rotina com período personalizado',
+    'en-US': 'Add routine with custom period',
+    'es-ES': 'Agregar rutina con período personalizado',
+    'fr-FR': 'Ajouter une routine avec période personnalisée'
+  },
+  'modal.tipoPeriodo': {
+    'pt-BR': 'Tipo de período',
+    'en-US': 'Period type',
+    'es-ES': 'Tipo de período',
+    'fr-FR': 'Type de période'
+  },
+  'modal.periodo': {
+    'pt-BR': 'Período (início e fim)',
+    'en-US': 'Range (start and end)',
+    'es-ES': 'Período (inicio y fin)',
+    'fr-FR': 'Période (début et fin)'
+  },
+  'modal.diasEspecificos': {
+    'pt-BR': 'Dias específicos',
+    'en-US': 'Specific days',
+    'es-ES': 'Días específicos',
+    'fr-FR': 'Jours spécifiques'
+  },
+  'modal.recorrente': {
+    'pt-BR': 'Recorrente (semanal/mensal)',
+    'en-US': 'Recurring (weekly/monthly)',
+    'es-ES': 'Recurrente (semanal/mensual)',
+    'fr-FR': 'Récurrent (hebdomadaire/mensuel)'
+  },
+  'modal.dataInicio': {
+    'pt-BR': 'Data de início',
+    'en-US': 'Start date',
+    'es-ES': 'Fecha de inicio',
+    'fr-FR': 'Date de début'
+  },
+  'modal.dataTermino': {
+    'pt-BR': 'Data de término',
+    'en-US': 'End date',
+    'es-ES': 'Fecha de fin',
+    'fr-FR': 'Date de fin'
+  },
+  'modal.repetirDias': {
+    'pt-BR': 'Repetir nos dias da semana',
+    'en-US': 'Repeat on weekdays',
+    'es-ES': 'Repetir en días de semana',
+    'fr-FR': 'Répéter les jours de semaine'
+  },
+  'modal.selecionarDatas': {
+    'pt-BR': 'Selecionar datas',
+    'en-US': 'Select dates',
+    'es-ES': 'Seleccionar fechas',
+    'fr-FR': 'Sélectionner les dates'
+  },
+  'modal.adicionarData': {
+    'pt-BR': '+ Adicionar data',
+    'en-US': '+ Add date',
+    'es-ES': '+ Añadir fecha',
+    'fr-FR': '+ Ajouter date'
+  },
+  'modal.inicio': {
+    'pt-BR': 'Início',
+    'en-US': 'Start',
+    'es-ES': 'Inicio',
+    'fr-FR': 'Début'
+  },
+  'modal.frequencia': {
+    'pt-BR': 'Frequência',
+    'en-US': 'Frequency',
+    'es-ES': 'Frecuencia',
+    'fr-FR': 'Fréquence'
+  },
+  'modal.repetirCada': {
+    'pt-BR': 'Repetir a cada',
+    'en-US': 'Repeat every',
+    'es-ES': 'Repetir cada',
+    'fr-FR': 'Répéter chaque'
+  },
+  'modal.terminar': {
+    'pt-BR': 'Terminar',
+    'en-US': 'End',
+    'es-ES': 'Terminar',
+    'fr-FR': 'Terminer'
+  },
+  'modal.nunca': {
+    'pt-BR': 'Nunca',
+    'en-US': 'Never',
+    'es-ES': 'Nunca',
+    'fr-FR': 'Jamais'
+  },
+  'modal.aposOcorrencias': {
+    'pt-BR': 'Após ocorrências',
+    'en-US': 'After occurrences',
+    'es-ES': 'Después de ocurrencias',
+    'fr-FR': 'Après occurrences'
+  },
+  'modal.emData': {
+    'pt-BR': 'Em data',
+    'en-US': 'On date',
+    'es-ES': 'En fecha',
+    'fr-FR': 'À date'
+  },
+  'modal.criarRotina': {
+    'pt-BR': 'Criar rotina',
+    'en-US': 'Create routine',
+    'es-ES': 'Crear rutina',
+    'fr-FR': 'Créer routine'
+  },
+
+  // Dias da semana
+  'weekday.dom': {
+    'pt-BR': 'Dom',
+    'en-US': 'Sun',
+    'es-ES': 'Dom',
+    'fr-FR': 'Dim'
+  },
+  'weekday.seg': {
+    'pt-BR': 'Seg',
+    'en-US': 'Mon',
+    'es-ES': 'Lun',
+    'fr-FR': 'Lun'
+  },
+  'weekday.ter': {
+    'pt-BR': 'Ter',
+    'en-US': 'Tue',
+    'es-ES': 'Mar',
+    'fr-FR': 'Mar'
+  },
+  'weekday.qua': {
+    'pt-BR': 'Qua',
+    'en-US': 'Wed',
+    'es-ES': 'Mié',
+    'fr-FR': 'Mer'
+  },
+  'weekday.qui': {
+    'pt-BR': 'Qui',
+    'en-US': 'Thu',
+    'es-ES': 'Jue',
+    'fr-FR': 'Jeu'
+  },
+  'weekday.sex': {
+    'pt-BR': 'Sex',
+    'en-US': 'Fri',
+    'es-ES': 'Vie',
+    'fr-FR': 'Ven'
+  },
+  'weekday.sab': {
+    'pt-BR': 'Sáb',
+    'en-US': 'Sat',
+    'es-ES': 'Sáb',
+    'fr-FR': 'Sam'
+  },
+
+  // Frequências
+  'frequency.daily': {
+    'pt-BR': 'Diária',
+    'en-US': 'Daily',
+    'es-ES': 'Diaria',
+    'fr-FR': 'Quotidienne'
+  },
+  'frequency.weekly': {
+    'pt-BR': 'Semanal',
+    'en-US': 'Weekly',
+    'es-ES': 'Semanal',
+    'fr-FR': 'Hebdomadaire'
+  },
+  'frequency.monthly': {
+    'pt-BR': 'Mensal',
+    'en-US': 'Monthly',
+    'es-ES': 'Mensual',
+    'fr-FR': 'Mensuelle'
+  },
+
+  // Etiquetas existentes
+  'tag.pessoal': {
+    'pt-BR': '#pessoal',
+    'en-US': '#personal',
+    'es-ES': '#personal',
+    'fr-FR': '#personnel'
+  },
+  'tag.trabalho': {
+    'pt-BR': '#trabalho',
+    'en-US': '#work',
+    'es-ES': '#trabajo',
+    'fr-FR': '#travail'
+  },
+  'tag.saude': {
+    'pt-BR': '#saúde',
+    'en-US': '#health',
+    'es-ES': '#salud',
+    'fr-FR': '#santé'
+  },
+  'tag.estudos': {
+    'pt-BR': '#estudos',
+    'en-US': '#studies',
+    'es-ES': '#estudios',
+    'fr-FR': '#études'
+  },
+  'tag.geral': {
+    'pt-BR': '#geral',
+    'en-US': '#general',
+    'es-ES': '#general',
+    'fr-FR': '#général'
+  },
+
+  // Estados vazios
   'empty.none': {
     'pt-BR': 'Nenhuma rotina encontrada',
     'en-US': 'No routines found',
     'es-ES': 'No se encontraron rutinas',
     'fr-FR': "Aucune routine trouvée"
   },
+  'empty.addRoutines': {
+    'pt-BR': 'Adicione rotinas para ver os gráficos',
+    'en-US': 'Add routines to see charts',
+    'es-ES': 'Agregue rutinas para ver gráficos',
+    'fr-FR': 'Ajoutez des routines pour voir les graphiques'
+  },
 
-  // Toasts (we will use keys and pass to showToastTranslation)
+  // Toasts
   'toast.added': {
     'pt-BR': 'Rotina adicionada com sucesso!',
     'en-US': 'Routine added successfully!',
@@ -337,28 +639,86 @@ const I18N = {
     'es-ES': '¡Rutina duplicada con éxito!',
     'fr-FR': 'Routine dupliquée avec succès !'
   },
+  'toast.requiredTitle': {
+    'pt-BR': 'O título é obrigatório!',
+    'en-US': 'Title is required!',
+    'es-ES': '¡El título es obligatorio!',
+    'fr-FR': 'Le titre est obligatoire !'
+  },
 
-  // Chart titles
+  // Gráficos
   'chart.weeklyProgress': {
     'pt-BR': 'Progresso Semanal de Tarefas',
     'en-US': 'Weekly Task Progress',
-    'es-ES': 'Progreso semanal de tareas',
-    'fr-FR': "Progression hebdomadaire des tâches"
+    'es-ES': 'Progreso Semanal de Tareas',
+    'fr-FR': "Progression Hebdomadaire des Tâches"
   },
   'chart.timeDistribution': {
     'pt-BR': 'Distribuição do Tempo',
     'en-US': 'Time Distribution',
-    'es-ES': 'Distribución del tiempo',
-    'fr-FR': "Répartition du temps"
+    'es-ES': 'Distribución del Tiempo',
+    'fr-FR': "Répartition du Temps"
   },
   'chart.habitsOverTime': {
     'pt-BR': 'Evolução de Hábitos',
     'en-US': 'Habits Over Time',
-    'es-ES': 'Evolución de hábitos',
-    'fr-FR': "Évolution des habitudes"
+    'es-ES': 'Evolución de Hábitos',
+    'fr-FR': "Évolution des Habitudes"
+  },
+  'chart.infoWeekly': {
+    'pt-BR': 'Acompanhe sua produtividade ao longo da semana',
+    'en-US': 'Track your productivity throughout the week',
+    'es-ES': 'Sigue tu productividad durante la semana',
+    'fr-FR': 'Suivez votre productivité tout au long de la semaine'
+  },
+  'chart.infoTime': {
+    'pt-BR': 'Veja como você distribui seu tempo entre diferentes atividades',
+    'en-US': 'See how you distribute your time between different activities',
+    'es-ES': 'Vea cómo distribuye su tiempo entre diferentes actividades',
+    'fr-FR': 'Voyez comment vous répartissez votre temps entre différentes activités'
+  },
+  'chart.infoHabits': {
+    'pt-BR': 'Monitore a consistência dos seus hábitos ao longo do tempo',
+    'en-US': 'Monitor the consistency of your habits over time',
+    'es-ES': 'Monitore la consistencia de sus hábitos a lo largo del tiempo',
+    'fr-FR': 'Surveillez la cohérence de vos habitudes au fil du temps'
   },
 
-  // Calendar month/day names (we'll use these programmatically)
+  // Modal nova etiqueta
+  'modal.novaEtiqueta': {
+    'pt-BR': 'Nova etiqueta',
+    'en-US': 'New tag',
+    'es-ES': 'Nueva etiqueta',
+    'fr-FR': 'Nouvelle étiquette'
+  },
+  'modal.nomeEtiqueta': {
+    'pt-BR': 'Nome da etiqueta',
+    'en-US': 'Tag name',
+    'es-ES': 'Nombre de etiqueta',
+    'fr-FR': 'Nom de l\'étiquette'
+  },
+  'modal.cor': {
+    'pt-BR': 'Cor',
+    'en-US': 'Color',
+    'es-ES': 'Color',
+    'fr-FR': 'Couleur'
+  },
+
+  // Calendário
+  'calendar.mesAnterior': {
+    'pt-BR': 'Mês anterior',
+    'en-US': 'Previous month',
+    'es-ES': 'Mes anterior',
+    'fr-FR': 'Mois précédent'
+  },
+  'calendar.proximoMes': {
+    'pt-BR': 'Próximo mês',
+    'en-US': 'Next month',
+    'es-ES': 'Próximo mes',
+    'fr-FR': 'Mois suivant'
+  },
+
+  // Meses e dias da semana
   'months': {
     'pt-BR': ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
     'en-US': ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
@@ -371,11 +731,12 @@ const I18N = {
     'es-ES': ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'],
     'fr-FR': ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam']
   }
+
 };
 
-/* ===========================
-   2) ESTADO DA APLICAÇÃO (mutável)
-   =========================== */
+/*
+   2) ESTADO DA APLICAÇÃO
+*/
 
 // Estado global que guarda a informação atual do app (não persistida diretamente)
 let state = {
@@ -393,9 +754,9 @@ let state = {
 // Contador simples para gerar IDs únicos (inicia em 1000 para evitar colisão com IDs de exemplo)
 let nextId = 1000;
 
-/* ===========================
-   3) SELETORES DO DOM (cache de elementos)
-   =========================== */
+/*
+   3) SELETORES DO DOM
+*/
 
 // Guardamos referências a elementos do DOM para evitar querySelector repetido
 const DOM = {
@@ -448,7 +809,7 @@ const DOM = {
   userName: document.getElementById('userName'),
   userEmail: document.getElementById('userEmail'),
   showEmail: document.getElementById('showEmail'),
-  // Calendário - CORREÇÃO ADICIONADA
+  // Calendário
   calTitle: document.getElementById('calTitle'),
   calendarGrid: document.querySelector('.calendar-grid'),
   calPrev: document.getElementById('calPrev'),
@@ -485,9 +846,9 @@ const templates = {
   toast: document.getElementById('tplToast')
 };
 
-/* ===========================
-   4) SISTEMA DE TRADUÇÃO
-   =========================== */
+/*
+  4) SISTEMA DE TRADUÇÃO
+*/
 
 // Obtém idioma atual (padrão pt-BR)
 function getLang() {
@@ -505,6 +866,8 @@ function t(key) {
 // Aplica tradução nos elementos com data-i18n
 function applyLanguageToDOM() {
   const lang = getLang();
+
+  // Traduz elementos com data-i18n
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
     if (I18N[key] && I18N[key][lang]) {
@@ -512,19 +875,89 @@ function applyLanguageToDOM() {
     }
   });
 
-  // Atualiza textos dinâmicos (por ex. títulos de view)
-  updateViewTitle();
+  // Traduz placeholders
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    if (I18N[key] && I18N[key][lang]) {
+      el.placeholder = I18N[key][lang];
+    }
+  });
 
-  // Atualiza textos do calendário e dos gráficos, se existirem
+  // Atualiza textos dinâmicos
+  updateViewTitle();
+  updateDynamicTexts();
+
+  // Atualiza calendário e gráficos
   if (typeof renderCalendar === 'function') renderCalendar();
   if (typeof initCharts === 'function') initCharts();
+
+  // Atualiza textos específicos que não usam data-i18n
+  updateSpecificTexts();
 }
 
-// Recarrega a página ao trocar idioma
-function changeLanguage(newLang) {
-  state.preferences.language = newLang;
-  saveData();
-  window.location.reload(); // funciona localmente (file://)
+function updateDynamicTexts() {
+  const lang = getLang();
+
+  // Atualiza botão de nova rotina
+  const quickAddBtn = document.getElementById('btnQuickAdd');
+  if (quickAddBtn && I18N['button.novaRotina']) {
+    quickAddBtn.textContent = I18N['button.novaRotina'][lang];
+  }
+
+  // Atualiza botão de nova etiqueta
+  const addTagBtn = document.getElementById('btnAddTag');
+  if (addTagBtn && I18N['button.novaEtiqueta']) {
+    addTagBtn.textContent = I18N['button.novaEtiqueta'][lang];
+  }
+}
+
+function updateSpecificTexts() {
+  const lang = getLang();
+
+  // Atualiza dias da semana no modal de período personalizado
+  const weekdayLabels = {
+    0: 'weekday.dom', 1: 'weekday.seg', 2: 'weekday.ter',
+    3: 'weekday.qua', 4: 'weekday.qui', 5: 'weekday.sex', 6: 'weekday.sab'
+  };
+
+  document.querySelectorAll('.weekday-option').forEach((option, index) => {
+    const span = option.querySelector('span');
+    const key = weekdayLabels[index];
+    if (span && key && I18N[key] && I18N[key][lang]) {
+      span.textContent = I18N[key][lang];
+    }
+  });
+
+  // Atualiza opções de frequência
+  const frequencyOptions = document.querySelectorAll('#recurringFrequency option');
+  if (frequencyOptions.length >= 3) {
+    frequencyOptions[0].textContent = I18N['frequency.daily'][lang];
+    frequencyOptions[1].textContent = I18N['frequency.weekly'][lang];
+    frequencyOptions[2].textContent = I18N['frequency.monthly'][lang];
+  }
+
+  // Atualiza opções de prioridade
+  updatePriorityOptions();
+}
+
+function updatePriorityOptions() {
+  const lang = getLang();
+
+  // Atualiza no painel de detalhes
+  const priorityOptions = document.querySelectorAll('#taskPriority option');
+  if (priorityOptions.length >= 3) {
+    priorityOptions[0].textContent = I18N['priority.baixa'][lang];
+    priorityOptions[1].textContent = I18N['priority.media'][lang];
+    priorityOptions[2].textContent = I18N['priority.alta'][lang];
+  }
+
+  // Atualiza no modal personalizado
+  const customPriorityOptions = document.querySelectorAll('#customPriority option');
+  if (customPriorityOptions.length >= 3) {
+    customPriorityOptions[0].textContent = I18N['priority.baixa'][lang];
+    customPriorityOptions[1].textContent = I18N['priority.media'][lang];
+    customPriorityOptions[2].textContent = I18N['priority.alta'][lang];
+  }
 }
 
 // Toast multilíngue
@@ -533,9 +966,17 @@ function showToastTranslation(key, type = 'info') {
   showToast(msg, type);
 }
 
-/* ===========================
+// Recarrega a página ao trocar idioma
+function changeLanguage(newLang) {
+  state.preferences.language = newLang;
+  saveData();
+  applyLanguageToDOM();
+  showToastTranslation('toast.saved', 'success');
+}
+
+/*
    5) INICIALIZAÇÃO
-   =========================== */
+*/
 
 // Função de inicialização que configura tudo e renderiza o estado inicial
 function init() {
@@ -575,9 +1016,9 @@ function init() {
   render();
 }
 
-/* ===========================
-   6) PERSISTÊNCIA (localStorage)
-   =========================== */
+/*
+   6) PERSISTÊNCIA 
+*/
 
 // Carrega os dados salvos no localStorage. Se não existir, usa DEFAULT_DATA
 function loadData() {
@@ -639,9 +1080,9 @@ function saveData() {
   }
 }
 
-/* ===========================
-   7) UTILITÁRIOS (helpers)
-   =========================== */
+/*
+   7) UTILITÁRIOS
+*/
 
 // Gera um ID único simples para novas rotinas (prefixo 't' + contador)
 function generateId() {
@@ -704,9 +1145,9 @@ function normalizeTag(tagStr) {
   return tagStr.replace('#', '').trim();
 }
 
-/* ===========================
+/*
    8) CRUD DE ROTINAS (Add / Toggle / Open / Save / Delete / Duplicate)
-   =========================== */
+*/
 
 // Adiciona uma nova rotina ao estado e salva
 function addNewRoutine({ title, description, date, time, priority, tag, status = 'todo', completed = false }) {
@@ -868,9 +1309,9 @@ function duplicateCurrentTask() {
   showToastTranslation('toast.copied', 'success');
 }
 
-/* ===========================
-   9) GESTÃO DE ETIQUETAS (TAGS)
-   =========================== */
+/*
+  9) GESTÃO DE ETIQUETAS
+*/
 
 // Adiciona nova etiqueta ao estado (verifica duplicidade por nome)
 function addNewTag({ name, color }) {
@@ -937,9 +1378,9 @@ function renderTags() {
   });
 }
 
-/* ===========================
+/*
    10) FILTRAGEM E LISTAGEM DE TAREFAS
-   =========================== */
+*/
 
 // Retorna um array de tarefas filtradas de acordo com a view atual e filtros rápidos
 function getFilteredTasks() {
@@ -1007,9 +1448,9 @@ function getFilteredTasks() {
   return tasks;
 }
 
-/* ===========================
+/*
    11) RENDERIZAÇÃO (Lista / Quadro / Calendário / Config)
-   =========================== */
+*/
 
 // Atualiza título da view (ex.: Hoje, Calendário)
 function updateViewTitle() {
@@ -1109,9 +1550,9 @@ function render() {
   }
 }
 
-/* ---------------------------
+/*
    11.1) Render - Quadro Kanban
-   --------------------------- */
+*/
 
 // Renderiza o quadro Kanban preenchendo as colunas por status
 function renderBoard() {
@@ -1140,9 +1581,9 @@ function renderBoard() {
   if (doneCount) doneCount.textContent = `${DOM.doneList.children.length} itens`;
 }
 
-/* ---------------------------
-   11.2) Render - Calendário - CORREÇÃO COMPLETA
-   --------------------------- */
+/*
+   11.2) Render - Calendário
+*/
 
 // Renderiza o calendário do mês atual (state.currentDate)
 function renderCalendar() {
@@ -1263,9 +1704,9 @@ function createCalendarDay(day, isOtherMonth, isToday = false, fullDate = null) 
   return cell;
 }
 
-/* ===========================
-   12) CRIAÇÃO DE ELEMENTOS (task item e board card)
-   =========================== */
+/*
+   12) CRIAÇÃO DE ELEMENTOS
+*/
 
 // Cria e retorna um elemento li.populado para a lista usando o template tplTaskItem
 function createTaskElement(task) {
@@ -1434,7 +1875,7 @@ function createBoardCard(task) {
   if (actionButtons.length >= 2) {
     actionButtons[0].addEventListener('click', () => openTaskDetails(task.id)); // Detalhes
     // Botão concluir / desfazer
-    actionButtons[1].textContent = task.completed ? t('details.undo') : t('details.complete');
+    actionButtons[1].textContent = task.completed ? t('button.desfazer') : t('button.concluir');
     actionButtons[1].addEventListener('click', () => toggleTaskCompletion(task.id));
   }
 
@@ -1446,9 +1887,9 @@ function createBoardCard(task) {
   return clone;
 }
 
-/* ===========================
+/*
    13) DRAG & DROP (Kanban)
-   =========================== */
+*/
 
 // Configura eventos de drag & drop nas colunas
 function setupDragAndDrop() {
@@ -1506,9 +1947,9 @@ function handleDrop(e) {
   showToast(`Rotina movida para: ${statusText[newStatus] || 'A fazer'}`, 'info');
 }
 
-/* ===========================
+/*
    14) CONFIGURAÇÕES E PREFERÊNCIAS
-   =========================== */
+*/
 
 // Carrega as configurações salvas
 function loadSettings() {
@@ -1608,9 +2049,9 @@ function renderProfile() {
   }
 }
 
-/* ===========================
+/*
    15) SISTEMA DE PERÍODO PERSONALIZADO
-   =========================== */
+*/
 
 // Abrir modal de período personalizado
 function openCustomPeriodModal() {
@@ -1939,9 +2380,9 @@ function processCustomPeriodForm(e) {
   closeCustomPeriodModal();
 }
 
-/* ===========================
+/*
    16) EVENTOS GERAIS E LIGAÇÕES
-   =========================== */
+*/
 
 // Configura todos os listeners de UI (botões, formulários, links, etc.)
 function setupEventListeners() {
@@ -2032,7 +2473,7 @@ function setupEventListeners() {
     }
   }
 
-  // Navegação do calendário (mudar mês) - CORREÇÃO ADICIONADA
+  // Navegação do calendário (mudar mês)
   if (DOM.calPrev) DOM.calPrev.addEventListener('click', () => {
     state.currentDate.setMonth(state.currentDate.getMonth() - 1);
     renderCalendar();
@@ -2089,10 +2530,10 @@ function setupEventListeners() {
       e.preventDefault();
       if (DOM.userEmail.textContent.includes('*')) {
         DOM.userEmail.textContent = state.profile.email;
-        DOM.showEmail.textContent = 'Ocultar';
+        DOM.showEmail.textContent = t('profile.ocultar');
       } else {
         DOM.userEmail.textContent = '*****************@gmail.com';
-        DOM.showEmail.textContent = 'Mostrar';
+        DOM.showEmail.textContent = t('profile.mostrar');
       }
     });
   }
@@ -2114,9 +2555,9 @@ function setupEventListeners() {
   });
 }
 
-/* ===========================
-   17) FUNÇÕES AUXILIARES (UI/Helpers)
-   =========================== */
+/*
+   17) FUNÇÕES AUXILIARES
+ */
 
 // Alterna a sidebar visível / escondida e persiste a preferência
 function toggleSidebar() {
@@ -2157,9 +2598,9 @@ function updateClock() {
   if (DOM.nowTime) DOM.nowTime.textContent = now.toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' });
 }
 
-/* ===========================
-   18) SISTEMA DE GRÁFICOS - VERSÃO CORRIGIDA
-   =========================== */
+/*
+   18) SISTEMA DE GRÁFICOS
+*/
 
 // Inicializar todos os gráficos
 function initCharts() {
@@ -2195,13 +2636,13 @@ function renderWeeklyProgressChart() {
     ctx.chartInstance.destroy();
   }
 
-  // Dados de exemplo para teste
   const weeklyData = [5, 8, 6, 9, 7, 4, 3];
+  const lang = getLang();
 
   ctx.chartInstance = new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: I18N.weekdays[getLang()],
+      labels: I18N.weekdays[lang],
       datasets: [{
         label: t('chart.weeklyProgress'),
         data: weeklyData,
@@ -2220,6 +2661,12 @@ function renderWeeklyProgressChart() {
       }
     }
   });
+
+  // Atualiza texto informativo
+  const infoText = ctx.closest('.chart-container').querySelector('.info-text');
+  if (infoText) {
+    infoText.textContent = t('chart.infoWeekly');
+  }
 }
 
 // Renderizar gráfico de distribuição de tempo - VERSÃO SIMPLIFICADA
@@ -2231,11 +2678,12 @@ function renderTimeDistributionChart() {
     ctx.chartInstance.destroy();
   }
 
-  // Dados de exemplo
+  const lang = getLang();
+
   ctx.chartInstance = new Chart(ctx, {
     type: 'doughnut',
     data: {
-      labels: [t('filter.trabalho'), t('filter.saude'), t('filter.estudos'), t('filter.pessoal')],
+      labels: [t('tag.trabalho'), t('tag.saude'), t('tag.estudos'), t('tag.pessoal')],
       datasets: [{
         data: [30, 20, 25, 25],
         backgroundColor: ['#ff5454', '#4f46e5', '#10b981', '#f59e0b'],
@@ -2247,6 +2695,12 @@ function renderTimeDistributionChart() {
       maintainAspectRatio: false
     }
   });
+
+  // Atualiza texto informativo
+  const infoText = ctx.closest('.chart-container').querySelector('.info-text');
+  if (infoText) {
+    infoText.textContent = t('chart.infoTime');
+  }
 }
 
 // Renderizar gráfico de hábitos ao longo do tempo - VERSÃO SIMPLIFICADA
@@ -2259,7 +2713,6 @@ function renderHabitsOverTimeChart() {
   }
 
   const lang = getLang();
-  const monthNames = I18N.months[lang];
 
   ctx.chartInstance = new Chart(ctx, {
     type: 'line',
@@ -2279,6 +2732,12 @@ function renderHabitsOverTimeChart() {
       maintainAspectRatio: false
     }
   });
+
+  // Atualiza texto informativo
+  const infoText = ctx.closest('.chart-container').querySelector('.info-text');
+  if (infoText) {
+    infoText.textContent = t('chart.infoHabits');
+  }
 }
 
 function renderEmptyCharts() {
@@ -2294,6 +2753,8 @@ function renderEmptyCharts() {
       if (ctx.chartInstance) {
         ctx.chartInstance.destroy();
       }
+
+      const lang = getLang();
 
       // Criar gráfico vazio
       ctx.chartInstance = new Chart(ctx, {
@@ -2311,13 +2772,19 @@ function renderEmptyCharts() {
           maintainAspectRatio: false
         }
       });
+
+      // Atualiza texto informativo
+      const infoText = ctx.closest('.chart-container').querySelector('.info-text');
+      if (infoText) {
+        infoText.textContent = t('empty.addRoutines');
+      }
     }
   });
 }
 
-/* ===========================
+/*
    19) INICIALIZAÇÃO DA APLICAÇÃO
-   =========================== */
+*/
 
 // Inicializar a aplicação
 document.addEventListener('DOMContentLoaded', init);
