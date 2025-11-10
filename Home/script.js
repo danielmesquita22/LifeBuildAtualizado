@@ -1,4 +1,4 @@
-/*
+/* 
    1) CONSTANTES E CONFIGURAÇÕES
 */
 
@@ -78,9 +78,9 @@ const DEFAULT_DATA = {
   }
 };
 
-/* ===========================
-   1.1) TRADUÇÕES MULTILÍNGUE (PT / EN / ES / FR) - VERSÃO COMPLETA
-   =========================== */
+/*
+   1.1) TRADUÇÕES MULTILÍNGUE (PT / EN / ES / FR)
+*/
 
 const I18N = {
   'view.hoje': {
