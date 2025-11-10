@@ -62,8 +62,8 @@ const DEFAULT_DATA = {
     { id: 'tag4', name: 'estudos', color: '#f59e0b' }
   ],
   // Preferências iniciais
-  preferences: { 
-    theme: 'light', 
+  preferences: {
+    theme: 'light',
     showCompleted: true,
     notifications: true,
     language: 'pt-BR',
@@ -720,16 +720,16 @@ const I18N = {
 
   // Meses e dias da semana
   'months': {
-    'pt-BR': ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
-    'en-US': ['January','February','March','April','May','June','July','August','September','October','November','December'],
-    'es-ES': ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
-    'fr-FR': ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre']
+    'pt-BR': ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+    'en-US': ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+    'es-ES': ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+    'fr-FR': ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre']
   },
   'weekdays': {
-    'pt-BR': ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'],
-    'en-US': ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],
-    'es-ES': ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'],
-    'fr-FR': ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam']
+    'pt-BR': ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
+    'en-US': ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+    'es-ES': ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'],
+    'fr-FR': ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam']
   }
 };
 
@@ -865,7 +865,7 @@ function t(key) {
 // Aplica tradução nos elementos com data-i18n
 function applyLanguageToDOM() {
   const lang = getLang();
-  
+
   // Traduz elementos com data-i18n
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
@@ -889,14 +889,14 @@ function applyLanguageToDOM() {
   // Atualiza calendário e gráficos
   if (typeof renderCalendar === 'function') renderCalendar();
   if (typeof initCharts === 'function') initCharts();
-  
+
   // Atualiza textos específicos que não usam data-i18n
   updateSpecificTexts();
 }
 
 function updateDynamicTexts() {
   const lang = getLang();
-  
+
   // Atualiza botão de nova rotina
   const quickAddBtn = document.getElementById('btnQuickAdd');
   if (quickAddBtn && I18N['button.novaRotina']) {
@@ -912,13 +912,13 @@ function updateDynamicTexts() {
 
 function updateSpecificTexts() {
   const lang = getLang();
-  
+
   // Atualiza dias da semana no modal de período personalizado
   const weekdayLabels = {
-    0: 'weekday.dom', 1: 'weekday.seg', 2: 'weekday.ter', 
+    0: 'weekday.dom', 1: 'weekday.seg', 2: 'weekday.ter',
     3: 'weekday.qua', 4: 'weekday.qui', 5: 'weekday.sex', 6: 'weekday.sab'
   };
-  
+
   document.querySelectorAll('.weekday-option').forEach((option, index) => {
     const span = option.querySelector('span');
     const key = weekdayLabels[index];
@@ -941,7 +941,7 @@ function updateSpecificTexts() {
 
 function updatePriorityOptions() {
   const lang = getLang();
-  
+
   // Atualiza no painel de detalhes
   const priorityOptions = document.querySelectorAll('#taskPriority option');
   if (priorityOptions.length >= 3) {
@@ -1069,7 +1069,7 @@ function saveData() {
       showSidebar: state.showSidebar
     };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(dataToSave));
-    
+
     // Se estiver na view de gráficos, atualizar os gráficos
     if (state.currentView === 'graficos') {
       initCharts();
@@ -1116,7 +1116,7 @@ function showToast(message, type = 'info', duration = 3000) {
     toast.classList.add('fade-out');
     // remove depois da transição (evita remoção imediata cortando animação)
     toast.addEventListener('transitionend', () => {
-      try { toast.remove(); } catch(e) {}
+      try { toast.remove(); } catch (e) { }
     });
   }, duration);
 }
@@ -1396,7 +1396,7 @@ function getFilteredTasks() {
       tasks = tasks.filter(task => {
         if (!task.date) return false;
         const td = new Date(task.date + 'T00:00:00');
-        td.setHours(0,0,0,0);
+        td.setHours(0, 0, 0, 0);
         return td.getTime() === today.getTime();
       });
       break;
@@ -1761,7 +1761,7 @@ function createTaskElement(task) {
     prioEl.className = 'priority'; // reset classes
     const priorityText = {
       'high': t('filter.alta'),
-      'medium': t('filter.media'), 
+      'medium': t('filter.media'),
       'low': t('filter.baixa')
     };
     prioEl.textContent = priorityText[task.priority] || t('filter.media');
@@ -1825,7 +1825,7 @@ function createBoardCard(task) {
     if (task.date) {
       const d = new Date(task.date + 'T00:00:00');
       dueEl.textContent = d.toLocaleDateString(getLang());
-      const today = new Date(); today.setHours(0,0,0,0);
+      const today = new Date(); today.setHours(0, 0, 0, 0);
       if (!task.completed && d < today) dueEl.classList.add('overdue');
       else dueEl.classList.remove('overdue');
     } else {
@@ -1937,10 +1937,10 @@ function handleDrop(e) {
   // Persistência e render
   saveData();
   render(); // chama render (ou renderBoard para menor custo)
-  
+
   const statusText = {
     'todo': 'A fazer',
-    'doing': 'Em progresso', 
+    'doing': 'Em progresso',
     'done': 'Concluído'
   };
   showToast(`Rotina movida para: ${statusText[newStatus] || 'A fazer'}`, 'info');
@@ -1958,23 +1958,23 @@ function loadSettings() {
       DOM.app.setAttribute('data-theme', state.preferences.theme);
       if (DOM.themeToggle) DOM.themeToggle.checked = state.preferences.theme === 'dark';
     }
-    
+
     // Notificações
     if (DOM.notificationsToggle && state.preferences.notifications !== undefined) {
       DOM.notificationsToggle.checked = state.preferences.notifications;
     }
-    
+
     // Idioma
     if (DOM.appLanguage && state.preferences.language) {
       DOM.appLanguage.value = state.preferences.language;
     }
-    
+
     // Fonte
     if (DOM.fontFamily && state.preferences.fontFamily) {
       DOM.fontFamily.value = state.preferences.fontFamily;
       document.body.style.fontFamily = state.preferences.fontFamily;
     }
-    
+
     // Tamanho da fonte
     if (DOM.fontSize && state.preferences.fontSize) {
       DOM.fontSize.value = state.preferences.fontSize;
@@ -1994,7 +1994,7 @@ function saveSettings() {
     fontSize: DOM.fontSize ? DOM.fontSize.value : '16',
     showCompleted: state.preferences.showCompleted !== undefined ? state.preferences.showCompleted : true
   };
-  
+
   // Aplica as configurações
   DOM.app.setAttribute('data-theme', state.preferences.theme);
   if (DOM.fontFamily) document.body.style.fontFamily = state.preferences.fontFamily;
@@ -2002,7 +2002,7 @@ function saveSettings() {
     document.body.style.fontSize = state.preferences.fontSize + 'px';
     if (DOM.fontSizeValue) DOM.fontSizeValue.textContent = state.preferences.fontSize + 'px';
   }
-  
+
   saveData();
   showToastTranslation('toast.saved', 'success');
 }
@@ -2011,7 +2011,7 @@ function saveSettings() {
 function resetSettings() {
   const confirmed = confirm('Deseja restaurar as configurações padrão?');
   if (!confirmed) return;
-  
+
   state.preferences = {
     theme: 'light',
     notifications: true,
@@ -2020,7 +2020,7 @@ function resetSettings() {
     fontSize: '16',
     showCompleted: true
   };
-  
+
   loadSettings();
   saveData();
   applyLanguageToDOM();
@@ -2055,19 +2055,19 @@ function renderProfile() {
 // Abrir modal de período personalizado
 function openCustomPeriodModal() {
   if (!DOM.modalCustomPeriod) return;
-  
+
   // Definir data mínima como hoje
   const today = new Date().toISOString().split('T')[0];
   if (DOM.customStartDate) DOM.customStartDate.min = today;
   if (DOM.customEndDate) DOM.customEndDate.min = today;
   if (DOM.recurringStartDate) DOM.recurringStartDate.min = today;
-  
+
   // Limpar formulário
   DOM.customPeriodForm.reset();
-  
+
   // Mostrar seção padrão (intervalo)
   showPeriodSection('range');
-  
+
   // Abrir modal
   if (DOM.modalCustomPeriod.showModal) DOM.modalCustomPeriod.showModal();
   if (DOM.customTitle) DOM.customTitle.focus();
@@ -2076,10 +2076,10 @@ function openCustomPeriodModal() {
 // Função para fechar o modal de período personalizado
 function closeCustomPeriodModal() {
   if (!DOM.modalCustomPeriod) return;
-  
+
   // Limpar formulário
   if (DOM.customPeriodForm) DOM.customPeriodForm.reset();
-  
+
   // Fechar modal
   if (DOM.modalCustomPeriod.close) DOM.modalCustomPeriod.close();
 }
@@ -2090,9 +2090,9 @@ function showPeriodSection(type) {
   if (DOM.periodRangeSection) DOM.periodRangeSection.style.display = 'none';
   if (DOM.periodSpecificSection) DOM.periodSpecificSection.style.display = 'none';
   if (DOM.periodRecurringSection) DOM.periodRecurringSection.style.display = 'none';
-  
+
   // Mostrar a seção selecionada
-  switch(type) {
+  switch (type) {
     case 'range':
       if (DOM.periodRangeSection) DOM.periodRangeSection.style.display = 'block';
       break;
@@ -2108,24 +2108,24 @@ function showPeriodSection(type) {
 // Adicionar campo de data para dias específicos
 function addSpecificDateField() {
   if (!DOM.specificDatesContainer) return;
-  
+
   const dateRow = document.createElement('div');
   dateRow.className = 'date-input-row';
-  
+
   const dateInput = document.createElement('input');
   dateInput.type = 'date';
   dateInput.className = 'specific-date';
-  
+
   const removeBtn = document.createElement('button');
   removeBtn.type = 'button';
   removeBtn.className = 'btn icon only remove-date';
   removeBtn.setAttribute('aria-label', 'Remover data');
   removeBtn.textContent = '✕';
-  
-  removeBtn.addEventListener('click', function() {
+
+  removeBtn.addEventListener('click', function () {
     dateRow.remove();
   });
-  
+
   dateRow.appendChild(dateInput);
   dateRow.appendChild(removeBtn);
   DOM.specificDatesContainer.appendChild(dateRow);
@@ -2134,11 +2134,11 @@ function addSpecificDateField() {
 // Atualizar unidade de intervalo baseada na frequência
 function updateIntervalUnit() {
   if (!DOM.recurringFrequency || !DOM.intervalUnit) return;
-  
+
   const frequency = DOM.recurringFrequency.value;
   let unit = 'dia(s)';
-  
-  switch(frequency) {
+
+  switch (frequency) {
     case 'weekly':
       unit = 'semana(s)';
       break;
@@ -2146,18 +2146,18 @@ function updateIntervalUnit() {
       unit = 'mês(es)';
       break;
   }
-  
+
   DOM.intervalUnit.textContent = unit;
 }
 
 // Habilitar/desabilitar campos de término baseado na seleção
 function toggleRecurringEndFields() {
   const selectedValue = document.querySelector('input[name="recurringEnd"]:checked').value;
-  
+
   if (DOM.recurringOccurrences) {
     DOM.recurringOccurrences.disabled = selectedValue !== 'after';
   }
-  
+
   if (DOM.recurringEndDate) {
     DOM.recurringEndDate.disabled = selectedValue !== 'on';
   }
@@ -2166,14 +2166,14 @@ function toggleRecurringEndFields() {
 // Gerar todas as datas para uma rotina baseada no tipo de período
 function generateRoutineDates(periodType, formData) {
   let dates = [];
-  
-  switch(periodType) {
+
+  switch (periodType) {
     case 'range':
       // Gerar datas entre início e fim, considerando apenas os dias da semana selecionados
       const start = new Date(formData.startDate);
       const end = new Date(formData.endDate);
       const selectedDays = formData.selectedDays || [1, 2, 3, 4, 5]; // Padrão: dias de semana
-      
+
       let current = new Date(start);
       while (current <= end) {
         if (selectedDays.includes(current.getDay())) {
@@ -2182,18 +2182,18 @@ function generateRoutineDates(periodType, formData) {
         current.setDate(current.getDate() + 1);
       }
       break;
-      
+
     case 'specific':
       // Usar as datas específicas fornecidas
       dates = formData.specificDates.filter(date => date.trim() !== '');
       break;
-      
+
     case 'recurring':
       // Gerar datas baseadas na recorrência
       dates = generateRecurringDates(formData);
       break;
   }
-  
+
   return dates;
 }
 
@@ -2203,22 +2203,22 @@ function generateRecurringDates(formData) {
   const startDate = new Date(formData.startDate);
   const frequency = formData.frequency;
   const interval = parseInt(formData.interval) || 1;
-  
+
   let currentDate = new Date(startDate);
   let occurrenceCount = 0;
   const maxOccurrences = formData.endType === 'after' ? parseInt(formData.occurrences) : Infinity;
   const endDate = formData.endType === 'on' ? new Date(formData.endDate) : null;
-  
+
   while (
-    (formData.endType === 'never' || 
-     (formData.endType === 'after' && occurrenceCount < maxOccurrences) ||
-     (formData.endType === 'on' && currentDate <= endDate))
+    (formData.endType === 'never' ||
+      (formData.endType === 'after' && occurrenceCount < maxOccurrences) ||
+      (formData.endType === 'on' && currentDate <= endDate))
   ) {
     dates.push(formatDateForInput(currentDate));
     occurrenceCount++;
-    
+
     // Avançar para a próxima data baseada na frequência
-    switch(frequency) {
+    switch (frequency) {
       case 'daily':
         currentDate.setDate(currentDate.getDate() + interval);
         break;
@@ -2229,25 +2229,25 @@ function generateRecurringDates(formData) {
         currentDate.setMonth(currentDate.getMonth() + interval);
         break;
     }
-    
+
     // Limitar a um número razoável de ocorrências para evitar loops infinitos
     if (occurrenceCount > 365) break;
   }
-  
+
   return dates;
 }
 
 // Adicionar múltiplas rotinas baseadas nas datas geradas
 function addRoutinesWithCustomPeriod(formData) {
   const dates = generateRoutineDates(formData.periodType, formData);
-  
+
   if (dates.length === 0) {
     showToast('Nenhuma data válida foi gerada para esta rotina.', 'error');
     return;
   }
-  
+
   let createdCount = 0;
-  
+
   dates.forEach(date => {
     const routineData = {
       title: formData.title,
@@ -2260,37 +2260,37 @@ function addRoutinesWithCustomPeriod(formData) {
       completed: false,
       isRecurring: formData.periodType === 'recurring'
     };
-    
+
     const result = addNewRoutine(routineData);
     if (result) createdCount++;
   });
-  
+
   showToast(`${createdCount} rotina(s) criada(s) com sucesso!`, 'success');
 }
 
 // Processar formulário de período personalizado
 function processCustomPeriodForm(e) {
   if (e && e.preventDefault) e.preventDefault();
-  
+
   // Verificar se é o botão cancelar
   const submitter = e.submitter;
   if (submitter && submitter.value === 'cancel') {
     closeCustomPeriodModal();
     return;
   }
-  
+
   // Coletar dados do formulário
   const title = DOM.customTitle ? DOM.customTitle.value.trim() : '';
   const description = DOM.customDesc ? DOM.customDesc.value : '';
   const time = DOM.customTime ? DOM.customTime.value || undefined : undefined;
   const priority = DOM.customPriority ? DOM.customPriority.value : 'medium';
   const tag = DOM.customTag ? normalizeTag(DOM.customTag.value) : undefined;
-  
+
   if (!title) {
     showToastTranslation('toast.requiredTitle', 'error');
     return;
   }
-  
+
   // Determinar tipo de período selecionado
   const periodType = document.querySelector('input[name="periodType"]:checked').value;
   let formData = {
@@ -2301,69 +2301,69 @@ function processCustomPeriodForm(e) {
     tag,
     periodType
   };
-  
+
   // Coletar dados específicos do tipo de período
-  switch(periodType) {
+  switch (periodType) {
     case 'range':
       const startDate = DOM.customStartDate ? DOM.customStartDate.value : '';
       const endDate = DOM.customEndDate ? DOM.customEndDate.value : '';
-      
+
       if (!startDate || !endDate) {
         showToast('As datas de início e término são obrigatórias.', 'error');
         return;
       }
-      
+
       if (new Date(startDate) > new Date(endDate)) {
         showToast('A data de início não pode ser posterior à data de término.', 'error');
         return;
       }
-      
+
       // Coletar dias da semana selecionados
       const selectedDays = [];
       document.querySelectorAll('.weekday-option input[type="checkbox"]:checked').forEach(cb => {
         selectedDays.push(parseInt(cb.value));
       });
-      
+
       formData.startDate = startDate;
       formData.endDate = endDate;
       formData.selectedDays = selectedDays;
       break;
-      
+
     case 'specific':
       const specificDates = [];
       document.querySelectorAll('.specific-date').forEach(input => {
         if (input.value) specificDates.push(input.value);
       });
-      
+
       if (specificDates.length === 0) {
         showToast('Pelo menos uma data específica deve ser fornecida.', 'error');
         return;
       }
-      
+
       formData.specificDates = specificDates;
       break;
-      
+
     case 'recurring':
       const recurringStartDate = DOM.recurringStartDate ? DOM.recurringStartDate.value : '';
       const frequency = DOM.recurringFrequency ? DOM.recurringFrequency.value : 'weekly';
       const interval = DOM.recurringInterval ? DOM.recurringInterval.value : '1';
       const endType = document.querySelector('input[name="recurringEnd"]:checked').value;
-      
+
       if (!recurringStartDate) {
         showToast('A data de início é obrigatória para rotinas recorrentes.', 'error');
         return;
       }
-      
+
       formData.startDate = recurringStartDate;
       formData.frequency = frequency;
       formData.interval = interval;
       formData.endType = endType;
-      
+
       if (endType === 'after') {
         formData.occurrences = DOM.recurringOccurrences ? DOM.recurringOccurrences.value : '10';
       } else if (endType === 'on') {
         formData.endDate = DOM.recurringEndDate ? DOM.recurringEndDate.value : '';
-        
+
         if (!formData.endDate) {
           showToast('A data de término é obrigatória quando selecionada.', 'error');
           return;
@@ -2371,10 +2371,10 @@ function processCustomPeriodForm(e) {
       }
       break;
   }
-  
+
   // Criar as rotinas
   addRoutinesWithCustomPeriod(formData);
-  
+
   // Fechar modal
   closeCustomPeriodModal();
 }
@@ -2440,29 +2440,29 @@ function setupEventListeners() {
   // Event listeners para o modal de período personalizado
   if (DOM.periodTypeRadios) {
     DOM.periodTypeRadios.forEach(radio => {
-      radio.addEventListener('change', function() {
+      radio.addEventListener('change', function () {
         showPeriodSection(this.value);
       });
     });
   }
-  
+
   if (DOM.addDateBtn) {
     DOM.addDateBtn.addEventListener('click', addSpecificDateField);
   }
-  
+
   if (DOM.recurringFrequency) {
     DOM.recurringFrequency.addEventListener('change', updateIntervalUnit);
   }
-  
+
   if (DOM.recurringEndRadios) {
     DOM.recurringEndRadios.forEach(radio => {
       radio.addEventListener('change', toggleRecurringEndFields);
     });
   }
-  
+
   if (DOM.customPeriodForm) {
     DOM.customPeriodForm.addEventListener('submit', processCustomPeriodForm);
-    
+
     // Botão cancelar
     const cancelBtn = DOM.customPeriodForm.querySelector('button[value="cancel"]');
     if (cancelBtn) {
@@ -2486,15 +2486,15 @@ function setupEventListeners() {
   if (DOM.themeToggle) {
     DOM.themeToggle.addEventListener('change', toggleTheme);
   }
-  
+
   if (DOM.btnSaveSettings) {
     DOM.btnSaveSettings.addEventListener('click', saveSettings);
   }
-  
+
   if (DOM.btnResetSettings) {
     DOM.btnResetSettings.addEventListener('click', resetSettings);
   }
-  
+
   if (DOM.btnOpenConfig) {
     DOM.btnOpenConfig.addEventListener('click', (e) => {
       e.preventDefault();
@@ -2508,7 +2508,7 @@ function setupEventListeners() {
       changeLanguage(e.target.value);
     });
   }
-  
+
   // Controles de configuração em tempo real
   if (DOM.fontSize) {
     DOM.fontSize.addEventListener('input', (e) => {
@@ -2516,7 +2516,7 @@ function setupEventListeners() {
       if (DOM.fontSizeValue) DOM.fontSizeValue.textContent = e.target.value + 'px';
     });
   }
-  
+
   if (DOM.fontFamily) {
     DOM.fontFamily.addEventListener('change', (e) => {
       document.body.style.fontFamily = e.target.value;
@@ -2603,182 +2603,182 @@ function updateClock() {
 
 // Inicializar todos os gráficos
 function initCharts() {
-    console.log('Inicializando gráficos...');
-    
-    if (!state.routines || state.routines.length === 0) {
-        console.log('Nenhuma rotina encontrada para gráficos');
-        renderEmptyCharts();
-        return;
-    }
-    
-    try {
-        renderWeeklyProgressChart();
-        renderTimeDistributionChart();
-        renderHabitsOverTimeChart();
-        console.log('Gráficos inicializados com sucesso!');
-    } catch (error) {
-        console.error('Erro ao inicializar gráficos:', error);
-        renderEmptyCharts();
-    }
+  console.log('Inicializando gráficos...');
+
+  if (!state.routines || state.routines.length === 0) {
+    console.log('Nenhuma rotina encontrada para gráficos');
+    renderEmptyCharts();
+    return;
+  }
+
+  try {
+    renderWeeklyProgressChart();
+    renderTimeDistributionChart();
+    renderHabitsOverTimeChart();
+    console.log('Gráficos inicializados com sucesso!');
+  } catch (error) {
+    console.error('Erro ao inicializar gráficos:', error);
+    renderEmptyCharts();
+  }
 }
 
 // Renderizar gráfico de progresso semanal - VERSÃO SIMPLIFICADA
 function renderWeeklyProgressChart() {
-    const ctx = document.getElementById('weeklyProgressChart');
-    if (!ctx) {
-        console.log('Elemento weeklyProgressChart não encontrado');
-        return;
-    }
-    
-    // Destruir gráfico anterior se existir
-    if (ctx.chartInstance) {
-        ctx.chartInstance.destroy();
-    }
-    
-    const weeklyData = [5, 8, 6, 9, 7, 4, 3];
-    const lang = getLang();
-    
-    ctx.chartInstance = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: I18N.weekdays[lang],
-            datasets: [{
-                label: t('chart.weeklyProgress'),
-                data: weeklyData,
-                backgroundColor: '#ff5454',
-                borderColor: '#ff2c2c',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
+  const ctx = document.getElementById('weeklyProgressChart');
+  if (!ctx) {
+    console.log('Elemento weeklyProgressChart não encontrado');
+    return;
+  }
 
-    // Atualiza texto informativo
-    const infoText = ctx.closest('.chart-container').querySelector('.info-text');
-    if (infoText) {
-        infoText.textContent = t('chart.infoWeekly');
+  // Destruir gráfico anterior se existir
+  if (ctx.chartInstance) {
+    ctx.chartInstance.destroy();
+  }
+
+  const weeklyData = [5, 8, 6, 9, 7, 4, 3];
+  const lang = getLang();
+
+  ctx.chartInstance = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: I18N.weekdays[lang],
+      datasets: [{
+        label: t('chart.weeklyProgress'),
+        data: weeklyData,
+        backgroundColor: '#ff5454',
+        borderColor: '#ff2c2c',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
     }
+  });
+
+  // Atualiza texto informativo
+  const infoText = ctx.closest('.chart-container').querySelector('.info-text');
+  if (infoText) {
+    infoText.textContent = t('chart.infoWeekly');
+  }
 }
 
 // Renderizar gráfico de distribuição de tempo - VERSÃO SIMPLIFICADA
 function renderTimeDistributionChart() {
-    const ctx = document.getElementById('timeDistributionChart');
-    if (!ctx) return;
-    
-    if (ctx.chartInstance) {
-        ctx.chartInstance.destroy();
-    }
-    
-    const lang = getLang();
-    
-    ctx.chartInstance = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            labels: [t('tag.trabalho'), t('tag.saude'), t('tag.estudos'), t('tag.pessoal')],
-            datasets: [{
-                data: [30, 20, 25, 25],
-                backgroundColor: ['#ff5454', '#4f46e5', '#10b981', '#f59e0b'],
-                borderWidth: 2
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false
-        }
-    });
+  const ctx = document.getElementById('timeDistributionChart');
+  if (!ctx) return;
 
-    // Atualiza texto informativo
-    const infoText = ctx.closest('.chart-container').querySelector('.info-text');
-    if (infoText) {
-        infoText.textContent = t('chart.infoTime');
+  if (ctx.chartInstance) {
+    ctx.chartInstance.destroy();
+  }
+
+  const lang = getLang();
+
+  ctx.chartInstance = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: [t('tag.trabalho'), t('tag.saude'), t('tag.estudos'), t('tag.pessoal')],
+      datasets: [{
+        data: [30, 20, 25, 25],
+        backgroundColor: ['#ff5454', '#4f46e5', '#10b981', '#f59e0b'],
+        borderWidth: 2
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false
     }
+  });
+
+  // Atualiza texto informativo
+  const infoText = ctx.closest('.chart-container').querySelector('.info-text');
+  if (infoText) {
+    infoText.textContent = t('chart.infoTime');
+  }
 }
 
 // Renderizar gráfico de hábitos ao longo do tempo - VERSÃO SIMPLIFICADA
 function renderHabitsOverTimeChart() {
-    const ctx = document.getElementById('habitsOverTimeChart');
-    if (!ctx) return;
-    
-    if (ctx.chartInstance) {
-        ctx.chartInstance.destroy();
-    }
-    
-    const lang = getLang();
-    
-    ctx.chartInstance = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ['01/03', '02/03', '03/03', '04/03', '05/03', '06/03', '07/03'],
-            datasets: [{
-                label: t('chart.habitsOverTime'),
-                data: [3, 5, 2, 6, 4, 7, 8],
-                borderColor: '#ff5454',
-                backgroundColor: 'rgba(255, 84, 84, 0.1)',
-                borderWidth: 2,
-                fill: true
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false
-        }
-    });
+  const ctx = document.getElementById('habitsOverTimeChart');
+  if (!ctx) return;
 
-    // Atualiza texto informativo
-    const infoText = ctx.closest('.chart-container').querySelector('.info-text');
-    if (infoText) {
-        infoText.textContent = t('chart.infoHabits');
+  if (ctx.chartInstance) {
+    ctx.chartInstance.destroy();
+  }
+
+  const lang = getLang();
+
+  ctx.chartInstance = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['01/03', '02/03', '03/03', '04/03', '05/03', '06/03', '07/03'],
+      datasets: [{
+        label: t('chart.habitsOverTime'),
+        data: [3, 5, 2, 6, 4, 7, 8],
+        borderColor: '#ff5454',
+        backgroundColor: 'rgba(255, 84, 84, 0.1)',
+        borderWidth: 2,
+        fill: true
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false
     }
+  });
+
+  // Atualiza texto informativo
+  const infoText = ctx.closest('.chart-container').querySelector('.info-text');
+  if (infoText) {
+    infoText.textContent = t('chart.infoHabits');
+  }
 }
 
 function renderEmptyCharts() {
-    const chartIds = [
-        'weeklyProgressChart',
-        'timeDistributionChart', 
-        'habitsOverTimeChart'
-    ];
-    
-    chartIds.forEach(chartId => {
-        const ctx = document.getElementById(chartId);
-        if (ctx) {
-            if (ctx.chartInstance) {
-                ctx.chartInstance.destroy();
-            }
-            
-            const lang = getLang();
-            
-            // Criar gráfico vazio
-            ctx.chartInstance = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: [t('empty.none')],
-                    datasets: [{
-                        label: t('empty.addRoutines'),
-                        data: [1],
-                        backgroundColor: '#e5e7eb'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false
-                }
-            });
+  const chartIds = [
+    'weeklyProgressChart',
+    'timeDistributionChart',
+    'habitsOverTimeChart'
+  ];
 
-            // Atualiza texto informativo
-            const infoText = ctx.closest('.chart-container').querySelector('.info-text');
-            if (infoText) {
-                infoText.textContent = t('empty.addRoutines');
-            }
+  chartIds.forEach(chartId => {
+    const ctx = document.getElementById(chartId);
+    if (ctx) {
+      if (ctx.chartInstance) {
+        ctx.chartInstance.destroy();
+      }
+
+      const lang = getLang();
+
+      // Criar gráfico vazio
+      ctx.chartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: [t('empty.none')],
+          datasets: [{
+            label: t('empty.addRoutines'),
+            data: [1],
+            backgroundColor: '#e5e7eb'
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false
         }
-    });
+      });
+
+      // Atualiza texto informativo
+      const infoText = ctx.closest('.chart-container').querySelector('.info-text');
+      if (infoText) {
+        infoText.textContent = t('empty.addRoutines');
+      }
+    }
+  });
 }
 
 /* ===========================
