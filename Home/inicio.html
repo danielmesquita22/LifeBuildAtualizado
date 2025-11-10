@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
   <div class="app" data-layout="with-sidebar" data-theme="light">
@@ -133,13 +134,46 @@
           <div class="calendar-grid"></div>
         </section>
 
+        <!-- View de Gráficos -->
+        <section class="view" id="viewGraficos" data-viewmode="graficos" aria-labelledby="viewTitle">
+          <div class="container">
+            <div class="charts-grid">
+                <!-- Gráfico de Barras - Progresso Semanal -->
+                <div class="chart-container">
+                    <h2 class="chart-title">Progresso Semanal de Tarefas</h2>
+                    <div class="chart-wrapper">
+                        <canvas id="weeklyProgressChart"></canvas>
+                    </div>
+                    <p class="info-text">Acompanhe sua produtividade ao longo da semana</p>
+                </div>
+                
+                <!-- Gráfico de Pizza - Distribuição de Tempo -->
+                <div class="chart-container">
+                    <h2 class="chart-title">Distribuição do Tempo</h2>
+                    <div class="chart-wrapper">
+                        <canvas id="timeDistributionChart"></canvas>
+                    </div>
+                    <p class="info-text">Veja como você distribui seu tempo entre diferentes atividades</p>
+                </div>
+                
+                <!-- Gráfico de Linha - Hábitos ao Longo do Tempo -->
+                <div class="chart-container">
+                    <h2 class="chart-title">Evolução de Hábitos</h2>
+                    <div class="chart-wrapper">
+                        <canvas id="habitsOverTimeChart"></canvas>
+                    </div>
+                    <p class="info-text">Monitore a consistência dos seus hábitos ao longo do tempo</p>
+                </div>
+            </div>
+          </div>
+        </section>
+
         <!-- View de Configurações -->
         <section class="view" id="viewConfig" data-viewmode="config" aria-labelledby="viewTitle">
           <div class="config-body">
             <main class="profile-container">
                 <section class="profile-header">
                   <div class="profile-banner"></div>
-                  <h1>Meu perfil</h1>
                   <img src="img/Ryo.jpg" alt="Foto do perfil" class="profile-photo" />
                   <input type="file" id="profilePhotoInput" accept="image/*" style="display:none;" />
                   <div class="profile-info">
@@ -173,140 +207,51 @@
                   </div>
                 </section>
             </main>
+            
+            <h3 data-i18n="view.config">Configurações do Aplicativo</h3>
+            <form id="configForm">
+              <div class="config-item">
+                <label for="themeToggle" data-i18n="label.darkMode">Modo escuro</label>
+                <label class="switch">
+                  <input type="checkbox" id="themeToggle">
+                  <span class="slider"></span>
+                </label>
+              </div>
+              <div class="config-item">
+                <label for="notificationsToggle" data-i18n="label.notifications">Ativar notificações do navegador</label>
+                <label class="switch">
+                  <input type="checkbox" id="notificationsToggle">
+                  <span class="slider"></span>
+                </label>
+              </div>
+              <div class="config-item">
+                <label for="appLanguage" data-i18n="label.appLanguage">Idioma do aplicativo</label>
+                <select id="appLanguage">
+                  <option value="pt-BR">Português</option>
+                  <option value="en-US">English</option>
+                  <option value="es-ES">Español</option>
+                  <option value="fr-FR">Français</option>
+                </select>
+              </div>
+              <div class="config-item">
+                <label for="fontFamily" data-i18n="label.fontFamily">Fonte personalizada</label>
+                <select id="fontFamily">
+                  <option value="Inter">Inter</option>
+                  <option value="Arial">Arial</option>
+                  <option value="Roboto">Roboto</option>
+                </select>
+              </div>
+              <div class="config-item">
+                <label for="fontSize" data-i18n="label.fontSize">Tamanho da fonte</label>
+                <input type="range" id="fontSize" min="12" max="22" value="16">
+                <span id="fontSizeValue">16</span>px
+              </div>
 
-            <h1 class="config-title">Configuração</h1>
-            <div class="config-option">
-              <label>Ativar notificações do navegador
-                <span style="float:right;">
-                  <label class="switch">
-                    <input type="checkbox" id="notificationsToggle">
-                    <span class="slider"></span>
-                  </label>
-                </span>
-              </label>
-            </div>
-
-            <div class="config-option">
-              <label>Modo escuro
-                <span style="float:right;">
-                  <label class="switch">
-                    <input type="checkbox" id="themeToggle">
-                    <span class="slider"></span>
-                  </label>
-                </span>
-              </label>
-            </div>
-
-            <div class="config-option">
-              <label for="appLanguage">Idioma do aplicativo
-                <span style="float:right;">
-                  <select id="appLanguage">
-                    <option value="pt-BR">Português</option>
-                    <option value="en-US">Inglês</option>
-                  </select>
-                </span>
-              </label>
-            </div>
-
-            <div class="config-option">
-              <label for="fontFamily">Fonte personalizada
-                <span style="float:right;">
-                  <select id="fontFamily">
-                    <option value="Inter">Inter</option>
-                    <option value="Arial">Arial</option>
-                    <option value="Roboto">Roboto</option>
-                    <option value="Georgia">Georgia</option>
-                    <option value="Courier New">Courier New</option>
-                  </select>
-                </span>
-              </label>
-            </div>
-
-            <div class="config-option">
-              <label for="fontSize">Tamanho da fonte
-                <span style="float:right;">
-                  <input type="range" id="fontSize" min="12" max="24" value="16" />
-                  <span id="fontSizeValue">16px</span>
-                </span>
-              </label>
-            </div>
-
-            <div class="form-actions">
-              <button class="btn primary" id="btnSaveSettings">Salvar Configurações</button>
-              <button class="btn secondary" id="btnResetSettings">Restaurar Padrões</button>
-            </div>
-          </div>
-        </section>
-
-        <section>
-          <div class="view" id="viewGraficos" data-viewmode="graficos" aria-labelledby="viewTitle">
-            <canvas id="tasksChart" aria-label="Gráfico de tarefas concluídas por dia" role="img"></canvas>
-            <div class="container">
-                <header>
-                    <h1>Gráficos para Site de Rotinas</h1>
-                    <p class="subtitle">Visualizações funcionais e atrativas para acompanhar seus hábitos e progresso</p>
-                </header>
-                
-                <div class="charts-grid">
-                    <!-- Gráfico de Barras - Progresso Semanal -->
-                    <div class="chart-container">
-                        <h2 class="chart-title">📊 Progresso Semanal de Tarefas</h2>
-                        <div class="chart-wrapper">
-                            <canvas id="weeklyProgressChart"></canvas>
-                        </div>
-                        <p class="info-text">Acompanhe sua produtividade ao longo da semana</p>
-                    </div>
-                    
-                    <!-- Gráfico de Pizza - Distribuição de Tempo -->
-                    <div class="chart-container">
-                        <h2 class="chart-title">⏰ Distribuição do Tempo</h2>
-                        <div class="chart-wrapper">
-                            <canvas id="timeDistributionChart"></canvas>
-                        </div>
-                        <p class="info-text">Veja como você distribui seu tempo entre diferentes atividades</p>
-                    </div>
-                    
-                    <!-- Gráfico de Linha - Hábitos ao Longo do Tempo -->
-                    <div class="chart-container">
-                        <h2 class="chart-title">📈 Evolução de Hábitos</h2>
-                        <div class="chart-wrapper">
-                            <canvas id="habitsOverTimeChart"></canvas>
-                        </div>
-                        <p class="info-text">Monitore a consistência dos seus hábitos ao longo do tempo</p>
-                    </div>
-                    
-                    <!-- Gráfico de Radar - Equilíbrio de Vida -->
-                    <div class="chart-container">
-                        <h2 class="chart-title">🎯 Equilíbrio de Vida</h2>
-                        <div class="chart-wrapper">
-                            <canvas id="lifeBalanceChart"></canvas>
-                        </div>
-                        <p class="info-text">Avalie o equilíbrio entre diferentes áreas da sua vida</p>
-                    </div>
-                    
-                    <!-- Gráfico de Barras Horizontais - Metas Mensais -->
-                    <div class="chart-container">
-                        <h2 class="chart-title">🎯 Progresso de Metas Mensais</h2>
-                        <div class="chart-wrapper">
-                            <canvas id="monthlyGoalsChart"></canvas>
-                        </div>
-                        <p class="info-text">Acompanhe seu progresso em direção às metas do mês</p>
-                    </div>
-                    
-                    <!-- Gráfico de Área - Produtividade Diária -->
-                    <div class="chart-container">
-                        <h2 class="chart-title">📅 Produtividade Diária</h2>
-                        <div class="chart-wrapper">
-                            <canvas id="dailyProductivityChart"></canvas>
-                        </div>
-                        <p class="info-text">Visualize seus picos de produtividade ao longo do dia</p>
-                    </div>
-                </div>
-                
-                <footer>
-                    <p>NCDRP - 2025.</p>
-                </footer>
-            </div>
+              <div class="config-buttons">
+                <button type="button" id="btnSaveSettings" class="btn primary" data-i18n="button.saveSettings">Salvar Configurações</button>
+                <button type="button" id="btnResetSettings" class="btn secondary" data-i18n="button.resetSettings">Restaurar Padrões</button>
+              </div>
+            </form>
           </div>
         </section>
       </main>
