@@ -1,10 +1,10 @@
-/* ==============================================================
+/* 
    VARIÁVEIS DE CORES (Themes: Light/Dark)
-   ============================================================== */
+*/
 
-/* =======================
+/*
    🌞 LIGHT MODE (Default)
-   ======================= */
+*/
 :root {
     /* Cores Principais */
     --color-primary: #ff5454;
@@ -122,9 +122,9 @@ a {
     text-decoration: none;
 }
 
-/* =================================================================
+/*  
    LAYOUT PRINCIPAL: .app, .topbar, .sidebar, .layout, .content
-   ================================================================= */
+*/
 
 /* Barra Superior (Top Bar) */
 .topbar {
@@ -291,9 +291,9 @@ a {
     border-top: 1px solid var(--color-border);
 }
 
-/* =================================================================
+/* 
    COMPONENTES GERAIS: Botões, Menu, Fields
-   ================================================================= */
+*/
 
 /* Botões */
 .btn,
@@ -490,9 +490,9 @@ textarea {
     grid-template-columns: 1fr 1fr;
 }
 
-/* =================================================================
+/* 
    ESTILOS PARA PERÍODO PERSONALIZADO
-   ================================================================= */
+*/
 
 .period-type-selector {
     display: flex;
@@ -606,9 +606,9 @@ textarea {
     font-size: 0.7rem;
 }
 
-/* =================================================================
+/* 
    PAINEL DE DETALHES (ASIDE.DETAILS)
-   ================================================================= */
+*/
 .details {
     position: fixed;
     top: 0;
@@ -666,9 +666,9 @@ textarea {
     background-color: var(--color-bg-alt);
 }
 
-/* =================================================================
+/*
    CONFIGURAÇÕES
-   ================================================================= */
+*/
 
 .config-body {
     max-width: 800px;
@@ -898,9 +898,9 @@ input:checked+.slider:before {
     font-style: italic;
 }
 
-/* =================================================================
-   VISUALIZAÇÕES: LISTA, QUADRO (KANBAN), CALENDÁRIO
-   ================================================================= */
+/*
+   VISUALIZAÇÕES
+*/
 
 .view {
     display: none;
@@ -1140,9 +1140,9 @@ input:checked+.slider:before {
     padding: 4px;
 }
 
-/* =================================================================
-   CALENDÁRIO - CORREÇÃO COMPLETA
-   ================================================================= */
+/* 
+   CALENDÁRIO 
+*/
 
 .calendar-toolbar,
 .calendar-header {
@@ -1283,9 +1283,9 @@ input:checked+.slider:before {
     background-color: var(--color-priority-low);
 }
 
-/* =================================================================
-   GRÁFICOS - CORREÇÕES E MELHORIAS
-   ================================================================= */
+/*
+   GRÁFICOS
+*/
 
 .container {
     max-width: 1200px;
