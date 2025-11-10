@@ -1,6 +1,6 @@
-/* 
+/* ===========================
    1) CONSTANTES E CONFIGURAÇÕES
-*/
+   =========================== */
 
 // Chave usada no localStorage para persistir os dados da aplicação
 const STORAGE_KEY = 'routineAppData_v2_multilang';
@@ -78,9 +78,9 @@ const DEFAULT_DATA = {
   }
 };
 
-/*
-   1.1) TRADUÇÕES MULTILÍNGUE (PT / EN / ES / FR)
-*/
+/* ===========================
+   1.1) TRADUÇÕES MULTILÍNGUE (PT / EN / ES / FR) - VERSÃO COMPLETA
+   =========================== */
 
 const I18N = {
   'view.hoje': {
@@ -611,7 +611,7 @@ const I18N = {
     'pt-BR': 'Adicione rotinas para ver os gráficos',
     'en-US': 'Add routines to see charts',
     'es-ES': 'Agregue rutinas para ver gráficos',
-    'fr-FR': 'Ajoutez des routines pour voir les graphiques'
+    'fr-FR': 'Ajoutez des routines para voir les graphiques'
   },
 
   // Toasts
@@ -720,7 +720,7 @@ const I18N = {
 
   // Meses e dias da semana
   'months': {
-    'pt-BR': ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+    'pt-BR': ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julio', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
     'en-US': ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
     'es-ES': ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
     'fr-FR': ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre']
@@ -846,9 +846,9 @@ const templates = {
   toast: document.getElementById('tplToast')
 };
 
-/*
-  4) SISTEMA DE TRADUÇÃO
-*/
+/* ===========================
+   4) SISTEMA DE TRADUÇÃO
+   =========================== */
 
 // Obtém idioma atual (padrão pt-BR)
 function getLang() {
@@ -974,9 +974,9 @@ function changeLanguage(newLang) {
   showToastTranslation('toast.saved', 'success');
 }
 
-/*
+/* ===========================
    5) INICIALIZAÇÃO
-*/
+   =========================== */
 
 // Função de inicialização que configura tudo e renderiza o estado inicial
 function init() {
@@ -1007,6 +1007,9 @@ function init() {
   // Aplica traduções
   applyLanguageToDOM();
 
+  // Renderiza etiquetas - IMPORTANTE: Adicionar esta linha
+  renderTags();
+
   // Inicializar gráficos se estiver na view de gráficos
   if (state.currentView === 'graficos') {
     setTimeout(initCharts, 100); // Pequeno delay para garantir que o DOM esteja pronto
@@ -1016,9 +1019,9 @@ function init() {
   render();
 }
 
-/*
-   6) PERSISTÊNCIA 
-*/
+/* ===========================
+   6) PERSISTÊNCIA (localStorage)
+   =========================== */
 
 // Carrega os dados salvos no localStorage. Se não existir, usa DEFAULT_DATA
 function loadData() {
@@ -1080,9 +1083,9 @@ function saveData() {
   }
 }
 
-/*
-   7) UTILITÁRIOS
-*/
+/* ===========================
+   7) UTILITÁRIOS (helpers)
+   =========================== */
 
 // Gera um ID único simples para novas rotinas (prefixo 't' + contador)
 function generateId() {
@@ -1145,9 +1148,9 @@ function normalizeTag(tagStr) {
   return tagStr.replace('#', '').trim();
 }
 
-/*
+/* ===========================
    8) CRUD DE ROTINAS (Add / Toggle / Open / Save / Delete / Duplicate)
-*/
+   =========================== */
 
 // Adiciona uma nova rotina ao estado e salva
 function addNewRoutine({ title, description, date, time, priority, tag, status = 'todo', completed = false }) {
@@ -1157,21 +1160,31 @@ function addNewRoutine({ title, description, date, time, priority, tag, status =
     return null;
   }
 
+  // Normalizar etiqueta e verificar se existe
+  let normalizedTag = tag ? normalizeTag(tag) : undefined;
+  if (normalizedTag && !getTagByName(normalizedTag)) {
+    // Se a etiqueta não existe, criar automaticamente
+    addNewTag({
+      name: normalizedTag,
+      color: '#888' // Cor padrão
+    });
+  }
+
   const newRoutine = {
     id: generateId(),
     title: title.trim(),
     description: description || '',
-    date: date || undefined,        // espera 'YYYY-MM-DD' ou undefined
-    time: time || undefined,        // espera 'HH:MM' ou undefined
-    priority: priority || 'medium', // 'low'|'medium'|'high'
-    tag: tag ? normalizeTag(tag) : undefined,
+    date: date || undefined,
+    time: time || undefined,
+    priority: priority || 'medium',
+    tag: normalizedTag,
     status: status,
     completed: !!completed
   };
 
   state.routines.push(newRoutine);
   saveData();
-  render(); // atualiza UI
+  render();
   showToastTranslation('toast.added', 'success');
   return newRoutine;
 }
@@ -1309,78 +1322,206 @@ function duplicateCurrentTask() {
   showToastTranslation('toast.copied', 'success');
 }
 
-/*
-  9) GESTÃO DE ETIQUETAS
-*/
+/* ===========================
+   9) GESTÃO DE ETIQUETAS (TAGS) - VERSÃO CORRIGIDA
+   =========================== */
+
+// Função para abrir o modal de nova etiqueta
+function openAddTagModal() {
+  const modal = document.getElementById('modalAddTag');
+  if (!modal) return;
+
+  // Limpar formulário
+  const form = document.getElementById('addTagForm');
+  if (form) form.reset();
+
+  // Definir cor padrão
+  const colorInput = document.getElementById('tagColor');
+  if (colorInput) colorInput.value = '#4f46e5';
+
+  // Focar no campo de nome
+  const nameInput = document.getElementById('tagName');
+  if (nameInput) nameInput.focus();
+
+  // Abrir modal
+  if (modal.showModal) {
+    modal.showModal();
+  }
+}
+
+// Função para processar o formulário de nova etiqueta
+function processAddTagForm(e) {
+  if (e && e.preventDefault) e.preventDefault();
+
+  // Verificar se é o botão cancelar
+  const submitter = e.submitter;
+  if (submitter && submitter.value === 'cancel') {
+    closeAddTagModal();
+    return;
+  }
+
+  // Coletar dados do formulário
+  const nameInput = document.getElementById('tagName');
+  const colorInput = document.getElementById('tagColor');
+
+  if (!nameInput || !colorInput) return;
+
+  const name = nameInput.value.trim();
+  const color = colorInput.value;
+
+  // Validação
+  if (!name) {
+    showToastTranslation('toast.requiredTitle', 'error');
+    return;
+  }
+
+  // Adicionar etiqueta
+  addNewTag({ name, color });
+
+  // Fechar modal
+  closeAddTagModal();
+}
+
+// Função para fechar o modal de etiqueta
+function closeAddTagModal() {
+  const modal = document.getElementById('modalAddTag');
+  if (!modal) return;
+
+  // Limpar formulário
+  const form = document.getElementById('addTagForm');
+  if (form) form.reset();
+
+  // Fechar modal
+  if (modal.close) modal.close();
+}
 
 // Adiciona nova etiqueta ao estado (verifica duplicidade por nome)
 function addNewTag({ name, color }) {
   if (!name || !name.trim()) {
     showToast('O nome da etiqueta é obrigatório.', 'error');
-    return;
+    return null;
   }
+
   const normalized = name.trim().toLowerCase();
 
-  // Verifica se já existe
+  // Verificar se já existe (case insensitive)
   if (state.tags.some(t => t.name.toLowerCase() === normalized)) {
     showToast('Esta etiqueta já existe!', 'error');
-    return;
+    return null;
   }
 
   const newTag = {
-    id: `tag${state.tags.length + 1}`,
+    id: `tag${Date.now()}`, // ID único baseado no timestamp
     name: normalized,
     color: color || '#888'
   };
 
   state.tags.push(newTag);
   saveData();
-  renderTags(); // atualiza a sidebar
-  showToast(`Etiqueta #${newTag.name} adicionada!`, 'success');
+  renderTags();
+
+  const lang = getLang();
+  const successMessages = {
+    'pt-BR': `Etiqueta #${newTag.name} adicionada!`,
+    'en-US': `Tag #${newTag.name} added!`,
+    'es-ES': `¡Etiqueta #${newTag.name} añadida!`,
+    'fr-FR': `Étiquette #${newTag.name} ajoutée !`
+  };
+
+  showToast(successMessages[lang] || successMessages['pt-BR'], 'success');
+  return newTag;
 }
 
 // Renderiza as tags na sidebar e no datalist do formulário
 function renderTags() {
   if (!DOM.tagList) return;
+
+  // Limpar lista atual
   DOM.tagList.innerHTML = '';
 
-  // datalist para sugestões no input (ex.: #pessoal)
+  // Atualizar datalist para sugestões
   const datalist = document.getElementById('datalistTags');
-  if (datalist) datalist.innerHTML = '';
+  if (datalist) {
+    datalist.innerHTML = '';
 
+    state.tags.forEach(tag => {
+      const option = document.createElement('option');
+      option.value = `#${tag.name}`;
+      datalist.appendChild(option);
+    });
+  }
+
+  // Se não houver etiquetas, mostrar mensagem
+  if (state.tags.length === 0) {
+    const emptyMsg = document.createElement('li');
+    emptyMsg.className = 'empty-state';
+    emptyMsg.textContent = 'Nenhuma etiqueta criada';
+    emptyMsg.style.padding = '8px';
+    emptyMsg.style.color = 'var(--color-text-secondary)';
+    emptyMsg.style.fontStyle = 'italic';
+    DOM.tagList.appendChild(emptyMsg);
+    return;
+  }
+
+  // Renderizar cada etiqueta
   state.tags.forEach(tag => {
-    // Cria item na sidebar
     const li = document.createElement('li');
     const a = document.createElement('a');
     a.className = 'tag';
     a.href = '#';
     a.dataset.tag = tag.name;
     a.textContent = `#${tag.name}`;
-    // Aplicação visual simples: cor da borda
+
+    // Aplicar cor da etiqueta
     a.style.borderColor = tag.color;
-    // Clique em tag filtra por essa tag
+    a.style.color = tag.color;
+    a.style.backgroundColor = tag.color + '20'; // Adiciona transparência
+
+    // Evento de clique para filtrar por etiqueta
     a.addEventListener('click', (e) => {
       e.preventDefault();
-      // Ativa o filtro "por tag" (simples implementação: renderiza apenas tarefas com essa tag)
-      renderTaskListWithTasks(state.routines.filter(r => r.tag === tag.name));
-      showToast(`Filtrado por #${tag.name}`, 'info');
+      filterByTag(tag.name);
     });
 
     li.appendChild(a);
     DOM.tagList.appendChild(li);
-
-    // Adiciona opção ao datalist para inputs
-    if (datalist) {
-      const option = document.createElement('option');
-      option.value = `#${tag.name}`;
-      datalist.appendChild(option);
-    }
   });
 }
 
-/*
+// Função para filtrar por etiqueta
+function filterByTag(tagName) {
+  // Limpar filtros ativos
+  if (DOM.filterLinks && DOM.filterLinks.length) {
+    DOM.filterLinks.forEach(l => l.classList.remove('is-active'));
+  }
+
+  // Filtrar tarefas pela etiqueta
+  const filteredTasks = state.routines.filter(routine =>
+    routine.tag && routine.tag.toLowerCase() === tagName.toLowerCase()
+  );
+
+  // Renderizar lista filtrada
+  renderTaskListWithTasks(filteredTasks);
+
+  const lang = getLang();
+  const filterMessages = {
+    'pt-BR': `Filtrado por #${tagName}`,
+    'en-US': `Filtered by #${tagName}`,
+    'es-ES': `Filtrado por #${tagName}`,
+    'fr-FR': `Filtré par #${tagName}`
+  };
+
+  showToast(filterMessages[lang] || filterMessages['pt-BR'], 'info');
+}
+
+// Função para obter etiqueta por nome
+function getTagByName(tagName) {
+  return state.tags.find(tag => tag.name.toLowerCase() === tagName.toLowerCase());
+}
+
+/* ===========================
    10) FILTRAGEM E LISTAGEM DE TAREFAS
-*/
+   =========================== */
 
 // Retorna um array de tarefas filtradas de acordo com a view atual e filtros rápidos
 function getFilteredTasks() {
@@ -1448,9 +1589,9 @@ function getFilteredTasks() {
   return tasks;
 }
 
-/*
+/* ===========================
    11) RENDERIZAÇÃO (Lista / Quadro / Calendário / Config)
-*/
+   =========================== */
 
 // Atualiza título da view (ex.: Hoje, Calendário)
 function updateViewTitle() {
@@ -1550,9 +1691,9 @@ function render() {
   }
 }
 
-/*
+/* ---------------------------
    11.1) Render - Quadro Kanban
-*/
+   --------------------------- */
 
 // Renderiza o quadro Kanban preenchendo as colunas por status
 function renderBoard() {
@@ -1581,9 +1722,9 @@ function renderBoard() {
   if (doneCount) doneCount.textContent = `${DOM.doneList.children.length} itens`;
 }
 
-/*
-   11.2) Render - Calendário
-*/
+/* ---------------------------
+   11.2) Render - Calendário - CORREÇÃO COMPLETA
+   --------------------------- */
 
 // Renderiza o calendário do mês atual (state.currentDate)
 function renderCalendar() {
@@ -1704,9 +1845,9 @@ function createCalendarDay(day, isOtherMonth, isToday = false, fullDate = null) 
   return cell;
 }
 
-/*
-   12) CRIAÇÃO DE ELEMENTOS
-*/
+/* ===========================
+   12) CRIAÇÃO DE ELEMENTOS (task item e board card)
+   =========================== */
 
 // Cria e retorna um elemento li.populado para a lista usando o template tplTaskItem
 function createTaskElement(task) {
@@ -1887,9 +2028,9 @@ function createBoardCard(task) {
   return clone;
 }
 
-/*
+/* ===========================
    13) DRAG & DROP (Kanban)
-*/
+   =========================== */
 
 // Configura eventos de drag & drop nas colunas
 function setupDragAndDrop() {
@@ -1947,9 +2088,9 @@ function handleDrop(e) {
   showToast(`Rotina movida para: ${statusText[newStatus] || 'A fazer'}`, 'info');
 }
 
-/*
+/* ===========================
    14) CONFIGURAÇÕES E PREFERÊNCIAS
-*/
+   =========================== */
 
 // Carrega as configurações salvas
 function loadSettings() {
@@ -2049,9 +2190,9 @@ function renderProfile() {
   }
 }
 
-/*
+/* ===========================
    15) SISTEMA DE PERÍODO PERSONALIZADO
-*/
+   =========================== */
 
 // Abrir modal de período personalizado
 function openCustomPeriodModal() {
@@ -2380,9 +2521,9 @@ function processCustomPeriodForm(e) {
   closeCustomPeriodModal();
 }
 
-/*
-   16) EVENTOS GERAIS E LIGAÇÕES
-*/
+/* ===========================
+   16) EVENTOS GERAIS E LIGAÇÕES - VERSÃO CORRIGIDA
+   =========================== */
 
 // Configura todos os listeners de UI (botões, formulários, links, etc.)
 function setupEventListeners() {
@@ -2420,12 +2561,24 @@ function setupEventListeners() {
     });
   }
 
-  // Modal adicionar tag
-  if (DOM.btnAddTag && DOM.modalAddTag) {
-    DOM.btnAddTag.addEventListener('click', () => {
-      if (DOM.modalAddTag.showModal) DOM.modalAddTag.showModal();
-      if (DOM.tagName) DOM.tagName.focus();
-    });
+  // Modal adicionar tag - CORREÇÃO COMPLETA
+  if (DOM.btnAddTag) {
+    DOM.btnAddTag.addEventListener('click', openAddTagModal);
+  }
+
+  // Formulário de adicionar tag
+  const addTagForm = document.getElementById('addTagForm');
+  if (addTagForm) {
+    addTagForm.addEventListener('submit', processAddTagForm);
+
+    // Botão cancelar no modal de etiqueta
+    const cancelBtn = addTagForm.querySelector('button[value="cancel"]');
+    if (cancelBtn) {
+      cancelBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        closeAddTagModal();
+      });
+    }
   }
 
   // Fechar painel detalhes
@@ -2553,11 +2706,21 @@ function setupEventListeners() {
       }
     });
   });
+
+  // Fechar modal de etiqueta com ESC
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      const tagModal = document.getElementById('modalAddTag');
+      if (tagModal && tagModal.open) {
+        closeAddTagModal();
+      }
+    }
+  });
 }
 
-/*
-   17) FUNÇÕES AUXILIARES
- */
+/* ===========================
+   17) FUNÇÕES AUXILIARES (UI/Helpers)
+   =========================== */
 
 // Alterna a sidebar visível / escondida e persiste a preferência
 function toggleSidebar() {
@@ -2598,9 +2761,9 @@ function updateClock() {
   if (DOM.nowTime) DOM.nowTime.textContent = now.toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' });
 }
 
-/*
-   18) SISTEMA DE GRÁFICOS
-*/
+/* ===========================
+   18) SISTEMA DE GRÁFICOS - VERSÃO CORRIGIDA
+   =========================== */
 
 // Inicializar todos os gráficos
 function initCharts() {
