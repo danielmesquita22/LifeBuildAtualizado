@@ -1,9 +1,6 @@
-/* 
-   VARIÁVEIS DE CORES (Themes: Light/Dark)
-*/
 
 /*
-   🌞 LIGHT MODE (Default)
+   LIGHT MODE (Default)
 */
 :root {
     /* Cores Principais */
@@ -50,9 +47,9 @@
         0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
-/* =======================
-   🌙 DARK MODE
-   ======================= */
+/*
+   DARK MODE
+*/
 .app[data-theme="dark"] {
     /* Cores Principais */
     --color-primary: #ff5454;
@@ -1387,9 +1384,9 @@ input:checked+.slider:before {
     background-color: var(--color-bg);
 }
 
-/* =================================================================
+/*
    MODAIS (DIALOG)
-   ================================================================= */
+*/
 .modal {
     border: none;
     padding: 0;
@@ -1439,9 +1436,9 @@ input:checked+.slider:before {
     border-top: 1px solid var(--color-border);
 }
 
-/* =================================================================
+/*
    TOASTS E RODAPÉ
-   ================================================================= */
+*/
 
 .toasts,
 #toasts {
@@ -1495,9 +1492,9 @@ input:checked+.slider:before {
     transform: translateX(100%);
 }
 
-/* =================================================================
+/*
    OUTROS COMPONENTES
-   ================================================================= */
+*/
 
 /* Botão toggle sidebar */
 #btnToggleSidebar {
@@ -1557,9 +1554,9 @@ label {
     color: var(--color-primary);
 }
 
-/* =================================================================
+/*
    RESPONSIVIDADE (Celulares e Tablets)
-   ================================================================= */
+*/
 
 @media (max-width: 768px) {
 
