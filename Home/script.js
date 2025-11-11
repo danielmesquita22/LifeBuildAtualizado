@@ -1,6 +1,6 @@
-/* ===========================
+/*
    1) CONSTANTES E CONFIGURAÇÕES
-   =========================== */
+*/
 
 // Chave usada no localStorage para persistir os dados da aplicação
 const STORAGE_KEY = 'routineAppData_v2_multilang';
@@ -65,7 +65,7 @@ const DEFAULT_DATA = {
   preferences: {
     theme: 'light',
     showCompleted: true,
-    notifications: true,
+    notifications: false,
     language: 'pt-BR',
     fontFamily: 'Inter',
     fontSize: '16'
@@ -268,7 +268,7 @@ const I18N = {
   'label.fontSize': {
     'pt-BR': 'Tamanho da fonte',
     'en-US': 'Font Size',
-    'es-ES': 'Tamaño de fuente',
+    'es-ES': 'Tamaño de fonte',
     'fr-FR': 'Taille de police'
   },
 
@@ -622,10 +622,10 @@ const I18N = {
     'fr-FR': 'Routine ajoutée avec succès !'
   },
   'toast.saved': {
-    'pt-BR': 'Rotina salva com sucesso!',
-    'en-US': 'Routine saved successfully!',
-    'es-ES': '¡Rutina guardada con éxito!',
-    'fr-FR': 'Routine enregistrée avec succès !'
+    'pt-BR': 'Foto do perfil atualizada com sucesso!',
+    'en-US': 'Profile photo updated successfully!',
+    'es-ES': '¡Foto de perfil actualizada con éxito!',
+    'fr-FR': 'Photo de profil mise à jour avec succès !'
   },
   'toast.deleted': {
     'pt-BR': 'Rotina excluída com sucesso!',
@@ -674,7 +674,7 @@ const I18N = {
   'chart.infoTime': {
     'pt-BR': 'Veja como você distribui seu tempo entre diferentes atividades',
     'en-US': 'See how you distribute your time between different activities',
-    'es-ES': 'Vea cómo distribuye su tiempo entre diferentes actividades',
+    'es-ES': 'Vea cómo distribuye su tempo entre diferentes actividades',
     'fr-FR': 'Voyez comment vous répartissez votre temps entre différentes activités'
   },
   'chart.infoHabits': {
@@ -716,6 +716,32 @@ const I18N = {
     'en-US': 'Next month',
     'es-ES': 'Próximo mes',
     'fr-FR': 'Mois suivant'
+  },
+
+  // Notificações
+  'notification.test': {
+    'pt-BR': 'Esta é uma notificação de teste do Life Build!',
+    'en-US': 'This is a test notification from Life Build!',
+    'es-ES': '¡Esta es una notificación de prueba de Life Build!',
+    'fr-FR': 'Ceci est une notification de test de Life Build!'
+  },
+  'notification.reminder': {
+    'pt-BR': '⏰ Lembrete: ',
+    'en-US': '⏰ Reminder: ',
+    'es-ES': '⏰ Recordatorio: ',
+    'fr-FR': '⏰ Rappel: '
+  },
+  'notification.permissionDenied': {
+    'pt-BR': 'Permissão para notificações foi negada. Por favor, habilite nas configurações do navegador.',
+    'en-US': 'Notification permission was denied. Please enable in browser settings.',
+    'es-ES': 'El permiso para notificaciones fue denegado. Por favor, habilite en la configuración del navegador.',
+    'fr-FR': "L'autorisation de notification a été refusée. Veuillez l'activer dans les paramètres du navigateur."
+  },
+  'notification.unsupported': {
+    'pt-BR': 'Seu navegador não suporta notificações',
+    'en-US': 'Your browser does not support notifications',
+    'es-ES': 'Tu navegador no admite notificaciones',
+    'fr-FR': 'Votre navigateur ne prend pas en charge les notifications'
   },
 
   // Meses e dias da semana
@@ -846,9 +872,9 @@ const templates = {
   toast: document.getElementById('tplToast')
 };
 
-/* ===========================
+/*
    4) SISTEMA DE TRADUÇÃO
-   =========================== */
+*/
 
 // Obtém idioma atual (padrão pt-BR)
 function getLang() {
@@ -974,9 +1000,9 @@ function changeLanguage(newLang) {
   showToastTranslation('toast.saved', 'success');
 }
 
-/* ===========================
+/*
    5) INICIALIZAÇÃO
-   =========================== */
+*/
 
 // Função de inicialização que configura tudo e renderiza o estado inicial
 function init() {
@@ -993,6 +1019,16 @@ function init() {
 
   // Configura listeners de eventos (interações do usuário)
   setupEventListeners();
+
+  // Configurar troca de foto do perfil
+  setupProfilePhotoChange();
+
+  // Carregar foto do perfil salva
+  loadProfilePhoto();
+
+  // Configurar notificações
+  setupNotifications();
+  setupNotificationToggle();
 
   // Atualiza relógio e agenda de atualização periódica
   updateClock();
@@ -1019,9 +1055,9 @@ function init() {
   render();
 }
 
-/* ===========================
+/*
    6) PERSISTÊNCIA (localStorage)
-   =========================== */
+*/
 
 // Carrega os dados salvos no localStorage. Se não existir, usa DEFAULT_DATA
 function loadData() {
@@ -1083,9 +1119,9 @@ function saveData() {
   }
 }
 
-/* ===========================
+/*
    7) UTILITÁRIOS (helpers)
-   =========================== */
+*/
 
 // Gera um ID único simples para novas rotinas (prefixo 't' + contador)
 function generateId() {
@@ -1148,9 +1184,9 @@ function normalizeTag(tagStr) {
   return tagStr.replace('#', '').trim();
 }
 
-/* ===========================
+/*
    8) CRUD DE ROTINAS (Add / Toggle / Open / Save / Delete / Duplicate)
-   =========================== */
+*/
 
 // Adiciona uma nova rotina ao estado e salva
 function addNewRoutine({ title, description, date, time, priority, tag, status = 'todo', completed = false }) {
@@ -1186,6 +1222,12 @@ function addNewRoutine({ title, description, date, time, priority, tag, status =
   saveData();
   render();
   showToastTranslation('toast.added', 'success');
+  
+  // Verificar se deve enviar notificação
+  if (date && state.preferences.notifications) {
+    setTimeout(() => sendReminderNotification(newRoutine), 1000);
+  }
+  
   return newRoutine;
 }
 
@@ -1322,9 +1364,9 @@ function duplicateCurrentTask() {
   showToastTranslation('toast.copied', 'success');
 }
 
-/* ===========================
-   9) GESTÃO DE ETIQUETAS (TAGS) - VERSÃO CORRIGIDA
-   =========================== */
+/*
+   9) GESTÃO DE ETIQUETAS (TAGS)
+*/
 
 // Função para abrir o modal de nova etiqueta
 function openAddTagModal() {
@@ -1519,9 +1561,9 @@ function getTagByName(tagName) {
   return state.tags.find(tag => tag.name.toLowerCase() === tagName.toLowerCase());
 }
 
-/* ===========================
+/* 
    10) FILTRAGEM E LISTAGEM DE TAREFAS
-   =========================== */
+*/
 
 // Retorna um array de tarefas filtradas de acordo com a view atual e filtros rápidos
 function getFilteredTasks() {
@@ -1589,9 +1631,9 @@ function getFilteredTasks() {
   return tasks;
 }
 
-/* ===========================
+/*
    11) RENDERIZAÇÃO (Lista / Quadro / Calendário / Config)
-   =========================== */
+*/
 
 // Atualiza título da view (ex.: Hoje, Calendário)
 function updateViewTitle() {
@@ -1691,9 +1733,9 @@ function render() {
   }
 }
 
-/* ---------------------------
-   11.1) Render - Quadro Kanban
-   --------------------------- */
+/*
+  11.1) Render - Quadro Kanban
+*/
 
 // Renderiza o quadro Kanban preenchendo as colunas por status
 function renderBoard() {
@@ -1722,9 +1764,9 @@ function renderBoard() {
   if (doneCount) doneCount.textContent = `${DOM.doneList.children.length} itens`;
 }
 
-/* ---------------------------
-   11.2) Render - Calendário - CORREÇÃO COMPLETA
-   --------------------------- */
+/*
+  11.2) Render - Calendário
+*/
 
 // Renderiza o calendário do mês atual (state.currentDate)
 function renderCalendar() {
@@ -1845,9 +1887,9 @@ function createCalendarDay(day, isOtherMonth, isToday = false, fullDate = null) 
   return cell;
 }
 
-/* ===========================
-   12) CRIAÇÃO DE ELEMENTOS (task item e board card)
-   =========================== */
+/*
+  12) CRIAÇÃO DE ELEMENTOS (task item e board card)
+*/
 
 // Cria e retorna um elemento li.populado para a lista usando o template tplTaskItem
 function createTaskElement(task) {
@@ -2028,9 +2070,9 @@ function createBoardCard(task) {
   return clone;
 }
 
-/* ===========================
-   13) DRAG & DROP (Kanban)
-   =========================== */
+/*
+  13) DRAG & DROP (Kanban)
+*/
 
 // Configura eventos de drag & drop nas colunas
 function setupDragAndDrop() {
@@ -2088,9 +2130,9 @@ function handleDrop(e) {
   showToast(`Rotina movida para: ${statusText[newStatus] || 'A fazer'}`, 'info');
 }
 
-/* ===========================
-   14) CONFIGURAÇÕES E PREFERÊNCIAS
-   =========================== */
+/*
+  14) CONFIGURAÇÕES E PREFERÊNCIAS
+*/
 
 // Carrega as configurações salvas
 function loadSettings() {
@@ -2124,18 +2166,42 @@ function loadSettings() {
       document.body.style.fontSize = state.preferences.fontSize + 'px';
     }
   }
+
+  // Carregar foto do perfil
+  loadProfilePhoto();
 }
 
 // Salva as configurações
 function saveSettings() {
   state.preferences = {
     theme: DOM.themeToggle && DOM.themeToggle.checked ? 'dark' : 'light',
-    notifications: DOM.notificationsToggle ? DOM.notificationsToggle.checked : true,
+    notifications: DOM.notificationsToggle ? DOM.notificationsToggle.checked : false,
     language: DOM.appLanguage ? DOM.appLanguage.value : 'pt-BR',
     fontFamily: DOM.fontFamily ? DOM.fontFamily.value : 'Inter',
     fontSize: DOM.fontSize ? DOM.fontSize.value : '16',
     showCompleted: state.preferences.showCompleted !== undefined ? state.preferences.showCompleted : true
   };
+
+  // Se as notificações estão sendo ativadas, solicitar permissão
+  if (state.preferences.notifications) {
+    requestNotificationPermission().then(permissionGranted => {
+      if (!permissionGranted) {
+        state.preferences.notifications = false;
+        if (DOM.notificationsToggle) {
+          DOM.notificationsToggle.checked = false;
+        }
+        saveData();
+      } else {
+        // Enviar notificação de teste quando ativadas
+        setTimeout(sendTestNotification, 1000);
+      }
+    });
+  }
+
+  // Garantir que a foto do perfil seja preservada
+  if (state.profile && state.profile.photo) {
+    state.preferences.profilePhoto = state.profile.photo;
+  }
 
   // Aplica as configurações
   DOM.app.setAttribute('data-theme', state.preferences.theme);
@@ -2156,7 +2222,7 @@ function resetSettings() {
 
   state.preferences = {
     theme: 'light',
-    notifications: true,
+    notifications: false,
     language: 'pt-BR',
     fontFamily: 'Inter',
     fontSize: '16',
@@ -2190,11 +2256,11 @@ function renderProfile() {
   }
 }
 
-/* ===========================
-   15) SISTEMA DE PERÍODO PERSONALIZADO
-   =========================== */
+/*
+  15) SISTEMA DE PERÍODO PERSONALIZADO - VERSÃO CORRIGIDA
+*/
 
-// Abrir modal de período personalizado
+// Abrir modal de período personalizado - VERSÃO CORRIGIDA
 function openCustomPeriodModal() {
   if (!DOM.modalCustomPeriod) return;
 
@@ -2203,12 +2269,28 @@ function openCustomPeriodModal() {
   if (DOM.customStartDate) DOM.customStartDate.min = today;
   if (DOM.customEndDate) DOM.customEndDate.min = today;
   if (DOM.recurringStartDate) DOM.recurringStartDate.min = today;
+  if (DOM.recurringEndDate) DOM.recurringEndDate.min = today;
 
   // Limpar formulário
   DOM.customPeriodForm.reset();
 
+  // Inicializar valores padrão
+  if (DOM.customStartDate) DOM.customStartDate.value = today;
+  if (DOM.customEndDate) DOM.customEndDate.value = today;
+  if (DOM.recurringStartDate) DOM.recurringStartDate.value = today;
+  
+  // Inicializar dias da semana (segunda a sexta selecionados por padrão)
+  const weekdayCheckboxes = document.querySelectorAll('.weekday-option input[type="checkbox"]');
+  weekdayCheckboxes.forEach((checkbox, index) => {
+    checkbox.checked = index >= 1 && index <= 5; // Segunda a sexta
+  });
+
   // Mostrar seção padrão (intervalo)
   showPeriodSection('range');
+
+  // Inicializar estados dos campos
+  updateIntervalUnit();
+  toggleRecurringEndFields();
 
   // Abrir modal
   if (DOM.modalCustomPeriod.showModal) DOM.modalCustomPeriod.showModal();
@@ -2222,11 +2304,16 @@ function closeCustomPeriodModal() {
   // Limpar formulário
   if (DOM.customPeriodForm) DOM.customPeriodForm.reset();
 
+  // Limpar campos de datas específicas
+  if (DOM.specificDatesContainer) {
+    DOM.specificDatesContainer.innerHTML = '';
+  }
+
   // Fechar modal
   if (DOM.modalCustomPeriod.close) DOM.modalCustomPeriod.close();
 }
 
-// Mostrar seção específica baseada no tipo de período selecionado
+// Mostrar seção específica baseada no tipo de período selecionado - VERSÃO CORRIGIDA
 function showPeriodSection(type) {
   // Esconder todas as seções
   if (DOM.periodRangeSection) DOM.periodRangeSection.style.display = 'none';
@@ -2239,15 +2326,27 @@ function showPeriodSection(type) {
       if (DOM.periodRangeSection) DOM.periodRangeSection.style.display = 'block';
       break;
     case 'specific':
-      if (DOM.periodSpecificSection) DOM.periodSpecificSection.style.display = 'block';
+      if (DOM.periodSpecificSection) {
+        DOM.periodSpecificSection.style.display = 'block';
+        // Garantir que há pelo menos um campo de data
+        if (!DOM.specificDatesContainer.querySelector('.specific-date')) {
+          addSpecificDateField();
+        }
+      }
       break;
     case 'recurring':
-      if (DOM.periodRecurringSection) DOM.periodRecurringSection.style.display = 'block';
+      if (DOM.periodRecurringSection) {
+        DOM.periodRecurringSection.style.display = 'block';
+        // Definir data mínima para hoje
+        const today = new Date().toISOString().split('T')[0];
+        if (DOM.recurringStartDate) DOM.recurringStartDate.min = today;
+        if (DOM.recurringEndDate) DOM.recurringEndDate.min = today;
+      }
       break;
   }
 }
 
-// Adicionar campo de data para dias específicos
+// Adicionar campo de data para dias específicos - VERSÃO CORRIGIDA
 function addSpecificDateField() {
   if (!DOM.specificDatesContainer) return;
 
@@ -2257,6 +2356,11 @@ function addSpecificDateField() {
   const dateInput = document.createElement('input');
   dateInput.type = 'date';
   dateInput.className = 'specific-date';
+  dateInput.required = true;
+  
+  // Definir data mínima como hoje
+  const today = new Date().toISOString().split('T')[0];
+  dateInput.min = today;
 
   const removeBtn = document.createElement('button');
   removeBtn.type = 'button';
@@ -2266,96 +2370,169 @@ function addSpecificDateField() {
 
   removeBtn.addEventListener('click', function () {
     dateRow.remove();
+    // Se não houver mais campos, adicionar um vazio
+    if (DOM.specificDatesContainer.children.length === 0) {
+      addSpecificDateField();
+    }
   });
 
   dateRow.appendChild(dateInput);
   dateRow.appendChild(removeBtn);
   DOM.specificDatesContainer.appendChild(dateRow);
+  
+  // Focar no novo campo
+  setTimeout(() => dateInput.focus(), 100);
 }
 
-// Atualizar unidade de intervalo baseada na frequência
+// Atualizar unidade de intervalo baseada na frequência - VERSÃO CORRIGIDA
 function updateIntervalUnit() {
   if (!DOM.recurringFrequency || !DOM.intervalUnit) return;
 
   const frequency = DOM.recurringFrequency.value;
-  let unit = 'dia(s)';
+  const lang = getLang();
+  let unit = t('frequency.daily');
 
   switch (frequency) {
     case 'weekly':
-      unit = 'semana(s)';
+      unit = t('frequency.weekly');
       break;
     case 'monthly':
-      unit = 'mês(es)';
+      unit = t('frequency.monthly');
       break;
   }
 
   DOM.intervalUnit.textContent = unit;
 }
 
-// Habilitar/desabilitar campos de término baseado na seleção
+// Habilitar/desabilitar campos de término baseado na seleção - VERSÃO CORRIGIDA
 function toggleRecurringEndFields() {
-  const selectedValue = document.querySelector('input[name="recurringEnd"]:checked').value;
+  const selectedRadio = document.querySelector('input[name="recurringEnd"]:checked');
+  if (!selectedRadio) return;
+  
+  const selectedValue = selectedRadio.value;
 
   if (DOM.recurringOccurrences) {
     DOM.recurringOccurrences.disabled = selectedValue !== 'after';
+    if (!DOM.recurringOccurrences.value) {
+      DOM.recurringOccurrences.value = '10';
+    }
   }
 
   if (DOM.recurringEndDate) {
     DOM.recurringEndDate.disabled = selectedValue !== 'on';
+    if (!DOM.recurringEndDate.value && selectedValue === 'on') {
+      const today = new Date();
+      today.setMonth(today.getMonth() + 1); // 1 mês a partir de hoje
+      DOM.recurringEndDate.value = today.toISOString().split('T')[0];
+    }
   }
 }
 
-// Gerar todas as datas para uma rotina baseada no tipo de período
+// Gerar todas as datas para uma rotina baseada no tipo de período - VERSÃO CORRIGIDA
 function generateRoutineDates(periodType, formData) {
   let dates = [];
 
-  switch (periodType) {
-    case 'range':
-      // Gerar datas entre início e fim, considerando apenas os dias da semana selecionados
-      const start = new Date(formData.startDate);
-      const end = new Date(formData.endDate);
-      const selectedDays = formData.selectedDays || [1, 2, 3, 4, 5]; // Padrão: dias de semana
-
-      let current = new Date(start);
-      while (current <= end) {
-        if (selectedDays.includes(current.getDay())) {
-          dates.push(formatDateForInput(current));
+  try {
+    switch (periodType) {
+      case 'range':
+        if (!formData.startDate || !formData.endDate) {
+          throw new Error('Datas de início e término são obrigatórias');
         }
-        current.setDate(current.getDate() + 1);
-      }
-      break;
 
-    case 'specific':
-      // Usar as datas específicas fornecidas
-      dates = formData.specificDates.filter(date => date.trim() !== '');
-      break;
+        const start = new Date(formData.startDate + 'T00:00:00');
+        const end = new Date(formData.endDate + 'T00:00:00');
+        
+        if (start > end) {
+          throw new Error('Data de início não pode ser posterior à data de término');
+        }
 
-    case 'recurring':
-      // Gerar datas baseadas na recorrência
-      dates = generateRecurringDates(formData);
-      break;
+        const selectedDays = formData.selectedDays && formData.selectedDays.length > 0 
+          ? formData.selectedDays 
+          : [1, 2, 3, 4, 5]; // Padrão: dias de semana
+
+        let current = new Date(start);
+        while (current <= end) {
+          if (selectedDays.includes(current.getDay())) {
+            dates.push(formatDateForInput(current));
+          }
+          current.setDate(current.getDate() + 1);
+          
+          // Limite de segurança
+          if (dates.length > 365) break;
+        }
+        break;
+
+      case 'specific':
+        if (!formData.specificDates || formData.specificDates.length === 0) {
+          throw new Error('Pelo menos uma data específica é obrigatória');
+        }
+
+        dates = formData.specificDates
+          .filter(date => date && date.trim() !== '')
+          .map(date => {
+            const dateObj = new Date(date + 'T00:00:00');
+            if (isNaN(dateObj.getTime())) {
+              throw new Error(`Data inválida: ${date}`);
+            }
+            return formatDateForInput(dateObj);
+          })
+          .filter((date, index, self) => self.indexOf(date) === index); // Remover duplicatas
+        break;
+
+      case 'recurring':
+        dates = generateRecurringDates(formData);
+        break;
+
+      default:
+        throw new Error('Tipo de período desconhecido');
+    }
+  } catch (error) {
+    console.error('Erro ao gerar datas:', error);
+    showToast(error.message, 'error');
+    return [];
   }
 
   return dates;
 }
 
-// Gerar datas para rotinas recorrentes
+// Gerar datas para rotinas recorrentes - VERSÃO CORRIGIDA
 function generateRecurringDates(formData) {
   const dates = [];
-  const startDate = new Date(formData.startDate);
-  const frequency = formData.frequency;
+  
+  if (!formData.startDate) {
+    throw new Error('Data de início é obrigatória');
+  }
+
+  const startDate = new Date(formData.startDate + 'T00:00:00');
+  const frequency = formData.frequency || 'weekly';
   const interval = parseInt(formData.interval) || 1;
+
+  if (interval < 1) {
+    throw new Error('Intervalo deve ser pelo menos 1');
+  }
 
   let currentDate = new Date(startDate);
   let occurrenceCount = 0;
-  const maxOccurrences = formData.endType === 'after' ? parseInt(formData.occurrences) : Infinity;
-  const endDate = formData.endType === 'on' ? new Date(formData.endDate) : null;
+  
+  const maxOccurrences = formData.endType === 'after' ? parseInt(formData.occurrences) || 10 : Infinity;
+  const endDate = formData.endType === 'on' && formData.endDate 
+    ? new Date(formData.endDate + 'T00:00:00') 
+    : null;
 
-  while (
-    (formData.endType === 'never' ||
-      (formData.endType === 'after' && occurrenceCount < maxOccurrences) ||
-      (formData.endType === 'on' && currentDate <= endDate))
-  ) {
+  // Validar datas
+  if (endDate && startDate > endDate) {
+    throw new Error('Data de início não pode ser posterior à data de término');
+  }
+
+  while (occurrenceCount < 365) { // Limite de segurança
+    // Verificar condições de término
+    if (formData.endType === 'after' && occurrenceCount >= maxOccurrences) {
+      break;
+    }
+    if (formData.endType === 'on' && currentDate > endDate) {
+      break;
+    }
+
     dates.push(formatDateForInput(currentDate));
     occurrenceCount++;
 
@@ -2369,48 +2546,83 @@ function generateRecurringDates(formData) {
         break;
       case 'monthly':
         currentDate.setMonth(currentDate.getMonth() + interval);
+        // Ajustar para o último dia do mês se necessário
+        const nextMonth = new Date(currentDate);
+        nextMonth.setMonth(nextMonth.getMonth() + 1);
+        nextMonth.setDate(0);
+        if (currentDate.getDate() > nextMonth.getDate()) {
+          currentDate.setDate(nextMonth.getDate());
+        }
         break;
     }
 
-    // Limitar a um número razoável de ocorrências para evitar loops infinitos
-    if (occurrenceCount > 365) break;
+    // Parar se exceder um limite razoável
+    if (occurrenceCount >= 365) break;
   }
 
   return dates;
 }
 
-// Adicionar múltiplas rotinas baseadas nas datas geradas
+// Adicionar múltiplas rotinas baseadas nas datas geradas - VERSÃO CORRIGIDA
 function addRoutinesWithCustomPeriod(formData) {
-  const dates = generateRoutineDates(formData.periodType, formData);
+  try {
+    const dates = generateRoutineDates(formData.periodType, formData);
 
-  if (dates.length === 0) {
-    showToast('Nenhuma data válida foi gerada para esta rotina.', 'error');
-    return;
+    if (dates.length === 0) {
+      showToast('Nenhuma data válida foi gerada para esta rotina.', 'error');
+      return;
+    }
+
+    // Aviso para muitas rotinas
+    if (dates.length > 50) {
+      const confirmed = confirm(`Esta ação criará ${dates.length} rotinas. Isso pode afetar o desempenho. Deseja continuar?`);
+      if (!confirmed) return;
+    }
+
+    let createdCount = 0;
+    const errors = [];
+
+    dates.forEach((date, index) => {
+      try {
+        const routineData = {
+          title: formData.title + (dates.length > 1 ? ` (${index + 1}/${dates.length})` : ''),
+          description: formData.description,
+          date: date,
+          time: formData.time,
+          priority: formData.priority,
+          tag: formData.tag,
+          status: 'todo',
+          completed: false,
+          isRecurring: formData.periodType === 'recurring'
+        };
+
+        const result = addNewRoutine(routineData);
+        if (result) createdCount++;
+      } catch (error) {
+        errors.push(`Erro na data ${date}: ${error.message}`);
+      }
+    });
+
+    if (errors.length > 0) {
+      console.error('Erros ao criar rotinas:', errors);
+      showToast(`${createdCount} rotina(s) criada(s), ${errors.length} com erro.`, 'warning');
+    } else {
+      const lang = getLang();
+      const successMessages = {
+        'pt-BR': `${createdCount} rotina(s) criada(s) com sucesso!`,
+        'en-US': `${createdCount} routine(s) created successfully!`,
+        'es-ES': `¡${createdCount} rutina(s) creada(s) con éxito!`,
+        'fr-FR': `${createdCount} routine(s) créée(s) avec succès !`
+      };
+      showToast(successMessages[lang] || successMessages['pt-BR'], 'success');
+    }
+  } catch (error) {
+    console.error('Erro ao adicionar rotinas:', error);
+    showToast('Erro ao criar rotinas: ' + error.message, 'error');
   }
-
-  let createdCount = 0;
-
-  dates.forEach(date => {
-    const routineData = {
-      title: formData.title,
-      description: formData.description,
-      date: date,
-      time: formData.time,
-      priority: formData.priority,
-      tag: formData.tag,
-      status: 'todo',
-      completed: false,
-      isRecurring: formData.periodType === 'recurring'
-    };
-
-    const result = addNewRoutine(routineData);
-    if (result) createdCount++;
-  });
-
-  showToast(`${createdCount} rotina(s) criada(s) com sucesso!`, 'success');
 }
 
-// Processar formulário de período personalizado
+// Processar formulário de período personalizado - VERSÃO COMPLETAMENTE CORRIGIDA
 function processCustomPeriodForm(e) {
   if (e && e.preventDefault) e.preventDefault();
 
@@ -2421,7 +2633,7 @@ function processCustomPeriodForm(e) {
     return;
   }
 
-  // Coletar dados do formulário
+  // Coletar dados básicos do formulário
   const title = DOM.customTitle ? DOM.customTitle.value.trim() : '';
   const description = DOM.customDesc ? DOM.customDesc.value : '';
   const time = DOM.customTime ? DOM.customTime.value || undefined : undefined;
@@ -2434,7 +2646,13 @@ function processCustomPeriodForm(e) {
   }
 
   // Determinar tipo de período selecionado
-  const periodType = document.querySelector('input[name="periodType"]:checked').value;
+  const periodTypeRadio = document.querySelector('input[name="periodType"]:checked');
+  if (!periodTypeRadio) {
+    showToast('Selecione um tipo de período.', 'error');
+    return;
+  }
+
+  const periodType = periodTypeRadio.value;
   let formData = {
     title,
     description,
@@ -2445,85 +2663,232 @@ function processCustomPeriodForm(e) {
   };
 
   // Coletar dados específicos do tipo de período
-  switch (periodType) {
-    case 'range':
-      const startDate = DOM.customStartDate ? DOM.customStartDate.value : '';
-      const endDate = DOM.customEndDate ? DOM.customEndDate.value : '';
+  try {
+    switch (periodType) {
+      case 'range':
+        const startDate = DOM.customStartDate ? DOM.customStartDate.value : '';
+        const endDate = DOM.customEndDate ? DOM.customEndDate.value : '';
 
-      if (!startDate || !endDate) {
-        showToast('As datas de início e término são obrigatórias.', 'error');
-        return;
-      }
-
-      if (new Date(startDate) > new Date(endDate)) {
-        showToast('A data de início não pode ser posterior à data de término.', 'error');
-        return;
-      }
-
-      // Coletar dias da semana selecionados
-      const selectedDays = [];
-      document.querySelectorAll('.weekday-option input[type="checkbox"]:checked').forEach(cb => {
-        selectedDays.push(parseInt(cb.value));
-      });
-
-      formData.startDate = startDate;
-      formData.endDate = endDate;
-      formData.selectedDays = selectedDays;
-      break;
-
-    case 'specific':
-      const specificDates = [];
-      document.querySelectorAll('.specific-date').forEach(input => {
-        if (input.value) specificDates.push(input.value);
-      });
-
-      if (specificDates.length === 0) {
-        showToast('Pelo menos uma data específica deve ser fornecida.', 'error');
-        return;
-      }
-
-      formData.specificDates = specificDates;
-      break;
-
-    case 'recurring':
-      const recurringStartDate = DOM.recurringStartDate ? DOM.recurringStartDate.value : '';
-      const frequency = DOM.recurringFrequency ? DOM.recurringFrequency.value : 'weekly';
-      const interval = DOM.recurringInterval ? DOM.recurringInterval.value : '1';
-      const endType = document.querySelector('input[name="recurringEnd"]:checked').value;
-
-      if (!recurringStartDate) {
-        showToast('A data de início é obrigatória para rotinas recorrentes.', 'error');
-        return;
-      }
-
-      formData.startDate = recurringStartDate;
-      formData.frequency = frequency;
-      formData.interval = interval;
-      formData.endType = endType;
-
-      if (endType === 'after') {
-        formData.occurrences = DOM.recurringOccurrences ? DOM.recurringOccurrences.value : '10';
-      } else if (endType === 'on') {
-        formData.endDate = DOM.recurringEndDate ? DOM.recurringEndDate.value : '';
-
-        if (!formData.endDate) {
-          showToast('A data de término é obrigatória quando selecionada.', 'error');
+        if (!startDate || !endDate) {
+          showToast('As datas de início e término são obrigatórias.', 'error');
           return;
         }
-      }
-      break;
+
+        // Coletar dias da semana selecionados
+        const selectedDays = [];
+        document.querySelectorAll('.weekday-option input[type="checkbox"]:checked').forEach(cb => {
+          selectedDays.push(parseInt(cb.value));
+        });
+
+        formData.startDate = startDate;
+        formData.endDate = endDate;
+        formData.selectedDays = selectedDays;
+        break;
+
+      case 'specific':
+        const specificDates = [];
+        document.querySelectorAll('.specific-date').forEach(input => {
+          if (input.value) specificDates.push(input.value);
+        });
+
+        if (specificDates.length === 0) {
+          showToast('Pelo menos uma data específica deve ser fornecida.', 'error');
+          return;
+        }
+
+        formData.specificDates = specificDates;
+        break;
+
+      case 'recurring':
+        const recurringStartDate = DOM.recurringStartDate ? DOM.recurringStartDate.value : '';
+        const frequency = DOM.recurringFrequency ? DOM.recurringFrequency.value : 'weekly';
+        const interval = DOM.recurringInterval ? parseInt(DOM.recurringInterval.value) : 1;
+        const endTypeRadio = document.querySelector('input[name="recurringEnd"]:checked');
+        
+        if (!endTypeRadio) {
+          showToast('Selecione uma opção de término.', 'error');
+          return;
+        }
+
+        const endType = endTypeRadio.value;
+
+        if (!recurringStartDate) {
+          showToast('A data de início é obrigatória para rotinas recorrentes.', 'error');
+          return;
+        }
+
+        if (interval < 1) {
+          showToast('O intervalo deve ser pelo menos 1.', 'error');
+          return;
+        }
+
+        formData.startDate = recurringStartDate;
+        formData.frequency = frequency;
+        formData.interval = interval;
+        formData.endType = endType;
+
+        if (endType === 'after') {
+          const occurrences = DOM.recurringOccurrences ? parseInt(DOM.recurringOccurrences.value) : 10;
+          if (occurrences < 1) {
+            showToast('O número de ocorrências deve ser pelo menos 1.', 'error');
+            return;
+          }
+          formData.occurrences = occurrences;
+        } else if (endType === 'on') {
+          const endDate = DOM.recurringEndDate ? DOM.recurringEndDate.value : '';
+          if (!endDate) {
+            showToast('A data de término é obrigatória quando selecionada.', 'error');
+            return;
+          }
+          formData.endDate = endDate;
+        }
+        break;
+    }
+
+    // Criar as rotinas
+    addRoutinesWithCustomPeriod(formData);
+
+    // Fechar modal apenas se não houver erros
+    closeCustomPeriodModal();
+
+  } catch (error) {
+    console.error('Erro no processamento do formulário:', error);
+    showToast('Erro: ' + error.message, 'error');
   }
-
-  // Criar as rotinas
-  addRoutinesWithCustomPeriod(formData);
-
-  // Fechar modal
-  closeCustomPeriodModal();
 }
 
-/* ===========================
-   16) EVENTOS GERAIS E LIGAÇÕES - VERSÃO CORRIGIDA
-   =========================== */
+/*
+  16) SISTEMA DE NOTIFICAÇÕES
+*/
+
+// Configurar notificações
+function setupNotifications() {
+  if (!('Notification' in window)) {
+    console.log('Este navegador não suporta notificações');
+    if (DOM.notificationsToggle) {
+      DOM.notificationsToggle.disabled = true;
+      DOM.notificationsToggle.checked = false;
+    }
+    return;
+  }
+
+  // Verificar se já temos permissão
+  if (Notification.permission === 'granted') {
+    if (DOM.notificationsToggle) {
+      DOM.notificationsToggle.checked = true;
+    }
+  } else if (Notification.permission === 'denied') {
+    if (DOM.notificationsToggle) {
+      DOM.notificationsToggle.checked = false;
+      DOM.notificationsToggle.disabled = true;
+    }
+  }
+}
+
+// Função para solicitar permissão de notificação
+async function requestNotificationPermission() {
+  if (!('Notification' in window)) {
+    showToast(t('notification.unsupported'), 'error');
+    return false;
+  }
+
+  if (Notification.permission === 'granted') {
+    return true;
+  }
+
+  if (Notification.permission === 'denied') {
+    showToast(t('notification.permissionDenied'), 'error');
+    if (DOM.notificationsToggle) {
+      DOM.notificationsToggle.checked = false;
+    }
+    return false;
+  }
+
+  const permission = await Notification.requestPermission();
+  
+  if (permission === 'granted') {
+    showToast('Notificações ativadas com sucesso!', 'success');
+    return true;
+  } else {
+    showToast(t('notification.permissionDenied'), 'error');
+    if (DOM.notificationsToggle) {
+      DOM.notificationsToggle.checked = false;
+    }
+    return false;
+  }
+}
+
+// Função para enviar notificação de exemplo
+function sendTestNotification() {
+  if (!('Notification' in window) || Notification.permission !== 'granted') {
+    return;
+  }
+
+  const notification = new Notification('Life Build', {
+    body: t('notification.test'),
+    icon: 'img/Ryo.jpg',
+    badge: 'img/Ryo.jpg'
+  });
+
+  notification.onclick = function() {
+    window.focus();
+    notification.close();
+  };
+}
+
+// Configurar evento específico para o toggle de notificações
+function setupNotificationToggle() {
+  if (DOM.notificationsToggle) {
+    DOM.notificationsToggle.addEventListener('change', function() {
+      if (this.checked) {
+        // Se está tentando ativar, solicitar permissão
+        requestNotificationPermission().then(permissionGranted => {
+          if (!permissionGranted) {
+            this.checked = false;
+          } else {
+            // Enviar notificação de teste
+            setTimeout(sendTestNotification, 1000);
+          }
+        });
+      }
+      // Se está desativando, não precisa fazer nada além de atualizar o estado
+    });
+  }
+}
+
+// Função para enviar notificações de lembretes
+function sendReminderNotification(task) {
+  if (!state.preferences.notifications || !('Notification' in window) || Notification.permission !== 'granted') {
+    return;
+  }
+
+  const now = new Date();
+  const taskTime = task.time ? new Date(`${task.date}T${task.time}`) : new Date(`${task.date}T09:00:00`);
+  
+  // Verificar se a tarefa é para hoje e está próxima do horário
+  if (task.date === now.toISOString().split('T')[0]) {
+    const timeDiff = taskTime.getTime() - now.getTime();
+    
+    // Notificar se faltar 15 minutos ou menos, ou se já passou do horário
+    if (timeDiff <= 15 * 60 * 1000 && timeDiff > -60 * 60 * 1000) {
+      const notification = new Notification('Life Build', {
+        body: `${t('notification.reminder')}"${task.title}" - ${task.time || t('filter.hoje')}`,
+        icon: 'img/Ryo.jpg',
+        tag: task.id
+      });
+
+      notification.onclick = function() {
+        window.focus();
+        openTaskDetails(task.id);
+        notification.close();
+      };
+    }
+  }
+}
+
+/*
+   17) EVENTOS GERAIS E LIGAÇÕES
+*/
 
 // Configura todos os listeners de UI (botões, formulários, links, etc.)
 function setupEventListeners() {
@@ -2718,9 +3083,9 @@ function setupEventListeners() {
   });
 }
 
-/* ===========================
-   17) FUNÇÕES AUXILIARES (UI/Helpers)
-   =========================== */
+/*
+   18) FUNÇÕES AUXILIARES (UI/Helpers)
+*/
 
 // Alterna a sidebar visível / escondida e persiste a preferência
 function toggleSidebar() {
@@ -2761,9 +3126,9 @@ function updateClock() {
   if (DOM.nowTime) DOM.nowTime.textContent = now.toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' });
 }
 
-/* ===========================
-   18) SISTEMA DE GRÁFICOS - VERSÃO CORRIGIDA
-   =========================== */
+/*
+   19) SISTEMA DE GRÁFICOS
+*/
 
 // Inicializar todos os gráficos
 function initCharts() {
@@ -2946,7 +3311,98 @@ function renderEmptyCharts() {
 }
 
 /*
-   19) INICIALIZAÇÃO DA APLICAÇÃO
+   20) SISTEMA DE TROCA DE FOTO DO PERFIL
+*/
+
+// Configurar evento para trocar foto do perfil
+function setupProfilePhotoChange() {
+  const profilePhoto = document.querySelector('.profile-photo');
+  const profilePhotoInput = document.getElementById('profilePhotoInput');
+  
+  if (profilePhoto && profilePhotoInput) {
+    // Clicar na foto abre o seletor de arquivos
+    profilePhoto.addEventListener('click', () => {
+      profilePhotoInput.click();
+    });
+    
+    // Quando um arquivo é selecionado
+    profilePhotoInput.addEventListener('change', handleProfilePhotoChange);
+  }
+}
+
+// Processar a troca da foto do perfil
+function handleProfilePhotoChange(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  
+  // Validar tipo de arquivo
+  if (!file.type.startsWith('image/')) {
+    showToast('Por favor, selecione uma imagem válida.', 'error');
+    return;
+  }
+  
+  // Validar tamanho do arquivo (máximo 5MB)
+  if (file.size > 5 * 1024 * 1024) {
+    showToast('A imagem deve ter no máximo 5MB.', 'error');
+    return;
+  }
+  
+  // Ler a imagem e atualizar o perfil
+  const reader = new FileReader();
+  
+  reader.onload = function(e) {
+    updateProfilePhoto(e.target.result);
+  };
+  
+  reader.onerror = function() {
+    showToast('Erro ao carregar a imagem.', 'error');
+  };
+  
+  reader.readAsDataURL(file);
+}
+
+// Atualizar a foto do perfil no estado e na interface
+function updateProfilePhoto(imageData) {
+  // Atualizar no estado
+  if (!state.profile) state.profile = {};
+  state.profile.photo = imageData;
+  
+  // Atualizar na interface
+  const profilePhoto = document.querySelector('.profile-photo');
+  const topbarAvatar = document.querySelector('.topbar .avatar img');
+  
+  if (profilePhoto) {
+    profilePhoto.src = imageData;
+  }
+  
+  if (topbarAvatar) {
+    topbarAvatar.src = imageData;
+  }
+  
+  // Salvar no localStorage
+  saveData();
+  
+  showToastTranslation('toast.saved', 'success');
+}
+
+// Carregar foto do perfil salva
+function loadProfilePhoto() {
+  if (state.profile && state.profile.photo) {
+    const profilePhoto = document.querySelector('.profile-photo');
+    const topbarAvatar = document.querySelector('.topbar .avatar img');
+    
+    if (profilePhoto) {
+      profilePhoto.src = state.profile.photo;
+    }
+    
+    if (topbarAvatar) {
+      topbarAvatar.src = state.profile.photo;
+    }
+  }
+}
+
+/*
+   21) INICIALIZAÇÃO DA APLICAÇÃO
 */
 
 // Inicializar a aplicação
